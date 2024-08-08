@@ -101,7 +101,7 @@ public sealed class PlayerMovementController : Component
         if(currentHeight.AlmostEqual(targetHeight))
             return;
 
-        if(!wantsCrouch)
+        if(!wantsCrouch && nextHeight > currentHeight)
         {
             BBox bBox = BBox.FromPositionAndSize(Collider.Center, Collider.Scale - Vector3.Up * SkinSize * 2f);
             var traceResult = Scene.Trace.Box(bBox, Transform.Position, Transform.Position + Transform.Rotation.Up * (nextHeight - currentHeight + SkinSize))
