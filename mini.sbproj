@@ -21,7 +21,7 @@
     "PerMapRanking": false,
     "LeaderboardType": "None",
     "CsProjName": "",
-    "StartupScene": "scenes/minimal.scene",
+    "StartupScene": "scenes/test.scene",
     "Compiler": {
       "RootNamespace": "Mini",
       "DefineConstants": "SANDBOX;ADDON;DEBUG",
@@ -35,6 +35,7 @@
         "unittest"
       ],
       "DistinctAssemblyReferences": []
-    }
+    },
+    "LaunchMode": "Normal"
   }
 }
