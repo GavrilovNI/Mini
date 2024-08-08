@@ -1,11 +1,12 @@
 ﻿using Sandbox;
+using static Sandbox.Component;
 
 namespace Mini.Player;
 
-public sealed class PlayerCameraController : Component
+public sealed class PlayerCameraController : Component, INetworkSpawn
 {
     [Property]
-    private CameraComponent Camera { get; set; } = null!;
+    private GameObject Camera { get; set; } = null!;
     [Property]
     private GameObject Eye { get; set; } = null!;
 
@@ -18,13 +19,31 @@ public sealed class PlayerCameraController : Component
     private ModelRenderer? Model { get; set; }
 
 
+    public void OnNetworkSpawn(Connection owner)
+    {
+        UpdateModelRenderType();
+    }
+
+    protected override void OnStart()
+    {
+        UpdateModelRenderType();
+    }
+
     protected override void OnUpdate()
     {
-        Rotate();
-        ClipBack();
+        if(!Network.IsProxy)
+        {
+            Rotate();
+            ClipBack();
+        }
 
+        UpdateModelRenderType();
+    }
+
+    private void UpdateModelRenderType()
+    {
         if(Model.IsValid())
-            Model.RenderType = IsFirstPerson ? ModelRenderer.ShadowRenderType.ShadowsOnly : ModelRenderer.ShadowRenderType.On;
+            Model.RenderType = IsFirstPerson && !Network.IsProxy ? ModelRenderer.ShadowRenderType.ShadowsOnly : ModelRenderer.ShadowRenderType.On;
     }
 
     private void Rotate()

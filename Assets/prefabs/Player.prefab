@@ -71,16 +71,14 @@
         "__guid": "4bae60fb-890e-45d9-957c-5a4dd57dbba4",
         "BackingDistance": 100,
         "Camera": {
-          "_type": "component",
-          "component_id": "397a05a5-3c96-4210-be0a-274596375337",
-          "go": "9112b5fd-8419-44c6-a841-7ad413a12390",
-          "component_type": "CameraComponent"
+          "_type": "gameobject",
+          "go": "ab26c9ae-d8ee-475d-82d8-5454c4f2be71"
         },
         "Eye": {
           "_type": "gameobject",
           "go": "c552cd65-57dc-4bec-a5fb-b17977cb1f3b"
         },
-        "IsFirstPerson": true,
+        "IsFirstPerson": false,
         "Model": {
           "_type": "component",
           "component_id": "6475ac87-1a43-446f-bc5d-02675f94eaf9",
@@ -142,30 +140,43 @@
         "Enabled": true,
         "Children": [
           {
-            "__guid": "9112b5fd-8419-44c6-a841-7ad413a12390",
+            "__guid": "ab26c9ae-d8ee-475d-82d8-5454c4f2be71",
             "Flags": 0,
-            "Name": "Camera",
+            "Name": "CameraParent",
             "Position": "0,0,0",
-            "Rotation": "0,0,0.01745241,0.9998477",
-            "Tags": "maincamera",
             "Enabled": true,
-            "Components": [
+            "Children": [
               {
-                "__type": "Sandbox.CameraComponent",
-                "__guid": "397a05a5-3c96-4210-be0a-274596375337",
-                "BackgroundColor": "0.33333,0.46275,0.52157,1",
-                "ClearFlags": "All",
-                "FieldOfView": 90,
-                "IsMainCamera": true,
-                "Orthographic": false,
-                "OrthographicHeight": 1204,
-                "Priority": 1,
-                "RenderExcludeTags": "",
-                "RenderTags": "",
-                "TargetEye": "None",
-                "Viewport": "0,0,1,1",
-                "ZFar": 10000,
-                "ZNear": 5
+                "__guid": "9112b5fd-8419-44c6-a841-7ad413a12390",
+                "Flags": 0,
+                "Name": "Camera",
+                "Position": "0,0,0",
+                "Rotation": "0,0,0.01745241,0.9998477",
+                "Tags": "maincamera",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.CameraComponent",
+                    "__guid": "397a05a5-3c96-4210-be0a-274596375337",
+                    "BackgroundColor": "0.33333,0.46275,0.52157,1",
+                    "ClearFlags": "All",
+                    "FieldOfView": 90,
+                    "IsMainCamera": true,
+                    "Orthographic": false,
+                    "OrthographicHeight": 1204,
+                    "Priority": 1,
+                    "RenderExcludeTags": "",
+                    "RenderTags": "",
+                    "TargetEye": "None",
+                    "Viewport": "0,0,1,1",
+                    "ZFar": 10000,
+                    "ZNear": 5
+                  },
+                  {
+                    "__type": "Mini.Networking.ProxyDisabled",
+                    "__guid": "0621946d-5a42-4f5a-9e5c-5d1965de8eb6"
+                  }
+                ]
               }
             ]
           }

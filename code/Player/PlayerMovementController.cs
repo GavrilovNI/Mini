@@ -59,27 +59,35 @@ public sealed class PlayerMovementController : Component
     public float ModelRotationSpeed { get; set; } = 5f;
 
 
-    private Vector3 _wishVelocity;
-    private bool _isCrouching;
-    private bool _isSprinting;
+    [Sync]
+    public Vector3 WishVelocity { get; private set; }
+    [Sync]
+    public bool IsCrouching { get; private set; }
+    [Sync]
+    public bool IsSprinting { get; private set; }
 
 
     protected override void OnStart()
     {
-        SetHeight(StandingHeight);
+        if(!Network.IsProxy)
+            SetHeight(StandingHeight);
     }
 
     protected override void OnUpdate()
     {
-        _isSprinting = !_isCrouching && Input.Down("Run");
+        if(!Network.IsProxy)
+            IsSprinting = !IsCrouching && Input.Down("Run");
 
         Animate();
     }
 
     protected override void OnFixedUpdate()
     {
+        if(Network.IsProxy)
+            return;
+
         HandleCrouching();
-        _isCrouching = !CharacterController.Height.AlmostEqual(StandingHeight, StandingHeightTolerance);
+        IsCrouching = !CharacterController.Height.AlmostEqual(StandingHeight, StandingHeightTolerance);
 
         BuildWishVelocty();
 
@@ -118,6 +126,7 @@ public sealed class PlayerMovementController : Component
         SetHeight(nextHeight);
     }
 
+    [Broadcast]
     private void SetHeight(float height)
     {
         CharacterController.Height = height;
@@ -131,27 +140,27 @@ public sealed class PlayerMovementController : Component
 
     private void BuildWishVelocty()
     {
-        _wishVelocity = Vector3.Zero;
+        WishVelocity = Vector3.Zero;
 
         var cameraRotation = Eye.Transform.Rotation;
-        _wishVelocity = Input.AnalogMove * cameraRotation;
+        WishVelocity = Input.AnalogMove * cameraRotation;
 
-        _wishVelocity = Vector3.VectorPlaneProject(_wishVelocity, Transform.Rotation.Up);
+        WishVelocity = Vector3.VectorPlaneProject(WishVelocity, Transform.Rotation.Up);
 
-        if(_wishVelocity.IsNearZeroLength)
-            _wishVelocity = Vector3.Zero;
+        if(WishVelocity.IsNearZeroLength)
+            WishVelocity = Vector3.Zero;
         else
-            _wishVelocity = _wishVelocity.Normal;
+            WishVelocity = WishVelocity.Normal;
 
         float speed;
-        if(_isCrouching)
+        if(IsCrouching)
             speed = CrouchingSpeed;
-        else if(_isSprinting)
+        else if(IsSprinting)
             speed = RunningSpeed;
         else
             speed = WalkingSpeed;
 
-        _wishVelocity *= speed;
+        WishVelocity *= speed;
     }
 
     private void Move()
@@ -161,13 +170,13 @@ public sealed class PlayerMovementController : Component
         if(CharacterController.IsOnGround)
         {
             CharacterController.Velocity = Vector3.VectorPlaneProject(CharacterController.Velocity, Transform.Rotation.Up);
-            CharacterController.Accelerate(_wishVelocity);
+            CharacterController.Accelerate(WishVelocity);
             CharacterController.ApplyFriction(GroundFriction);
         }
         else
         {
             CharacterController.Velocity += gravity * Time.Delta * 0.5f;
-            CharacterController.Accelerate(_wishVelocity.ClampLength(MaxForce));
+            CharacterController.Accelerate(WishVelocity.ClampLength(MaxForce));
             CharacterController.ApplyFriction(AirFriction);
         }
 
@@ -206,6 +215,12 @@ public sealed class PlayerMovementController : Component
             upDirection = Transform.Rotation.Up;
 
         CharacterController.Punch(upDirection * JumpForce);
+        RunJumpAnimation();
+    }
+
+    [Broadcast]
+    private void RunJumpAnimation()
+    {
         AnimationHelper?.TriggerJump();
     }
 
@@ -214,7 +229,7 @@ public sealed class PlayerMovementController : Component
         if(!AnimationHelper.IsValid())
             return;
 
-        AnimationHelper.WithWishVelocity(_wishVelocity);
+        AnimationHelper.WithWishVelocity(WishVelocity);
         AnimationHelper.WithVelocity(CharacterController.Velocity);
         AnimationHelper.AimAngle = Eye.Transform.Rotation;
         AnimationHelper.IsGrounded = CharacterController.IsOnGround;
