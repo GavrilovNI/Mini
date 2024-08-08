@@ -5,7 +5,7 @@
   "Ident": "mini",
   "Schema": 1,
   "IncludeSourceFiles": false,
-  "Resources": "",
+  "Resources": "*",
   "PackageReferences": [],
   "EditorReferences": null,
   "Metadata": {
