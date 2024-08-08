@@ -174,7 +174,7 @@
                     "IsMainCamera": true,
                     "Orthographic": false,
                     "OrthographicHeight": 1204,
-                    "Priority": 1,
+                    "Priority": 5,
                     "RenderExcludeTags": "",
                     "RenderTags": "",
                     "TargetEye": "None",

@@ -323,6 +323,34 @@
           "StartServer": true
         }
       ]
+    },
+    {
+      "__guid": "694d37f0-cd74-4adb-b43a-d3493522aacd",
+      "Flags": 0,
+      "Name": "Camera",
+      "Position": "-766.6667,808.6432,624.6658",
+      "Rotation": "0.09904574,0.2391176,-0.3696438,0.8923992",
+      "Tags": "maincamera",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.CameraComponent",
+          "__guid": "f7c2bdd0-2f3f-4869-a170-b90556343cd1",
+          "BackgroundColor": "0.33333,0.46275,0.52157,1",
+          "ClearFlags": "All",
+          "FieldOfView": 60,
+          "IsMainCamera": false,
+          "Orthographic": false,
+          "OrthographicHeight": 1204,
+          "Priority": 1,
+          "RenderExcludeTags": "",
+          "RenderTags": "",
+          "TargetEye": "None",
+          "Viewport": "0,0,1,1",
+          "ZFar": 10000,
+          "ZNear": 10
+        }
+      ]
     }
   ],
   "SceneProperties": {
