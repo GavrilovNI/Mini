@@ -129,6 +129,16 @@
               "go": "1cebab66-67ff-4fac-892f-af650dac8097",
               "component_type": "SkinnedModelRenderer"
             }
+          },
+          {
+            "__type": "Mini.Player.PlayerDresser",
+            "__guid": "4237f238-08af-4aa3-8daf-b0e3c0b83752",
+            "Model": {
+              "_type": "component",
+              "component_id": "6475ac87-1a43-446f-bc5d-02675f94eaf9",
+              "go": "1cebab66-67ff-4fac-892f-af650dac8097",
+              "component_type": "SkinnedModelRenderer"
+            }
           }
         ]
       },
