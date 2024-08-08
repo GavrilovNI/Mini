@@ -34,12 +34,21 @@
           "go": "20c32008-465a-4542-bcb6-0d20e8b6e184",
           "component_type": "CharacterController"
         },
+        "Collider": {
+          "_type": "component",
+          "component_id": "771f5eb1-0e2e-48ba-9c97-3f35818e1748",
+          "go": "20c32008-465a-4542-bcb6-0d20e8b6e184",
+          "component_type": "BoxCollider"
+        },
+        "CrouchingHeight": 50,
         "CrouchingSpeed": 90,
         "Eye": {
           "_type": "gameobject",
           "go": "c552cd65-57dc-4bec-a5fb-b17977cb1f3b"
         },
+        "EyeHeightOffset": -8,
         "GroundFriction": 4,
+        "HeightChangingSpeed": 0.005,
         "JumpForce": 400,
         "MaxForce": 50,
         "MaxModelDeltaAngle": 50,
@@ -52,6 +61,8 @@
         },
         "ModelRotationSpeed": 5,
         "RunningSpeed": 290,
+        "SkinSize": 1,
+        "StandingHeight": 72,
         "WalkingSpeed": 160
       },
       {

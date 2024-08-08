@@ -1,5 +1,6 @@
 using Sandbox;
 using Sandbox.Citizen;
+using System;
 
 namespace Mini.Player;
 
@@ -9,13 +10,20 @@ public sealed class PlayerMovementController : Component
     [Property]
     private CharacterController CharacterController { get; set; } = null!;
 
+    [RequireComponent]
+    [Property]
+    private BoxCollider Collider { get; set; } = null!;
+
     [Property]
     private CitizenAnimationHelper? AnimationHelper { get; set; }
     [Property]
     private ModelRenderer? Model { get; set; }
 
-    [Property]
+    [Property, Group("Camera")]
     private GameObject Eye { get; set; } = null!;
+
+    [Property, Group("Camera")]
+    public float EyeHeightOffset { get; set; } = -8f;
 
 
     [Property, Group("Movement")]
@@ -32,6 +40,14 @@ public sealed class PlayerMovementController : Component
     public float CrouchingSpeed { get; set; } = 90f;
     [Property, Group("Movement")]
     public float JumpForce { get; set; } = 400f;
+    [Property, Group("Movement")]
+    public float StandingHeight { get; set; } = 72f;
+    [Property, Group("Movement")]
+    public float CrouchingHeight { get; set; } = 50f;
+    [Property, Group("Movement")]
+    public float HeightChangingSpeed { get; set; } = 0.005f;
+    [Property, Group("Movement")]
+    public float SkinSize { get; set; } = 1f;
 
     [Property, Group("Animation")]
     public float MaxModelDeltaAngle { get; set; } = 50f;
@@ -48,14 +64,16 @@ public sealed class PlayerMovementController : Component
 
     protected override void OnUpdate()
     {
-        _isCrouching = Input.Down("Duck");
-        _isSprinting = Input.Down("Run");
+        _isSprinting = !_isCrouching && Input.Down("Run");
 
         Animate();
     }
 
     protected override void OnFixedUpdate()
     {
+        HandleCrouching();
+        _isCrouching = !CharacterController.Height.AlmostEqual(StandingHeight, (StandingHeight - CrouchingHeight) / 5f);
+
         BuildWishVelocty();
 
         if(Input.Pressed("Jump"))
@@ -63,6 +81,37 @@ public sealed class PlayerMovementController : Component
 
         RotateBody();
         Move();
+    }
+
+    private void HandleCrouching()
+    {
+        var wantsCrouch = Input.Down("Duck");
+
+        var currentHeight = Collider.Scale.z;
+        var targetHeight = wantsCrouch ? CrouchingHeight : StandingHeight;
+        var nextHeight = CharacterController.Height.LerpTo(targetHeight, HeightChangingSpeed / Time.Delta);
+
+        if(!wantsCrouch && _isCrouching)
+        {
+            BBox bBox = BBox.FromPositionAndSize(Collider.Center + Vector3.Up * SkinSize / 2f, Collider.Scale + Vector3.Up * SkinSize);
+            var traceResult = Scene.Trace.Box(bBox, Transform.Position, Transform.Position + Transform.Rotation.Up * (nextHeight - currentHeight))
+                .WithCollisionRules("player")
+                .IgnoreGameObject(GameObject)
+                .Run();
+
+            nextHeight = MathF.Min(nextHeight, currentHeight + traceResult.Distance);
+        }
+
+        if(nextHeight.AlmostEqual(currentHeight))
+            return;
+
+        CharacterController.Height = nextHeight;
+        Collider.Scale = Collider.Scale.WithZ(nextHeight);
+        Collider.Center = Collider.Center.WithZ(nextHeight / 2f);
+
+        var targetEyeHeight = nextHeight + EyeHeightOffset;
+        var nextEyeHeight = Eye.Transform.LocalPosition.z.LerpTo(targetEyeHeight, HeightChangingSpeed / Time.Delta);
+        Eye.Transform.LocalPosition = Eye.Transform.LocalPosition.WithZ(nextEyeHeight);
     }
 
     private void BuildWishVelocty()
@@ -156,6 +205,6 @@ public sealed class PlayerMovementController : Component
         AnimationHelper.IsGrounded = CharacterController.IsOnGround;
         AnimationHelper.WithLook(Eye.Transform.Rotation.Forward, 1f, 0.75f, 0.5f);
         AnimationHelper.MoveStyle = CitizenAnimationHelper.MoveStyles.Auto;
-        AnimationHelper.DuckLevel = _isCrouching ? 1f : 0f;
+        AnimationHelper.DuckLevel = 1f - (CharacterController.Height - CrouchingHeight) / (StandingHeight - CrouchingHeight);
     }
 }
