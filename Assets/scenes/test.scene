@@ -320,7 +320,11 @@
             "prefab": "prefabs/player.prefab"
           },
           "SpawnPoints": [],
-          "StartServer": true
+          "StartServer": false
+        },
+        {
+          "__type": "Mini.Networking.NetworkAutoJoiner",
+          "__guid": "ba65dc30-3b13-453d-82a0-668cac82e183"
         }
       ]
     },
