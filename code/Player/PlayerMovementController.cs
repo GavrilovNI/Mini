@@ -64,6 +64,11 @@ public sealed class PlayerMovementController : Component
     private bool _isSprinting;
 
 
+    protected override void OnStart()
+    {
+        SetHeight(StandingHeight);
+    }
+
     protected override void OnUpdate()
     {
         _isSprinting = !_isCrouching && Input.Down("Run");
@@ -110,11 +115,16 @@ public sealed class PlayerMovementController : Component
         if(nextHeight.AlmostEqual(currentHeight))
             return;
 
-        CharacterController.Height = nextHeight;
-        Collider.Scale = Collider.Scale.WithZ(nextHeight);
-        Collider.Center = Collider.Center.WithZ(nextHeight / 2f);
+        SetHeight(nextHeight);
+    }
 
-        var targetEyeHeight = nextHeight + EyeHeightOffset;
+    private void SetHeight(float height)
+    {
+        CharacterController.Height = height;
+        Collider.Scale = Collider.Scale.WithZ(height);
+        Collider.Center = Collider.Center.WithZ(height / 2f);
+
+        var targetEyeHeight = height + EyeHeightOffset;
         var nextEyeHeight = Eye.Transform.LocalPosition.z.LerpTo(targetEyeHeight, HeightChangingSpeed / Time.Delta);
         Eye.Transform.LocalPosition = Eye.Transform.LocalPosition.WithZ(nextEyeHeight);
     }
