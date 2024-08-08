@@ -45,9 +45,11 @@ public sealed class PlayerMovementController : Component
     [Property, Group("Movement")]
     public float CrouchingHeight { get; set; } = 50f;
     [Property, Group("Movement")]
-    public float HeightChangingSpeed { get; set; } = 0.005f;
-    [Property, Group("Movement")]
     public float SkinSize { get; set; } = 1f;
+    [Property, Group("Movement")]
+    public float StandingHeightTolerance { get; set; } = 4f;
+    [Property, Group("Movement")]
+    public float HeightChangingSpeed { get; set; } = 0.005f;
 
     [Property, Group("Animation")]
     public float MaxModelDeltaAngle { get; set; } = 50f;
@@ -72,7 +74,7 @@ public sealed class PlayerMovementController : Component
     protected override void OnFixedUpdate()
     {
         HandleCrouching();
-        _isCrouching = !CharacterController.Height.AlmostEqual(StandingHeight, (StandingHeight - CrouchingHeight) / 5f);
+        _isCrouching = !CharacterController.Height.AlmostEqual(StandingHeight, StandingHeightTolerance);
 
         BuildWishVelocty();
 
@@ -91,15 +93,18 @@ public sealed class PlayerMovementController : Component
         var targetHeight = wantsCrouch ? CrouchingHeight : StandingHeight;
         var nextHeight = CharacterController.Height.LerpTo(targetHeight, HeightChangingSpeed / Time.Delta);
 
-        if(!wantsCrouch && _isCrouching)
+        if(currentHeight.AlmostEqual(targetHeight))
+            return;
+
+        if(!wantsCrouch)
         {
-            BBox bBox = BBox.FromPositionAndSize(Collider.Center + Vector3.Up * SkinSize / 2f, Collider.Scale + Vector3.Up * SkinSize);
-            var traceResult = Scene.Trace.Box(bBox, Transform.Position, Transform.Position + Transform.Rotation.Up * (nextHeight - currentHeight))
+            BBox bBox = BBox.FromPositionAndSize(Collider.Center, Collider.Scale - Vector3.Up * SkinSize * 2f);
+            var traceResult = Scene.Trace.Box(bBox, Transform.Position, Transform.Position + Transform.Rotation.Up * (nextHeight - currentHeight + SkinSize))
                 .WithCollisionRules("player")
                 .IgnoreGameObject(GameObject)
                 .Run();
 
-            nextHeight = MathF.Min(nextHeight, currentHeight + traceResult.Distance);
+            nextHeight = MathF.Min(nextHeight, currentHeight + Math.Clamp(traceResult.Distance - SkinSize, 0f, nextHeight - currentHeight));
         }
 
         if(nextHeight.AlmostEqual(currentHeight))

@@ -63,6 +63,7 @@
         "RunningSpeed": 290,
         "SkinSize": 1,
         "StandingHeight": 72,
+        "StandingHeightTolerance": 4,
         "WalkingSpeed": 160
       },
       {
