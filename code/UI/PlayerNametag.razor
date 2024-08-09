@@ -1,0 +1,15 @@
+@using Sandbox;
+@using Sandbox.UI;
+
+@namespace Mini.UI
+
+@inherits PanelComponent
+
+<root class="@(Network.IsProxy ? "" : "hidden")">
+	<label class="name">@(Network.OwnerConnection.DisplayName)</label>
+</root>
+
+@code
+{
+	protected override int BuildHash() => System.HashCode.Combine(Network.OwnerConnection);
+}
