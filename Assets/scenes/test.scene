@@ -84,6 +84,7 @@
           "Rotation": "0,0,-0.1305262,0.9914449",
           "Scale": "0.5,0.5,0.5",
           "Enabled": true,
+          "NetworkMode": 1,
           "Components": [
             {
               "__type": "Sandbox.ModelRenderer",
@@ -124,6 +125,7 @@
           "Position": "147.8754,139.5744,39.34081",
           "Scale": "0.5,0.5,0.5",
           "Enabled": true,
+          "NetworkMode": 1,
           "Components": [
             {
               "__type": "Sandbox.ModelRenderer",
@@ -165,6 +167,7 @@
           "Rotation": "0,0,0.1305262,0.9914449",
           "Scale": "0.5,0.5,0.5",
           "Enabled": true,
+          "NetworkMode": 1,
           "Components": [
             {
               "__type": "Sandbox.ModelRenderer",
