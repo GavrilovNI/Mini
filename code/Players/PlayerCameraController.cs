@@ -1,7 +1,7 @@
 ﻿using Sandbox;
 using static Sandbox.Component;
 
-namespace Mini.Player;
+namespace Mini.Players;
 
 public sealed class PlayerCameraController : Component, INetworkSpawn
 {

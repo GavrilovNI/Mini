@@ -2,7 +2,7 @@ using Sandbox;
 using Sandbox.Citizen;
 using System;
 
-namespace Mini.Player;
+namespace Mini.Players;
 
 public sealed class PlayerMovementController : Component
 {

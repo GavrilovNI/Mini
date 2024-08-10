@@ -2,7 +2,7 @@
 using System.Linq;
 using static Sandbox.Component;
 
-namespace Mini.Player;
+namespace Mini.Players;
 
 public sealed class PlayerDresser : Component, INetworkSpawn
 {

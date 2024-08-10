@@ -19,8 +19,8 @@
         "UseCollisionRules": true
       },
       {
-        "__type": "Mini.Player.PlayerMovementController",
-        "__guid": "7f4b31d5-cb9b-4558-8857-52bb6b86a59a",
+        "__type": "Mini.Players.PlayerMovementController",
+        "__guid": "dc676966-7e38-4490-9196-c2f37449f2f1",
         "AirFriction": 0.1,
         "AnimationHelper": {
           "_type": "component",
@@ -67,8 +67,8 @@
         "WalkingSpeed": 160
       },
       {
-        "__type": "Mini.Player.PlayerCameraController",
-        "__guid": "4bae60fb-890e-45d9-957c-5a4dd57dbba4",
+        "__type": "Mini.Players.PlayerCameraController",
+        "__guid": "ab040d9e-ef3e-48b1-88a2-e569453b791d",
         "BackingDistance": 100,
         "Camera": {
           "_type": "gameobject",
@@ -131,8 +131,8 @@
             }
           },
           {
-            "__type": "Mini.Player.PlayerDresser",
-            "__guid": "4237f238-08af-4aa3-8daf-b0e3c0b83752",
+            "__type": "Mini.Players.PlayerDresser",
+            "__guid": "1cd58630-8644-4691-a439-3d9b5395019b",
             "Model": {
               "_type": "component",
               "component_id": "6475ac87-1a43-446f-bc5d-02675f94eaf9",
