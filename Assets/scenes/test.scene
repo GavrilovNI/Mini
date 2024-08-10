@@ -310,28 +310,6 @@
       ]
     },
     {
-      "__guid": "2b911775-18d6-4b0b-bf64-3959364f4210",
-      "Flags": 0,
-      "Name": "Network",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "Sandbox.NetworkHelper",
-          "__guid": "40923725-bd96-4488-b5b1-7ac539fb6106",
-          "PlayerPrefab": {
-            "_type": "gameobject",
-            "prefab": "prefabs/player.prefab"
-          },
-          "SpawnPoints": [],
-          "StartServer": false
-        },
-        {
-          "__type": "Mini.Networking.NetworkAutoJoiner",
-          "__guid": "ba65dc30-3b13-453d-82a0-668cac82e183"
-        }
-      ]
-    },
-    {
       "__guid": "694d37f0-cd74-4adb-b43a-d3493522aacd",
       "Flags": 0,
       "Name": "Camera",
@@ -358,6 +336,14 @@
           "ZNear": 10
         }
       ]
+    },
+    {
+      "__guid": "419167c9-b98c-47ca-b7e4-b4c2eee29277",
+      "Flags": 0,
+      "Name": "Network",
+      "Enabled": true,
+      "__Prefab": "prefabs/network.prefab",
+      "__PrefabVariables": {}
     }
   ],
   "SceneProperties": {

@@ -1,0 +1,32 @@
+{
+  "RootObject": {
+    "__guid": "2b911775-18d6-4b0b-bf64-3959364f4210",
+    "Flags": 0,
+    "Name": "network",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.NetworkHelper",
+        "__guid": "40923725-bd96-4488-b5b1-7ac539fb6106",
+        "PlayerPrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/player.prefab"
+        },
+        "SpawnPoints": [],
+        "StartServer": false
+      },
+      {
+        "__type": "Mini.Networking.NetworkAutoJoiner",
+        "__guid": "ba65dc30-3b13-453d-82a0-668cac82e183"
+      }
+    ],
+    "Children": [],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
