@@ -17,6 +17,9 @@ public sealed class FallingBlocksGame : MiniGame
     public GameObject PlayersParent { get; set; } = null!;
 
     [Property]
+    public float MaxGameTime { get; set; } = 120f;
+
+    [Property]
     public Vector2Int Size { get; set; } = 8;
 
     [Property]
@@ -113,6 +116,12 @@ public sealed class FallingBlocksGame : MiniGame
     {
         if(IsProxy || Status != GameStatus.Started)
             return;
+
+        if(TimeSinceStatusChanged >= MaxGameTime)
+        {
+            Stop();
+            return;
+        }
 
         UpdateNotGroundedBlocks();
 
