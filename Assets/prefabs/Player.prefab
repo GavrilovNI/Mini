@@ -497,7 +497,7 @@
                                         "__guid": "98a8e0bc-2b0a-446c-8ed9-bc8483c49ace",
                                         "Flags": 4,
                                         "Name": "arm_elbow_helper_L",
-                                        "Position": "-0.000004768372,0.000002861023,-0.00006103516",
+                                        "Position": "0,0,0",
                                         "Rotation": "0.0000003075731,0.000000002854507,-0.7577645,0.6525282",
                                         "Enabled": true
                                       }
@@ -731,7 +731,7 @@
                                             "__guid": "19d03fdd-3068-49ed-8049-1502d468b77e",
                                             "Flags": 4,
                                             "Name": "arm_elbow_helper_R",
-                                            "Position": "-0.00000667572,0.00003147125,-0.00005340576",
+                                            "Position": "0,0,0",
                                             "Rotation": "0.0000007692941,-0.0000002412072,-0.7577677,0.6525243",
                                             "Enabled": true
                                           }
@@ -823,7 +823,7 @@
                         "__guid": "21c7c52a-4e6e-4ca7-a52f-b6e7d392002c",
                         "Flags": 4,
                         "Name": "leg_knee_helper_R",
-                        "Position": "0.000001907349,0.000004768372,-0.000009536743",
+                        "Position": "0,0,0",
                         "Rotation": "0.000000905889,-0.000001318489,0.7135269,0.7006279",
                         "Enabled": true
                       }
@@ -840,7 +840,7 @@
                     "__guid": "807ee922-86e7-45b1-8b88-f6404b54138f",
                     "Flags": 4,
                     "Name": "leg_upper_R_twist0",
-                    "Position": "0.000007629395,0.000005960464,-0.00001716614",
+                    "Position": "0,0,0",
                     "Rotation": "-0.00000008940732,-0.000000029802,0.000003069638,1",
                     "Enabled": true
                   },
@@ -848,7 +848,7 @@
                     "__guid": "e9ebca5d-cfab-4756-b0c9-e540a54a41b3",
                     "Flags": 4,
                     "Name": "leg_glute_helper_R",
-                    "Position": "-0.000007629395,0,-0.000007629395",
+                    "Position": "0,0,0",
                     "Rotation": "-0.000001221895,-0.0000006515999,-0.7071052,0.7071083",
                     "Enabled": true
                   }
@@ -906,7 +906,7 @@
                         "__guid": "5bfd7057-a5ce-49b6-bceb-878b7c110997",
                         "Flags": 4,
                         "Name": "leg_knee_helper_L",
-                        "Position": "-0.00001525879,0.000001847744,-0.000009536743",
+                        "Position": "0,0,0",
                         "Rotation": "-0.000002973302,-0.000001705918,0.7135277,0.7006271",
                         "Enabled": true
                       }
@@ -930,7 +930,7 @@
                     "__guid": "874bf41c-a8f7-482d-8450-e5ad14cbd7fc",
                     "Flags": 4,
                     "Name": "leg_glute_helper_L",
-                    "Position": "-0.000005722046,0.000001907349,-0.000003814697",
+                    "Position": "0,0,0",
                     "Rotation": "-0.000001102686,-0.0000007682514,-0.7071056,0.707108",
                     "Enabled": true
                   }
@@ -1045,8 +1045,16 @@
                     "ZNear": 5
                   },
                   {
-                    "__type": "Mini.Networking.ProxyDisabled",
-                    "__guid": "0621946d-5a42-4f5a-9e5c-5d1965de8eb6"
+                    "__type": "Mini.Networking.ProxyDisabler",
+                    "__guid": "58edb145-092f-4c18-a172-d8a183de3dc8",
+                    "ComponentsToDisable": [
+                      {
+                        "_type": "component",
+                        "component_id": "397a05a5-3c96-4210-be0a-274596375337",
+                        "go": "9112b5fd-8419-44c6-a841-7ad413a12390",
+                        "component_type": "CameraComponent"
+                      }
+                    ]
                   }
                 ]
               }
