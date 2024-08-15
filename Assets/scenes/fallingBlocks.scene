@@ -214,6 +214,7 @@
           "Position": "0,0,1200",
           "Rotation": "1,0,0,-0.00000004371139",
           "Scale": "12,12,1",
+          "Tags": "playerclip",
           "Enabled": true,
           "Components": [
             {
