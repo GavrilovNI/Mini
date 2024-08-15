@@ -6,6 +6,8 @@ namespace Mini.Players;
 
 public sealed class Player : Component, IDamageable, IHealthProvider
 {
+    public event Action<Player>? Died;
+
     [Sync, HostSync]
     [Property]
     public float Health { get; private set; } = 100f;
@@ -24,13 +26,10 @@ public sealed class Player : Component, IDamageable, IHealthProvider
         if(damage < 0)
             throw new ArgumentOutOfRangeException(nameof(damage), damage, "Damage is negative.");
 
-        if(IsProxy)
-            return;
-
         Health -= damage;
 
         if(Health <= 0)
-            OnKilled();
+            OnDied();
     }
 
     [Broadcast(NetPermission.HostOnly)]
@@ -45,14 +44,15 @@ public sealed class Player : Component, IDamageable, IHealthProvider
         Health += health;
     }
 
-    private void OnKilled()
+    [Broadcast(NetPermission.HostOnly)]
+    private void OnDied()
     {
         if(Health > 0)
             throw new InvalidOperationException("Health os positive.");
 
-        if(IsProxy)
-            return;
+        Died?.Invoke(this);
 
-        GameObject.Destroy();
+        if(!IsProxy)
+            GameObject.Destroy();
     }
 }
