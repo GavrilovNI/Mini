@@ -140,13 +140,15 @@ public sealed class FallingBlocksGame : MiniGame
         _nextSpawnPointIndex = (_nextSpawnPointIndex + 1) % _spawnPoints.Count;
 
         var startLocation = spawnPoint.Transform.World.WithScale(1f);
-        var playerGameObject = PlayerPrefab.Clone(startLocation, null, name: $"Player - {connection.DisplayName}");
+        var playerGameObject = PlayerPrefab.Clone(startLocation, null, false, $"Player - {connection.DisplayName}");
+        playerGameObject.SetParent(PlayersParent);
 
-        var player = playerGameObject.Components.Get<Player>();
+        var player = playerGameObject.Components.Get<Player>(true);
         if(!player.IsValid())
             throw new ComponentNotFoundException(playerGameObject, typeof(Player));
 
         _players.Add(player);
+        playerGameObject.Enabled = true;
 
         playerGameObject.NetworkMode = NetworkMode.Object;
         playerGameObject.NetworkSpawn(connection);

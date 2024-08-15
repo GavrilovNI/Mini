@@ -1,0 +1,88 @@
+{
+  "__guid": "7d0327bf-fd23-448e-b32d-d4d130aab92e",
+  "GameObjects": [
+    {
+      "__guid": "2ce6b6a4-d99a-4f72-9ddf-83456ce60c8d",
+      "Flags": 0,
+      "Name": "Main Camera",
+      "Position": "-300,0,100",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.CameraComponent",
+          "__guid": "7638b23c-0ae1-41d7-9cf3-785d5043c8bd",
+          "BackgroundColor": "0.33333,0.46275,0.52157,1",
+          "ClearFlags": "All",
+          "FieldOfView": 60,
+          "IsMainCamera": false,
+          "Orthographic": false,
+          "OrthographicHeight": 1204,
+          "Priority": 1,
+          "RenderExcludeTags": "",
+          "RenderTags": "",
+          "TargetEye": "None",
+          "Viewport": "0,0,1,1",
+          "ZFar": 10000,
+          "ZNear": 10
+        }
+      ]
+    },
+    {
+      "__guid": "fb244dd1-43e3-4465-bd8c-5d91e80c8526",
+      "Flags": 0,
+      "Name": "Network",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Mini.Networking.NetworkAutoJoiner",
+          "__guid": "5facf98f-219d-4f06-9bd0-037487a4a7bd"
+        }
+      ]
+    },
+    {
+      "__guid": "e8454cb1-58b1-4856-b496-7d755f874765",
+      "Flags": 0,
+      "Name": "GamesLauncher",
+      "Position": "65.23445,65.23447,-92.25546",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Mini.GamesLauncher",
+          "__guid": "8e2186f5-c6a5-40b1-9c0a-34d4e7a6a670",
+          "TestGamePrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/games/fallingblocksgame.prefab"
+          },
+          "TimeAfterEnd": 15,
+          "TimeBeforeStart": 2
+        }
+      ]
+    }
+  ],
+  "SceneProperties": {
+    "FixedUpdateFrequency": 50,
+    "MaxFixedUpdates": 5,
+    "NetworkFrequency": 30,
+    "NetworkInterpolation": true,
+    "ThreadedAnimation": true,
+    "TimeScale": 1,
+    "UseFixedUpdate": true,
+    "NavMesh": {
+      "Enabled": false,
+      "IncludeStaticBodies": true,
+      "IncludeKeyframedBodies": true,
+      "EditorAutoUpdate": true,
+      "AgentHeight": 64,
+      "AgentRadius": 16,
+      "AgentStepSize": 18,
+      "AgentMaxSlope": 40,
+      "ExcludedBodies": "",
+      "IncludedBodies": ""
+    }
+  },
+  "Title": "fallingblocks",
+  "Description": "",
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
