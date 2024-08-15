@@ -36,6 +36,7 @@ public sealed class FallingBlock : Component
 
         var traceResults = Scene.Trace.Box(Collider.Scale * Transform.Scale, Transform.Position, Transform.Position + Vector3.Down * travelDistance)
             .IgnoreGameObjectHierarchy(GameObject)
+            .WithCollisionRules(string.Empty)
             .RunAll();
 
         var others = traceResults.Where(t => t.GameObject.Components.Get<IDamageable>() is null);
