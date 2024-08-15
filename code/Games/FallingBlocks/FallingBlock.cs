@@ -40,9 +40,6 @@ public sealed class FallingBlock : Component
 
         var others = traceResults.Where(t => t.GameObject.Components.Get<IDamageable>() is null);
 
-        foreach(var traceResult in traceResults)
-            Log.Info(traceResult.GameObject);
-
         if(others.Any())
         {
             travelDistance = others.Max(t => t.Distance);
