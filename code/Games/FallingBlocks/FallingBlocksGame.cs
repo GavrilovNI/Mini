@@ -47,6 +47,9 @@ public sealed class FallingBlocksGame : MiniGame
     [Property]
     public List<Color> BlockColors { get; set; } = new();
 
+    public override IEnumerable<GameObject> PlayingPlayers => _players.Select(p => p.GameObject);
+    public override int PlayingPlayersCount => _players.Count;
+
 
     private readonly Dictionary<Vector2Int, int> _groundedBlocksCount = new();
     private readonly Dictionary<Vector2Int, FallingBlock> _notGroundedBlocks = new();
@@ -87,6 +90,13 @@ public sealed class FallingBlocksGame : MiniGame
 
         if(Status == GameStatus.SetUp)
             SpawnPlayer(connection);
+    }
+
+    public override void OnDisconnected(Connection connection)
+    {
+        var player = _players.FirstOrDefault(p => p.Network.OwnerConnection == connection, null);
+        if(player is not null)
+            OnPlayerDied(player);
     }
 
     protected override void OnGameStart()
@@ -148,10 +158,25 @@ public sealed class FallingBlocksGame : MiniGame
             throw new ComponentNotFoundException(playerGameObject, typeof(Player));
 
         _players.Add(player);
+        player.Died += OnPlayerDied;
+
         playerGameObject.Enabled = true;
 
         playerGameObject.NetworkMode = NetworkMode.Object;
         playerGameObject.NetworkSpawn(connection);
+    }
+
+    private void OnPlayerDied(Player player)
+    {
+        if(IsProxy)
+            return;
+
+        player.Died -= OnPlayerDied;
+        player.GameObject.Destroy();
+        _players.Remove(player);
+
+        if(Status == GameStatus.Started && _players.Count <= 1)
+            Stop();
     }
 
     private void UpdateNotGroundedBlocks()
