@@ -1,5 +1,6 @@
 ﻿using Sandbox;
 using System;
+using System.Collections.Generic;
 
 namespace Mini.Games;
 
@@ -8,8 +9,8 @@ public abstract class MiniGame : Component, Component.INetworkListener
     public GameStatus Status { get; private set; } = GameStatus.Created;
     public TimeSince TimeSinceStatusChanged { get; private set; }
 
-    [Property]
-    public float MaxGameTime { get; set; } = 120f;
+    public abstract IEnumerable<GameObject> PlayingPlayers { get; }
+    public abstract int PlayingPlayersCount { get; }
 
     [Button("Setup")]
     public void Setup()
