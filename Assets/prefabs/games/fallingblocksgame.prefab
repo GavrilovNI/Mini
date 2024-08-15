@@ -100,6 +100,14 @@
                 "Model": "models/dev/plane.vmdl",
                 "RenderType": "On",
                 "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.PlaneCollider",
+                "__guid": "6f2fd03c-9488-4949-b096-139328e2b480",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "100,100",
+                "Static": true
               }
             ]
           },
@@ -119,6 +127,14 @@
                 "Model": "models/dev/plane.vmdl",
                 "RenderType": "On",
                 "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.PlaneCollider",
+                "__guid": "8c1a5f6a-ea98-488f-af6b-6a1308e02764",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "100,100",
+                "Static": true
               }
             ]
           },
@@ -138,6 +154,14 @@
                 "Model": "models/dev/plane.vmdl",
                 "RenderType": "On",
                 "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.PlaneCollider",
+                "__guid": "b94839d3-733a-40dc-98a7-c61851255620",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "100,100",
+                "Static": true
               }
             ]
           },
@@ -157,6 +181,14 @@
                 "Model": "models/dev/plane.vmdl",
                 "RenderType": "On",
                 "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.PlaneCollider",
+                "__guid": "c66829ca-b6d8-41a7-8978-8b2b0bc2c357",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "100,100",
+                "Static": true
               }
             ]
           },
