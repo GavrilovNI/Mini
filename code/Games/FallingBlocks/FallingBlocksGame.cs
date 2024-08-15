@@ -1,4 +1,6 @@
-﻿using Sandbox;
+﻿using Mini.Exceptions;
+using Mini.Players;
+using Sandbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,11 @@ namespace Mini.Games.FallingBlocks;
 public sealed class FallingBlocksGame : MiniGame
 {
     public readonly Vector3 BlockModelSize = 50f;
+
+    [Property]
+    public GameObject PlayerPrefab { get; set; } = null!;
+    [Property]
+    public GameObject PlayersParent { get; set; } = null!;
 
     [Property]
     public Vector2Int Size { get; set; } = 8;
@@ -45,6 +52,10 @@ public sealed class FallingBlocksGame : MiniGame
 
     private Vector2Int[] _indices = null!;
 
+    private List<SpawnPoint> _spawnPoints = null!;
+    private int _nextSpawnPointIndex = 0;
+
+    private readonly List<Player> _players = new();
 
     protected override void OnValidate()
     {
@@ -52,6 +63,27 @@ public sealed class FallingBlocksGame : MiniGame
             Size = Size.WithX(1);
         if(Size.y < 1)
             Size = Size.WithY(1);
+    }
+
+    protected override void OnStart()
+    {
+        _spawnPoints = GameObject.Components.GetAll<SpawnPoint>(FindMode.EverythingInSelfAndDescendants)
+            .OrderBy(x => Guid.NewGuid()).ToList();
+    }
+
+    protected override void OnGameSetup()
+    {
+        foreach(var connection in Connection.All)
+            SpawnPlayer(connection);
+    }
+
+    public override void OnConnected(Connection connection)
+    {
+        if(IsProxy)
+            return;
+
+        if(Status == GameStatus.SetUp)
+            SpawnPlayer(connection);
     }
 
     protected override void OnGameStart()
@@ -91,6 +123,24 @@ public sealed class FallingBlocksGame : MiniGame
 
         _timeSinceBlockSpawned -= (1f / SpawningSpeed) * blocksToSpawn;
         SpawnRandomBlocks(blocksToSpawn);
+    }
+
+    private void SpawnPlayer(Connection connection)
+    {
+        var spawnPoint = _spawnPoints[_nextSpawnPointIndex];
+        _nextSpawnPointIndex = (_nextSpawnPointIndex + 1) % _spawnPoints.Count;
+
+        var startLocation = spawnPoint.Transform.World.WithScale(1f);
+        var playerGameObject = PlayerPrefab.Clone(startLocation, null, name: $"Player - {connection.DisplayName}");
+
+        var player = playerGameObject.Components.Get<Player>();
+        if(!player.IsValid())
+            throw new ComponentNotFoundException(playerGameObject, typeof(Player));
+
+        _players.Add(player);
+
+        playerGameObject.NetworkMode = NetworkMode.Object;
+        playerGameObject.NetworkSpawn(connection);
     }
 
     private void UpdateNotGroundedBlocks()

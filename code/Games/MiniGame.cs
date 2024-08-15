@@ -3,14 +3,13 @@ using System;
 
 namespace Mini.Games;
 
-public abstract class MiniGame : Component
+public abstract class MiniGame : Component, Component.INetworkListener
 {
     public GameStatus Status { get; private set; } = GameStatus.Created;
     public TimeSince TimeSinceStatusChanged { get; private set; }
 
     [Property]
     public float MaxGameTime { get; set; } = 120f;
-
 
     [Button("Setup")]
     public void Setup()
@@ -53,6 +52,9 @@ public abstract class MiniGame : Component
         Status = GameStatus.Stopped;
         TimeSinceStatusChanged = 0;
     }
+
+    public virtual void OnConnected(Connection connection) { }
+    public void OnDisconnected(Connection connection) { }
 
     protected virtual void OnGameSetup() { }
     protected virtual void OnGameStart() { }
