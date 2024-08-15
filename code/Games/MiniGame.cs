@@ -54,7 +54,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
     }
 
     public virtual void OnConnected(Connection connection) { }
-    public void OnDisconnected(Connection connection) { }
+    public virtual void OnDisconnected(Connection connection) { }
 
     protected virtual void OnGameSetup() { }
     protected virtual void OnGameStart() { }
