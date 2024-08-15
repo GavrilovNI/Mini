@@ -10,7 +10,17 @@ public sealed class FallingBlock : Component
     public BoxCollider Collider { get; set; } = null!;
 
     [Property]
+    [RequireComponent]
+    public ModelRenderer Model { get; set; } = null!;
+
+    [Property]
     public float Speed { get; set; } = 10f;
+
+    public Color Color
+    {
+        get => Model.Tint;
+        set => Model.Tint = value;
+    }
 
     public bool Grounded { get; private set; } = false;
 
