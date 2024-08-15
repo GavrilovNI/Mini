@@ -27,12 +27,12 @@ public sealed class FallingBlocksGame : MiniGame
     [Property]
     public Curve SpawningSpeedCurve { get; set; }
 
-    public float SpawningSpeed => SpawningSpeedCurve.Evaluate(TimeSinceStart / DifficultyIncreaseTime);
+    public float SpawningSpeed => SpawningSpeedCurve.Evaluate(TimeSinceStatusChanged / DifficultyIncreaseTime);
 
     [Property]
     public Curve BlocksSpeedCurve { get; set; }
 
-    public float BlocksSpeed => BlocksSpeedCurve.Evaluate(TimeSinceStart / DifficultyIncreaseTime);
+    public float BlocksSpeed => BlocksSpeedCurve.Evaluate(TimeSinceStatusChanged / DifficultyIncreaseTime);
 
     [Property]
     public List<Color> BlockColors { get; set; } = new();

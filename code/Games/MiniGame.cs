@@ -1,12 +1,30 @@
 ﻿using Sandbox;
+using System;
 
 namespace Mini.Games;
 
 public abstract class MiniGame : Component
 {
     public GameStatus Status { get; private set; } = GameStatus.Created;
-    public TimeSince TimeSinceStart { get; private set; }
+    public TimeSince TimeSinceStatusChanged { get; private set; }
 
+    [Property]
+    public float MaxGameTime { get; set; } = 120f;
+
+
+    [Button("Setup")]
+    public void Setup()
+    {
+        if(IsProxy)
+            return;
+
+        if(Status != GameStatus.Created)
+            throw new InvalidOperationException("Incorrect game status.");
+
+        OnGameSetup();
+        Status = GameStatus.SetUp;
+        TimeSinceStatusChanged = 0;
+    }
 
     [Button("Start")]
     public void Start()
@@ -14,9 +32,12 @@ public abstract class MiniGame : Component
         if(IsProxy)
             return;
 
+        if(Status != GameStatus.SetUp)
+            throw new InvalidOperationException("Incorrect game status.");
+
         OnGameStart();
-        TimeSinceStart = 0;
         Status = GameStatus.Started;
+        TimeSinceStatusChanged = 0;
     }
 
     [Button("Stop")]
@@ -25,10 +46,15 @@ public abstract class MiniGame : Component
         if(IsProxy)
             return;
 
+        if(Status != GameStatus.Started)
+            throw new InvalidOperationException("Incorrect game status.");
+
         OnGameStop();
         Status = GameStatus.Stopped;
+        TimeSinceStatusChanged = 0;
     }
 
+    protected virtual void OnGameSetup() { }
     protected virtual void OnGameStart() { }
     protected virtual void OnGameStop() { }
 }
