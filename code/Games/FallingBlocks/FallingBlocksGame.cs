@@ -70,6 +70,13 @@ public sealed class FallingBlocksGame : MiniGame
         _timeSinceBlockSpawned = 0;
     }
 
+    protected override void OnGameStop()
+    {
+        foreach(var (_, block) in _notGroundedBlocks)
+            block.GameObject.Destroy();
+        _notGroundedBlocks.Clear();
+    }
+
     protected override void OnUpdate()
     {
         if(IsProxy || Status != GameStatus.Started)
