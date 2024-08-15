@@ -1,6 +1,4 @@
-﻿using Mini.Exceptions;
-using Mini.Players;
-using Sandbox;
+﻿using Sandbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,14 +8,6 @@ namespace Mini.Games.FallingBlocks;
 public sealed class FallingBlocksGame : MiniGame
 {
     public readonly Vector3 BlockModelSize = 50f;
-
-    [Property]
-    public GameObject PlayerPrefab { get; set; } = null!;
-    [Property]
-    public GameObject PlayersParent { get; set; } = null!;
-
-    [Property]
-    public float MaxGameTime { get; set; } = 120f;
 
     [Property]
     public Vector2Int Size { get; set; } = 8;
@@ -47,9 +37,6 @@ public sealed class FallingBlocksGame : MiniGame
     [Property]
     public List<Color> BlockColors { get; set; } = new();
 
-    public override IEnumerable<GameObject> PlayingPlayers => _players.Select(p => p.GameObject);
-    public override int PlayingPlayersCount => _players.Count;
-
 
     private readonly Dictionary<Vector2Int, int> _groundedBlocksCount = new();
     private readonly Dictionary<Vector2Int, FallingBlock> _notGroundedBlocks = new();
@@ -58,46 +45,7 @@ public sealed class FallingBlocksGame : MiniGame
 
     private Vector2Int[] _indices = null!;
 
-    private List<SpawnPoint> _spawnPoints = null!;
-    private int _nextSpawnPointIndex = 0;
 
-    private readonly List<Player> _players = new();
-
-    protected override void OnValidate()
-    {
-        if(Size.x < 1)
-            Size = Size.WithX(1);
-        if(Size.y < 1)
-            Size = Size.WithY(1);
-    }
-
-    protected override void OnAwake()
-    {
-        _spawnPoints = GameObject.Components.GetAll<SpawnPoint>(FindMode.EverythingInSelfAndDescendants)
-            .OrderBy(x => Guid.NewGuid()).ToList();
-    }
-
-    protected override void OnGameSetup()
-    {
-        foreach(var connection in Connection.All)
-            SpawnPlayer(connection);
-    }
-
-    public override void OnConnected(Connection connection)
-    {
-        if(IsProxy)
-            return;
-
-        if(Status == GameStatus.SetUp)
-            SpawnPlayer(connection);
-    }
-
-    public override void OnDisconnected(Connection connection)
-    {
-        var player = _players.FirstOrDefault(p => p.Network.OwnerConnection == connection, null);
-        if(player is not null)
-            OnPlayerDied(player);
-    }
 
     protected override void OnGameStart()
     {
@@ -122,16 +70,21 @@ public sealed class FallingBlocksGame : MiniGame
         _notGroundedBlocks.Clear();
     }
 
+
+
+    protected override void OnValidate()
+    {
+        if(Size.x < 1)
+            Size = Size.WithX(1);
+        if(Size.y < 1)
+            Size = Size.WithY(1);
+    }
     protected override void OnUpdate()
     {
+        base.OnUpdate();
+
         if(IsProxy || Status != GameStatus.Started)
             return;
-
-        if(TimeSinceStatusChanged >= MaxGameTime)
-        {
-            Stop();
-            return;
-        }
 
         UpdateNotGroundedBlocks();
 
@@ -144,40 +97,7 @@ public sealed class FallingBlocksGame : MiniGame
         SpawnRandomBlocks(blocksToSpawn);
     }
 
-    private void SpawnPlayer(Connection connection)
-    {
-        var spawnPoint = _spawnPoints[_nextSpawnPointIndex];
-        _nextSpawnPointIndex = (_nextSpawnPointIndex + 1) % _spawnPoints.Count;
 
-        var startLocation = spawnPoint.Transform.World.WithScale(1f);
-        var playerGameObject = PlayerPrefab.Clone(startLocation, null, false, $"Player - {connection.DisplayName}");
-        playerGameObject.SetParent(PlayersParent);
-
-        var player = playerGameObject.Components.Get<Player>(true);
-        if(!player.IsValid())
-            throw new ComponentNotFoundException(playerGameObject, typeof(Player));
-
-        _players.Add(player);
-        player.Died += OnPlayerDied;
-
-        playerGameObject.Enabled = true;
-
-        playerGameObject.NetworkMode = NetworkMode.Object;
-        playerGameObject.NetworkSpawn(connection);
-    }
-
-    private void OnPlayerDied(Player player)
-    {
-        if(IsProxy)
-            return;
-
-        player.Died -= OnPlayerDied;
-        player.GameObject.Destroy();
-        _players.Remove(player);
-
-        if(Status == GameStatus.Started && _players.Count <= 1)
-            Stop();
-    }
 
     private void UpdateNotGroundedBlocks()
     {
