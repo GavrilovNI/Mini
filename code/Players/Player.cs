@@ -55,4 +55,10 @@ public sealed class Player : Component, IDamageable, IHealthProvider
         if(!IsProxy)
             GameObject.Destroy();
     }
+
+    [Button("Kill")]
+    public void Kill()
+    {
+        Damage(Health);
+    }
 }
