@@ -65,7 +65,7 @@ public sealed class FallingBlocksGame : MiniGame
             Size = Size.WithY(1);
     }
 
-    protected override void OnStart()
+    protected override void OnAwake()
     {
         _spawnPoints = GameObject.Components.GetAll<SpawnPoint>(FindMode.EverythingInSelfAndDescendants)
             .OrderBy(x => Guid.NewGuid()).ToList();
