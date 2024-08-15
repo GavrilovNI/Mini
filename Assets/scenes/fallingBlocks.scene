@@ -48,37 +48,32 @@
       ]
     },
     {
+      "__guid": "eb4fe78a-50be-4c3a-90e1-cb207aa0e7d1",
+      "Flags": 0,
+      "Name": "Directional Light (1)",
+      "Position": "0,0,1536.608",
+      "Rotation": "-0.1584937,-0.1584936,0.7745191,0.5915062",
+      "Tags": "light_directional,light",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.DirectionalLight",
+          "__guid": "21db8852-ef3f-47a6-bd24-23d31afa0049",
+          "FogMode": "Enabled",
+          "FogStrength": 1,
+          "LightColor": "0.91373,0.98039,1,1",
+          "Shadows": true,
+          "SkyColor": "0,0,0,0"
+        }
+      ]
+    },
+    {
       "__guid": "fb244dd1-43e3-4465-bd8c-5d91e80c8526",
       "Flags": 0,
       "Name": "Network",
       "Enabled": true,
       "__Prefab": "prefabs/network.prefab",
       "__PrefabVariables": {}
-    },
-    {
-      "__guid": "60e58070-ee79-4cfc-8b7b-8eb0c5e5cad0",
-      "Flags": 0,
-      "Name": "Plane",
-      "Scale": "12,12,1",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "6ae1518a-b12d-416f-9903-43eb3cbdce17",
-          "BodyGroups": 18446744073709551615,
-          "Model": "models/dev/plane.vmdl",
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "Sandbox.PlaneCollider",
-          "__guid": "833f23f3-4edb-48fc-9253-975a76f10c60",
-          "Center": "0,0,0",
-          "IsTrigger": false,
-          "Scale": "100,100",
-          "Static": true
-        }
-      ]
     },
     {
       "__guid": "3fd7cde0-66de-4760-990d-a10c77534e72",
@@ -161,64 +156,153 @@
               "Tint": "1,1,1,1"
             }
           ]
+        },
+        {
+          "__guid": "60e58070-ee79-4cfc-8b7b-8eb0c5e5cad0",
+          "Flags": 0,
+          "Name": "Plane",
+          "Scale": "12,12,1",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "Sandbox.ModelRenderer",
+              "__guid": "6ae1518a-b12d-416f-9903-43eb3cbdce17",
+              "BodyGroups": 18446744073709551615,
+              "Model": "models/dev/plane.vmdl",
+              "RenderType": "On",
+              "Tint": "1,1,1,1"
+            },
+            {
+              "__type": "Sandbox.PlaneCollider",
+              "__guid": "833f23f3-4edb-48fc-9253-975a76f10c60",
+              "Center": "0,0,0",
+              "IsTrigger": false,
+              "Scale": "100,100",
+              "Static": true
+            }
+          ]
+        },
+        {
+          "__guid": "7614337b-d9e2-4c2b-9161-c71f4a208d76",
+          "Flags": 0,
+          "Name": "Plane",
+          "Scale": "12,12,1",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "Sandbox.ModelRenderer",
+              "__guid": "5ac5ef94-6cbc-496f-bd71-891e7898e1b0",
+              "BodyGroups": 18446744073709551615,
+              "Model": "models/dev/plane.vmdl",
+              "RenderType": "On",
+              "Tint": "1,1,1,1"
+            },
+            {
+              "__type": "Sandbox.PlaneCollider",
+              "__guid": "f9e2f336-4dec-4c47-8bb1-dc815dc5767c",
+              "Center": "0,0,0",
+              "IsTrigger": false,
+              "Scale": "100,100",
+              "Static": true
+            }
+          ]
+        },
+        {
+          "__guid": "f431201e-dcc6-4337-95dd-6de517c22e0c",
+          "Flags": 0,
+          "Name": "Plane",
+          "Position": "0,0,1200",
+          "Rotation": "1,0,0,-0.00000004371139",
+          "Scale": "12,12,1",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "Sandbox.PlaneCollider",
+              "__guid": "e34a0e2c-dd40-44be-b1ec-6f58fabb5bbf",
+              "Center": "0,0,0",
+              "IsTrigger": false,
+              "Scale": "100,100",
+              "Static": true
+            }
+          ]
         }
       ]
     },
     {
-      "__guid": "db5618c3-4894-494d-ad00-e9f6f7739be3",
+      "__guid": "c900a688-0326-43ba-ac29-2aeb95b6d7d5",
       "Flags": 0,
-      "Name": "FallingBlock",
-      "Position": "0,0,1250",
-      "Scale": "3,3,1",
+      "Name": "FallingBlocks",
+      "Position": "-600,-600,0",
       "Enabled": true,
       "NetworkMode": 1,
       "Components": [
         {
-          "__type": "Sandbox.ModelRenderer",
-          "__guid": "f4d33b0d-ab2e-43c5-9ace-fbeedf271fa4",
-          "BodyGroups": 18446744073709551615,
-          "Model": "models/dev/box.vmdl",
-          "RenderType": "On",
-          "Tint": "1,1,1,1"
-        },
-        {
-          "__type": "Sandbox.BoxCollider",
-          "__guid": "ef32a300-7eeb-4658-8948-b30f487d8268",
-          "Center": "0,0,0",
-          "IsTrigger": false,
-          "Scale": "50,50,50",
-          "Static": false
-        },
-        {
-          "__type": "Mini.Games.FallingBlocks.FallingBlock",
-          "__guid": "9b109abd-e3db-44d6-994e-62091d26190e",
-          "Collider": {
-            "_type": "component",
-            "component_id": "ef32a300-7eeb-4658-8948-b30f487d8268",
-            "go": "db5618c3-4894-494d-ad00-e9f6f7739be3",
-            "component_type": "BoxCollider"
+          "__type": "Mini.Games.FallingBlocks.FallingBlocksGame",
+          "__guid": "78127e67-8ecc-47ca-b6ca-8740f8b9a53c",
+          "DifficultyIncreaseTime": 60,
+          "BlockColors": [
+            "0.68372,0,0,1",
+            "0.76884,0.8093,0,1",
+            "0.05606,0.53023,0.0222,1",
+            "0.01229,0.63886,0.66047,1",
+            "0,0,0.64651,1",
+            "0.69767,0.00649,0.60552,1",
+            "0.85581,0.45643,0,1",
+            "0.48372,0,0.74419,1"
+          ],
+          "BlockSize": "3,3,1",
+          "BlocksSpeedCurve": {
+            "rangey": "100,500",
+            "frames": [
+              {},
+              {
+                "x": 0.23660715,
+                "y": 0.3329463
+              },
+              {
+                "x": 0.5967262,
+                "y": 0.7795936
+              },
+              {
+                "x": 0.82886904,
+                "y": 0.9598781
+              },
+              {
+                "x": 1,
+                "y": 1
+              }
+            ]
           },
-          "Speed": 300
-        }
-      ]
-    },
-    {
-      "__guid": "de40d2aa-57c8-4bf7-a1e4-7be02d81e0d8",
-      "Flags": 0,
-      "Name": "Point Light",
-      "Position": "0,0,1258.725",
-      "Tags": "light_point,light",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "Sandbox.PointLight",
-          "__guid": "9bcbefa2-74aa-4a10-b6f6-87b777d71ef4",
-          "Attenuation": 0.04,
-          "FogMode": "Enabled",
-          "FogStrength": 1,
-          "LightColor": "0.91373,0.98039,1,1",
-          "Radius": 10000,
-          "Shadows": true
+          "FallingBlockPrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/fallingblock.prefab"
+          },
+          "Size": "8,8",
+          "SpawningHeight": 1250,
+          "SpawningSpeedCurve": {
+            "rangey": "0.5,3",
+            "frames": [
+              {},
+              {
+                "x": 0.23809524,
+                "y": 0.07363649,
+                "in": -0.725008,
+                "out": 0.725008
+              },
+              {
+                "x": 0.44642857,
+                "y": 0.24715814
+              },
+              {
+                "x": 0.7217261,
+                "y": 0.64232254
+              },
+              {
+                "x": 1,
+                "y": 1
+              }
+            ]
+          }
         }
       ]
     }
