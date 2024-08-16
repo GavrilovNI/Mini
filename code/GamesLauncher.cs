@@ -19,9 +19,17 @@ public class GamesLauncher : Component
     private GameObject TestGamePrefab { get; set; } = null!;
 
     private const int MinPlayersToPlay = 1;
-    private bool _hasEnoughPlayers = false;
-    private TimeSince _timeSinceEnoughPlayersConnected;
 
+    [Sync]
+    public GameStatus GameStatus { get; private set; }
+
+    [Sync]
+    public TimeUntil TimeUntilGameStatusEnd { get; private set; }
+
+    [Sync]
+    public bool HasEnoughPlayers { get; private set; } = false;
+
+    private TimeSince _timeSinceEnoughPlayersConnected;
 
     [Button("StartTestGame")]
     private void StartTestGame() => StartGame(TestGamePrefab);
@@ -49,29 +57,23 @@ public class GamesLauncher : Component
 
     protected override void OnUpdate()
     {
+        UpdateGameStartRequirements();
+
         if(!CurrentGame.IsValid())
+        {
+            GameStatus = GameStatus.None;
             return;
-
-        if(CurrentGame.Status == GameStatus.SetUp)
-        {
-            var hasEnoughPlayers = CurrentGame.PlayingPlayersCount >= MinPlayersToPlay;
-            if(hasEnoughPlayers && !_hasEnoughPlayers)
-                _timeSinceEnoughPlayersConnected = 0;
-            _hasEnoughPlayers = hasEnoughPlayers;
-
-            if(CurrentGame.TimeSinceStatusChanged >= TimeBeforeStart &&
-                _hasEnoughPlayers &&
-                _timeSinceEnoughPlayersConnected >= TimeBeforeStart
-                )
-            {
-                CurrentGame.Start();
-            }
         }
-        else if(CurrentGame.Status == GameStatus.Stopped)
+
+        GameStatus = CurrentGame.Status;
+
+        if(!HasEnoughPlayers)
         {
-            if(CurrentGame.TimeSinceStatusChanged >= TimeAfterEnd)
-                ResetGame();
+            ResetGame();
+            return;
         }
+
+        UpdateGameLifetime();
     }
 
     [Button("Reset")]
@@ -85,5 +87,41 @@ public class GamesLauncher : Component
 
         CurrentGame.GameObject.Destroy();
         CurrentGame = null;
+    }
+
+    private void UpdateGameStartRequirements()
+    {
+        bool hasEnoughPlayers;
+        if(CurrentGame.IsValid())
+            hasEnoughPlayers = CurrentGame.PlayingPlayersCount >= MinPlayersToPlay;
+        else
+            hasEnoughPlayers = Connection.All.Count >= MinPlayersToPlay;
+
+        if(hasEnoughPlayers && !HasEnoughPlayers)
+            _timeSinceEnoughPlayersConnected = 0;
+        HasEnoughPlayers = hasEnoughPlayers;
+    }
+
+    private void UpdateGameLifetime()
+    {
+        if(CurrentGame!.Status == GameStatus.SetUp && HasEnoughPlayers)
+        {
+            var timeSinceStartRequirementsMet = Math.Min(_timeSinceEnoughPlayersConnected, _timeSinceEnoughPlayersConnected);
+            TimeUntilGameStatusEnd = TimeBeforeStart - timeSinceStartRequirementsMet;
+
+            if(TimeUntilGameStatusEnd <= 0)
+                CurrentGame.Start();
+        }
+        else if(CurrentGame.Status == GameStatus.Started)
+        {
+            TimeUntilGameStatusEnd = CurrentGame.MaxGameTime - CurrentGame.TimeSinceStatusChanged;
+        }
+        else if(CurrentGame.Status == GameStatus.Stopped)
+        {
+            TimeUntilGameStatusEnd = TimeAfterEnd - CurrentGame.TimeSinceStatusChanged;
+
+            if(CurrentGame.TimeSinceStatusChanged >= TimeAfterEnd)
+                ResetGame();
+        }
     }
 }
