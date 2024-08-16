@@ -13,10 +13,11 @@ public class GamesLoader : Component
     public const string GamePrefabFileName = "game.prefab";
     public const string GameIconFileName = "icon.png";
 
-    private readonly Dictionary<string, (GameInfo GameInfo, string Path)> _games = new();
+    [Sync]
+    private NetDictionary<string, LoadedGameInfo> NetGames { get; set; } = new();
 
-    public IEnumerable<KeyValuePair<string, (GameInfo GameInfo, string Path)>> Games => _games;
-    public int GamesCount => _games.Count;
+    public IEnumerable<LoadedGameInfo> Games => NetGames.Values;
+    public int GamesCount => NetGames.Count;
 
     protected override void OnStart()
     {
@@ -25,7 +26,6 @@ public class GamesLoader : Component
 
         LoadGames("games");
     }
-
 
     [Button("Load Games")]
     public void LoadGamesBtn() => LoadGames("games");
@@ -40,11 +40,11 @@ public class GamesLoader : Component
         int loadedGamesCount = 0;
         foreach (var directory in directories)
         {
-            var gameIdentity = directory.ToLower();
-            if(loadedIdentities.Contains(gameIdentity))
+            var gameId = directory.ToLower();
+            if(loadedIdentities.Contains(gameId))
                 continue;
 
-            var gameFileSystem = fileSystem.CreateSubSystem(gameIdentity);
+            var gameFileSystem = fileSystem.CreateSubSystem(gameId);
             var gameIsValid = gameFileSystem.FileExists(GameInfoFileName) && gameFileSystem.FileExists(GamePrefabFileName);
 
             if(!gameIsValid)
@@ -63,21 +63,26 @@ public class GamesLoader : Component
                 continue;
             }
 
-            _games[gameIdentity] = (gameInfo, Path.Combine(path, gameIdentity));
+            NetGames[gameId] = new LoadedGameInfo()
+            {
+                GameId = gameId,
+                GameInfo = gameInfo,
+                Path = Path.Combine(path, gameId)
+            };
             loadedGamesCount++;
 
-            loadedIdentities.Add(gameIdentity);
+            loadedIdentities.Add(gameId);
         }
 
         Log.Info($"Loaded {loadedGamesCount} games.");
     }
 
     [Button("Clear")]
-    public void Clear() => _games.Clear();
+    public void Clear() => NetGames.Clear();
 
     public GameObject CloneGamePrefab(string gameId, CloneConfig cloneConfig)
     {
-        if(!_games.TryGetValue(gameId, out var gameData))
+        if(!NetGames.TryGetValue(gameId, out var gameData))
             throw new InvalidOperationException($"Game {gameId} wasn't loaded.");
 
         return PrefabScene.Clone(Path.Combine(gameData.Path, GamePrefabFileName), cloneConfig);
@@ -85,7 +90,7 @@ public class GamesLoader : Component
 
     public GameInfo GetGameInfo(string gameId)
     {
-        if(!_games.TryGetValue(gameId, out var gameData))
+        if(!NetGames.TryGetValue(gameId, out var gameData))
             throw new InvalidOperationException($"Game {gameId} wasn't loaded.");
 
         return gameData.GameInfo;
