@@ -74,6 +74,7 @@ public class GamesLauncher : Component
         }
     }
 
+    [Button("Reset")]
     private void ResetGame()
     {
         if(CurrentGame is null)
