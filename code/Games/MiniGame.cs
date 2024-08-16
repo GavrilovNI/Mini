@@ -168,4 +168,6 @@ public abstract class MiniGame : Component, Component.INetworkListener
     }
     protected virtual void OnGameStart() { }
     protected virtual void OnGameStop() { }
+
+    public abstract ISet<ulong> GetWinners();
 }

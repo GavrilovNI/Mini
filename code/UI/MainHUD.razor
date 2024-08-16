@@ -1,4 +1,5 @@
 @using System;
+@using System.Linq;
 @using Sandbox;
 @using Sandbox.UI;
 @using Mini.Games;
@@ -31,7 +32,11 @@
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.Stopped)
 	{
-		<label class="winners">Winners are ...</label>
+		var winners = GamesLauncher.CurrentGame.GetWinners()
+			.Select(steamId => Connection.All.FirstOrDefault(c => c.SteamId == steamId, null)?.DisplayName)
+			.Where(name => name is not null);
+
+		<label class="winners">Winners are @string.Join(", ", winners)</label>
 		<label class="title">Choosing game in @timeUntilGameStatusEnd.CeilToInt()</label>
 	}
 </root>
