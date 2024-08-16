@@ -15,24 +15,24 @@
 	
 	@if(!GamesLauncher.HasEnoughPlayers)
 	{
-		<div class="title">Waiting Players</div>
+		<label class="title">Waiting Players</label>
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.None)
 	{
-		<div class="title">Voting ends in @timeUntilGameStatusEnd.CeilToInt()</div>
+		<label class="title">Voting ends in @timeUntilGameStatusEnd.CeilToInt()</label>
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.SetUp)
 	{
-		<div class="title">Game starts in @timeUntilGameStatusEnd.CeilToInt()</div>
+		<label class="title">Game starts in @timeUntilGameStatusEnd.CeilToInt()</label>
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.Started)
 	{
-		<div class="title">Game ends in @timeUntilGameStatusEnd.CeilToInt()</div>
+		<label class="title">Game ends in @timeUntilGameStatusEnd.CeilToInt()</label>
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.Stopped)
 	{
-		<div class="title">Winners are ...</div>
-		<div class="title">Choosing game in @timeUntilGameStatusEnd.CeilToInt()</div>
+		<label class="title">Winners are ...</label>
+		<label class="title">Choosing game in @timeUntilGameStatusEnd.CeilToInt()</label>
 	}
 </root>
 
