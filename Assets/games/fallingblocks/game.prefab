@@ -2,7 +2,7 @@
   "RootObject": {
     "__guid": "c900a688-0326-43ba-ac29-2aeb95b6d7d5",
     "Flags": 0,
-    "Name": "fallingblocksgame",
+    "Name": "fallingblocks",
     "Enabled": true,
     "NetworkMode": 1,
     "Components": [
@@ -10,7 +10,6 @@
         "__type": "Mini.Games.FallingBlocks.FallingBlocksGame",
         "__guid": "78127e67-8ecc-47ca-b6ca-8740f8b9a53c",
         "DifficultyIncreaseTime": 60,
-        "_spawnPoints": [],
         "BlockColors": [
           "0.68372,0,0,1",
           "0.76884,0.8093,0,1",

@@ -51,7 +51,7 @@
           "__guid": "8e2186f5-c6a5-40b1-9c0a-34d4e7a6a670",
           "TestGamePrefab": {
             "_type": "gameobject",
-            "prefab": "prefabs/games/fallingblocksgame.prefab"
+            "prefab": "games/fallingblocks/fallingblocksgame.prefab"
           },
           "TimeAfterEnd": 15,
           "TimeBeforeStart": 2
