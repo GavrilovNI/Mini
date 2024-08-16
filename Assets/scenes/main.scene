@@ -52,13 +52,13 @@
           "__guid": "8e2186f5-c6a5-40b1-9c0a-34d4e7a6a670",
           "GamesLoader": {
             "_type": "component",
-            "component_id": "5af55cd6-316f-4078-910d-72ff393477c6",
+            "component_id": "bd3dad93-fc61-4645-a3fe-d0aaaa413e09",
             "go": "3d0afb7b-e8ce-4219-bd8d-675c8e8d15d5",
             "component_type": "GamesLoader"
           },
           "TestGamePrefab": {
             "_type": "gameobject",
-            "prefab": "games/fallingblocks/fallingblocksgame.prefab"
+            "prefab": "games/fallingblocks/game.prefab"
           },
           "TimeAfterEnd": 15,
           "TimeBeforeStart": 2
@@ -74,7 +74,7 @@
       "Components": [
         {
           "__type": "Mini.GamesLoader",
-          "__guid": "5af55cd6-316f-4078-910d-72ff393477c6"
+          "__guid": "bd3dad93-fc61-4645-a3fe-d0aaaa413e09"
         }
       ]
     },
@@ -94,7 +94,7 @@
         },
         {
           "__type": "Mini.UI.MainHUD",
-          "__guid": "ee1b000f-9590-4e10-aed0-662d0fdabfed",
+          "__guid": "4e1e1100-23fe-4989-a9fb-451178e60072",
           "GamesLauncher": {
             "_type": "component",
             "component_id": "8e2186f5-c6a5-40b1-9c0a-34d4e7a6a670",
