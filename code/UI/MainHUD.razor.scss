@@ -10,9 +10,12 @@ MainHUD {
 	border-radius: 20px;
 
 	.title {
+		position: absolute;
 		font-size: 25px;
 		font-family: Poppins;
 		color: #fff;
-		text-stroke: 5 #000;
+		text-stroke: 5 black;
+		top: 10px;
+		right: 10px;
 	}
 }
