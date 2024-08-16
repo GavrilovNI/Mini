@@ -19,20 +19,20 @@
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.None)
 	{
-		<div class="title">Voting ends in @timeUntilGameStatusEnd.ToString("0")</div>
+		<div class="title">Voting ends in @timeUntilGameStatusEnd.CeilToInt()</div>
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.SetUp)
 	{
-		<div class="title">Game starts in @timeUntilGameStatusEnd.ToString("0")</div>
+		<div class="title">Game starts in @timeUntilGameStatusEnd.CeilToInt()</div>
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.Started)
 	{
-		<div class="title">Game ends in @timeUntilGameStatusEnd.ToString("0")</div>
+		<div class="title">Game ends in @timeUntilGameStatusEnd.CeilToInt()</div>
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.Stopped)
 	{
 		<div class="title">Winners are ...</div>
-		<div class="title">Choosing game in @timeUntilGameStatusEnd.ToString("0")</div>
+		<div class="title">Choosing game in @timeUntilGameStatusEnd.CeilToInt()</div>
 	}
 </root>
 
