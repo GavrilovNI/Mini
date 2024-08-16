@@ -45,16 +45,36 @@
       "Name": "GamesLauncher",
       "Position": "65.23445,65.23447,-92.25546",
       "Enabled": true,
+      "NetworkMode": 1,
       "Components": [
         {
           "__type": "Mini.GamesLauncher",
           "__guid": "8e2186f5-c6a5-40b1-9c0a-34d4e7a6a670",
+          "GamesLoader": {
+            "_type": "component",
+            "component_id": "5af55cd6-316f-4078-910d-72ff393477c6",
+            "go": "3d0afb7b-e8ce-4219-bd8d-675c8e8d15d5",
+            "component_type": "GamesLoader"
+          },
           "TestGamePrefab": {
             "_type": "gameobject",
             "prefab": "games/fallingblocks/fallingblocksgame.prefab"
           },
           "TimeAfterEnd": 15,
           "TimeBeforeStart": 2
+        }
+      ]
+    },
+    {
+      "__guid": "3d0afb7b-e8ce-4219-bd8d-675c8e8d15d5",
+      "Flags": 0,
+      "Name": "Games",
+      "Position": "-59.72511,-59.72516,1532.992",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Mini.GamesLoader",
+          "__guid": "5af55cd6-316f-4078-910d-72ff393477c6"
         }
       ]
     }

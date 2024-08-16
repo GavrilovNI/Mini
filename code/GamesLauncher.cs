@@ -2,6 +2,7 @@
 using Mini.Games;
 using Sandbox;
 using System;
+using System.Linq;
 
 namespace Mini;
 
@@ -9,6 +10,9 @@ public class GamesLauncher : Component
 {
     public MiniGame? CurrentGame { get; private set; }
     public GameInfo CurrentGameInfo { get; private set; }
+
+    [Property]
+    public GamesLoader GamesLoader { get; set; } = null!;
 
     [Property]
     public float TimeBeforeStart { get; set; } = 30f;
@@ -34,6 +38,27 @@ public class GamesLauncher : Component
 
     [Button("StartTestGame")]
     private void StartTestGame() => StartGame(TestGamePrefab, new GameInfo());
+
+    [Button("StartRandomGame")]
+    private void StartRandomGame()
+    {
+        var gameIndex = Game.Random.Next(GamesLoader.GamesCount);
+        var gameIdentity = GamesLoader.Games.Skip(gameIndex).First().Key;
+        StartGame(gameIdentity);
+    }
+
+    public void StartGame(string gameIdentity)
+    {
+        if(IsProxy)
+            return;
+
+        if(CurrentGame.IsValid())
+            throw new InvalidOperationException("Another game already exists.");
+
+        var gameGameObject = GamesLoader.CloneGamePrefab(gameIdentity, new CloneConfig(new global::Transform(), GameObject, false));
+        var gameInfo = GamesLoader.GetGameInfo(gameIdentity);
+        StartGameByGameObject(gameGameObject, gameInfo);
+    }
 
     public void StartGame(GameObject gamePrefab, GameInfo gameInfo)
     {
