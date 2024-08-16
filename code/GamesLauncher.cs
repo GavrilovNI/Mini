@@ -36,6 +36,8 @@ public class GamesLauncher : Component
 
     private TimeSince _timeSinceEnoughPlayersConnected;
 
+
+
     [Button("StartTestGame")]
     private void StartTestGame() => StartGame(TestGamePrefab, new GameInfo());
 
@@ -43,11 +45,11 @@ public class GamesLauncher : Component
     private void StartRandomGame()
     {
         var gameIndex = Game.Random.Next(GamesLoader.GamesCount);
-        var gameIdentity = GamesLoader.Games.Skip(gameIndex).First().Key;
-        StartGame(gameIdentity);
+        var gameId = GamesLoader.Games.Skip(gameIndex).First().Key;
+        StartGame(gameId);
     }
 
-    public void StartGame(string gameIdentity)
+    public void StartGame(string gameId)
     {
         if(IsProxy)
             return;
@@ -55,8 +57,8 @@ public class GamesLauncher : Component
         if(CurrentGame.IsValid())
             throw new InvalidOperationException("Another game already exists.");
 
-        var gameGameObject = GamesLoader.CloneGamePrefab(gameIdentity, new CloneConfig(new global::Transform(), GameObject, false));
-        var gameInfo = GamesLoader.GetGameInfo(gameIdentity);
+        var gameGameObject = GamesLoader.CloneGamePrefab(gameId, new CloneConfig(new global::Transform(), GameObject, false));
+        var gameInfo = GamesLoader.GetGameInfo(gameId);
         StartGameByGameObject(gameGameObject, gameInfo);
     }
 

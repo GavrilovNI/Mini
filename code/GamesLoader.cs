@@ -75,18 +75,18 @@ public class GamesLoader : Component
     [Button("Clear")]
     public void Clear() => _games.Clear();
 
-    public GameObject CloneGamePrefab(string gameIdentity, CloneConfig cloneConfig)
+    public GameObject CloneGamePrefab(string gameId, CloneConfig cloneConfig)
     {
-        if(!_games.TryGetValue(gameIdentity, out var gameData))
-            throw new InvalidOperationException($"Game {gameIdentity} wasn't loaded.");
+        if(!_games.TryGetValue(gameId, out var gameData))
+            throw new InvalidOperationException($"Game {gameId} wasn't loaded.");
 
         return PrefabScene.Clone(Path.Combine(gameData.Path, GamePrefabFileName), cloneConfig);
     }
 
-    public GameInfo GetGameInfo(string gameIdentity)
+    public GameInfo GetGameInfo(string gameId)
     {
-        if(!_games.TryGetValue(gameIdentity, out var gameData))
-            throw new InvalidOperationException($"Game {gameIdentity} wasn't loaded.");
+        if(!_games.TryGetValue(gameId, out var gameData))
+            throw new InvalidOperationException($"Game {gameId} wasn't loaded.");
 
         return gameData.GameInfo;
     }
