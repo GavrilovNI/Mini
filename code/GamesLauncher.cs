@@ -188,6 +188,7 @@ public class GamesLauncher : Component
         {
             var choosedGame = GamesVoter.GetMostWantedGame();
             GamesVoter.ClearGames();
+            GamesVoter.ClearVotes();
             StartGame(choosedGame);
         }
     }

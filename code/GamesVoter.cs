@@ -43,6 +43,12 @@ public class GamesVoter : Component
         NetGames.Clear();
     }
 
+    public void ClearVotes()
+    {
+        NetVotes.Clear();
+    }
+
+
     [Broadcast]
     public void Vote(string gameId)
     {
