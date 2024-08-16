@@ -52,7 +52,6 @@ public sealed class FallingBlock : Component
         var damageables = traceResults.Select(t => t.GameObject.Components.Get<IDamageable>()).Where(d => d is not null);
         foreach(var damageable in damageables)
         {
-            Log.Info(damageable);
             var damage = damageable is IHealthProvider healthProvider ? healthProvider.Health : float.MaxValue;
             damageable.OnDamage(new DamageInfo(damage, GameObject, GameObject));
         }
