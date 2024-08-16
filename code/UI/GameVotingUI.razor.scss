@@ -1,0 +1,138 @@
+GameVotingUI {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: gray;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-family: Poppins;
+	font-weight: bold;
+
+	&.hidden {
+		opacity: 0;
+	}
+
+	.title {
+		position: absolute;
+		width: 100%;
+		top: 5%;
+		color: white;
+		font-size: 50px;
+		text-stroke: 7 black;
+		text-align: center;
+	}
+
+	.games {
+		position: absolute;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-direction: column;
+
+		.line {
+			width: 100%;
+			flex-grow: 1;
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-start;
+			flex-direction: row;
+			gap: 10px;
+
+			.game {
+				position: relative;
+				height: 100%;
+				flex-grow: 1;
+				background-color: slategrey;
+				border: 1px solid white;
+				border-radius: 2%;
+				color: white;
+				text-align: center;
+				pointer-events: all;
+
+				.game-title {
+					position: absolute;
+					width: 95%;
+					top: 4%;
+					font-size: 20px;
+					text-stroke: 7 black;
+				}
+
+				.game-icon {
+					position: absolute;
+					border-radius: 2% 2% 0% 0%;
+					border-bottom: 0.1px solid white;
+					width: 100%;
+					height: 85%;
+					background-size: cover;
+					background-position: center;
+				}
+
+				.game-description-parent {
+					width: 100%;
+					height: 100%;
+
+					.game-description {
+						pointer-events: auto;
+						position: absolute;
+						left: 3%;
+						width: 94%;
+						height: 60%;
+						bottom: 16%;
+						display: flex;
+						align-items: flex-end;
+						font-size: 20px;
+					}
+
+					&:hover {
+						text-stroke: 3 black;
+					}
+
+					&:not(:hover) {
+						color: transparent;
+						text-stroke: 0 black;
+					}
+				}
+
+				.game-votes {
+					width: 98%;
+					left: 1%;
+					pointer-events: none;
+					position: absolute;
+					height: 13%;
+					bottom: 0%;
+
+					.player-icon {
+						position: absolute;
+						height: 90%;
+						aspect-ratio: 1;
+						border-radius: 50%;
+						border: 4% solid white;
+					}
+
+					.more-players-icon {
+						position: absolute;
+						left: 50px;
+						height: 95%;
+						aspect-ratio: 1;
+						background-color: lightgrey;
+						border-radius: 50%;
+						border: 4% solid black;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+						font-size: 13px;
+						text-stroke: 2 black;
+						white-space: nowrap;
+					}
+				}
+
+				&.fake {
+					opacity: 0;
+				}
+			}
+		}
+	}
+}

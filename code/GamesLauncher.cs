@@ -13,6 +13,13 @@ public class GamesLauncher : Component
 
     [Property]
     public GamesLoader GamesLoader { get; set; } = null!;
+    [Property]
+    public GamesVoter GamesVoter { get; set; } = null!;
+
+    [Property]
+    public int GamesCountToVote { get; set; } = 15;
+    [Property]
+    public float VotingTime { get; set; } = 20f;
 
     [Property]
     public float TimeBeforeStart { get; set; } = 30f;
@@ -34,6 +41,7 @@ public class GamesLauncher : Component
     [Sync]
     public bool HasEnoughPlayers { get; private set; } = false;
 
+    private TimeSince _timeSinceVotingStarted;
     private TimeSince _timeSinceEnoughPlayersConnected;
 
 
@@ -45,7 +53,7 @@ public class GamesLauncher : Component
     private void StartRandomGame()
     {
         var gameIndex = Game.Random.Next(GamesLoader.GamesCount);
-        var gameId = GamesLoader.Games.Skip(gameIndex).First().Key;
+        var gameId = GamesLoader.Games.Skip(gameIndex).First().GameId;
         StartGame(gameId);
     }
 
@@ -102,6 +110,7 @@ public class GamesLauncher : Component
         if(!CurrentGame.IsValid())
         {
             GameStatus = GameStatus.None;
+            HandleVoting();
             return;
         }
 
@@ -146,7 +155,7 @@ public class GamesLauncher : Component
     {
         if(CurrentGame!.Status == GameStatus.SetUp && HasEnoughPlayers)
         {
-            var timeSinceStartRequirementsMet = Math.Min(_timeSinceEnoughPlayersConnected, _timeSinceEnoughPlayersConnected);
+            var timeSinceStartRequirementsMet = Math.Min(CurrentGame.TimeSinceStatusChanged, _timeSinceEnoughPlayersConnected);
             TimeUntilGameStatusEnd = TimeBeforeStart - timeSinceStartRequirementsMet;
 
             if(TimeUntilGameStatusEnd <= 0)
@@ -162,6 +171,24 @@ public class GamesLauncher : Component
 
             if(CurrentGame.TimeSinceStatusChanged >= TimeAfterEnd)
                 ResetGame();
+        }
+    }
+
+    private void HandleVoting()
+    {
+        if(!GamesVoter.IsVoting)
+        {
+            _timeSinceVotingStarted = 0;
+            GamesVoter.ChooseGames(Math.Min(GamesCountToVote, GamesLoader.GamesCount));
+        }
+
+        TimeUntilGameStatusEnd = VotingTime - Math.Min(_timeSinceVotingStarted, _timeSinceEnoughPlayersConnected);
+
+        if(TimeUntilGameStatusEnd <= 0)
+        {
+            var choosedGame = GamesVoter.GetMostWantedGame();
+            GamesVoter.ClearGames();
+            StartGame(choosedGame);
         }
     }
 }
