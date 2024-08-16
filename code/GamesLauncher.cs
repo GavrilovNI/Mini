@@ -8,6 +8,7 @@ namespace Mini;
 public class GamesLauncher : Component
 {
     public MiniGame? CurrentGame { get; private set; }
+    public GameInfo CurrentGameInfo { get; private set; }
 
     [Property]
     public float TimeBeforeStart { get; set; } = 30f;
@@ -32,14 +33,25 @@ public class GamesLauncher : Component
     private TimeSince _timeSinceEnoughPlayersConnected;
 
     [Button("StartTestGame")]
-    private void StartTestGame() => StartGame(TestGamePrefab);
+    private void StartTestGame() => StartGame(TestGamePrefab, new GameInfo());
 
-    public void StartGame(GameObject gamePrefab)
+    public void StartGame(GameObject gamePrefab, GameInfo gameInfo)
     {
+        if(IsProxy)
+            return;
+
         if(CurrentGame.IsValid())
             throw new InvalidOperationException("Another game already exists.");
 
         var gameGameObject = gamePrefab.Clone(new CloneConfig(new global::Transform(), GameObject, false));
+        StartGameByGameObject(gameGameObject, gameInfo);
+    }
+
+    private void StartGameByGameObject(GameObject gameGameObject, GameInfo gameInfo)
+    {
+        if(CurrentGame.IsValid())
+            throw new InvalidOperationException("Another game already exists.");
+
         var game = gameGameObject.Components.Get<MiniGame>(true);
 
         if(!game.IsValid())
@@ -47,6 +59,7 @@ public class GamesLauncher : Component
 
         gameGameObject.Enabled = true;
         CurrentGame = game;
+        CurrentGameInfo = gameInfo;
 
         gameGameObject.Enabled = true;
         gameGameObject.NetworkMode = NetworkMode.Object;
