@@ -95,4 +95,12 @@ public class GamesLoader : Component
 
         return gameData.GameInfo;
     }
+
+    public string GetGameIconPath(string gameId)
+    {
+        if(!NetGames.TryGetValue(gameId, out var gameData))
+            throw new InvalidOperationException($"Game {gameId} wasn't loaded.");
+
+        return Path.Combine(gameData.Path, GameIconFileName);
+    }
 }
