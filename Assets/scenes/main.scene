@@ -77,6 +77,32 @@
           "__guid": "5af55cd6-316f-4078-910d-72ff393477c6"
         }
       ]
+    },
+    {
+      "__guid": "65dcbf5c-4340-48d1-93dc-35f743722194",
+      "Flags": 0,
+      "Name": "UI",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "db23f478-12bd-462a-8283-8fc2d485ebfb",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 100
+        },
+        {
+          "__type": "Mini.UI.MainHUD",
+          "__guid": "ee1b000f-9590-4e10-aed0-662d0fdabfed",
+          "GamesLauncher": {
+            "_type": "component",
+            "component_id": "8e2186f5-c6a5-40b1-9c0a-34d4e7a6a670",
+            "go": "e8454cb1-58b1-4856-b496-7d755f874765",
+            "component_type": "GamesLauncher"
+          }
+        }
+      ]
     }
   ],
   "SceneProperties": {

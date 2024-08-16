@@ -1,0 +1,45 @@
+@using System;
+@using Sandbox;
+@using Sandbox.UI;
+@using Mini.Games;
+
+@namespace Mini.UI
+
+@inherits PanelComponent
+
+<root>
+	@{
+		float timeUntilGameStatusEnd = GamesLauncher.TimeUntilGameStatusEnd;
+	}
+
+	
+	@if(!GamesLauncher.HasEnoughPlayers)
+	{
+		<div class="title">Waiting Players</div>
+	}
+	else if(GamesLauncher.GameStatus == GameStatus.None)
+	{
+		<div class="title">Choosing Game</div>
+	}
+	else if(GamesLauncher.GameStatus == GameStatus.SetUp)
+	{
+		<div class="title">Game starts in @timeUntilGameStatusEnd.ToString("0")</div>
+	}
+	else if(GamesLauncher.GameStatus == GameStatus.Started)
+	{
+		<div class="title">Game ends in @timeUntilGameStatusEnd.ToString("0")</div>
+	}
+	else if(GamesLauncher.GameStatus == GameStatus.Stopped)
+	{
+		<div class="title">Winners are ...</div>
+		<div class="title">Choosing game in @timeUntilGameStatusEnd.ToString("0")</div>
+	}
+</root>
+
+@code
+{
+	[Property]
+	public GamesLauncher GamesLauncher { get; set; } = null!;
+
+	protected override int BuildHash() => HashCode.Combine(GamesLauncher.HasEnoughPlayers, GamesLauncher.TimeUntilGameStatusEnd, GamesLauncher.GameStatus, Time.Now);
+}
