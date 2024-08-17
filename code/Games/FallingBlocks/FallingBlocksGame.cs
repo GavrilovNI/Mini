@@ -144,12 +144,4 @@ public sealed class FallingBlocksGame : MiniGame
         fallingBlockGameObject.NetworkMode = NetworkMode.Object;
         fallingBlockGameObject.NetworkSpawn();
     }
-
-    public override ISet<ulong> GetWinners()
-    {
-        if(Status != GameStatus.Stopped)
-            throw new InvalidOperationException("Incorrect game status.");
-
-        return PlayingPlayers.Select(p => p.Network.OwnerConnection.SteamId).ToHashSet();
-    }
 }

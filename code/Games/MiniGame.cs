@@ -169,5 +169,11 @@ public abstract class MiniGame : Component, Component.INetworkListener
     protected virtual void OnGameStart() { }
     protected virtual void OnGameStop() { }
 
-    public abstract ISet<ulong> GetWinners();
+    public virtual ISet<ulong> GetWinners()
+    {
+        if(Status != GameStatus.Stopped)
+            throw new InvalidOperationException("Incorrect game status.");
+
+        return PlayingPlayers.Select(p => p.Network.OwnerConnection.SteamId).ToHashSet();
+    }
 }
