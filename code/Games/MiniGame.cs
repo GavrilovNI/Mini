@@ -9,6 +9,7 @@ namespace Mini.Games;
 
 public abstract class MiniGame : Component, Component.INetworkListener
 {
+    [Property, Group("Debug")]
     public GameStatus Status { get; private set; } = GameStatus.Created;
     public TimeSince TimeSinceStatusChanged { get; private set; }
 
