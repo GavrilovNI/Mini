@@ -23,6 +23,8 @@ public class FindTheWayGame : MiniGame
     public GameObject FakeBlockPrefab { get; set; } = null!;
     [Property]
     public GameObject HighlightedBlockPrefab { get; set; } = null!;
+    [Property]
+    public GameObject BlocksParent { get; set; } = null!;
 
     [Property, Group("Rendering")]
     public Color Color { get; set; } = new Color(0.33f, 0.33f, 0.33f);
@@ -237,7 +239,7 @@ public class FindTheWayGame : MiniGame
         var position = new Vector3((index.x + 0.5f) * BlockSize.x * Consts.CubeModelSize.x,
             (index.y + 0.5f) * BlockSize.y * Consts.CubeModelSize.y, 0f);
 
-        var cloneConfig = new CloneConfig(new global::Transform(position, Transform.Rotation, BlockSize), GameObject, false);
+        var cloneConfig = new CloneConfig(new global::Transform(position, Transform.Rotation, BlockSize), BlocksParent, false);
 
         var prefab = fake ? FakeBlockPrefab : HighlightedBlockPrefab;
         var blockGameObject = prefab.Clone(cloneConfig);

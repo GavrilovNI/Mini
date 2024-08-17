@@ -9,6 +9,10 @@
         "__type": "Mini.Games.FindTheWay.FindTheWayGame",
         "__guid": "83c0e5cc-c3f3-4610-bca8-1f641bcebd19",
         "BlockSize": "3,3,1",
+        "BlocksParent": {
+          "_type": "gameobject",
+          "go": "e159cbb4-efc2-49be-99d3-8eec09b4741e"
+        },
         "Color": "0.33,0.33,0.33,1",
         "FakeBlockPrefab": {
           "_type": "gameobject",
@@ -127,6 +131,12 @@
         "Flags": 0,
         "Name": "Players",
         "Position": "-375.3816,0,0",
+        "Enabled": true
+      },
+      {
+        "__guid": "e159cbb4-efc2-49be-99d3-8eec09b4741e",
+        "Flags": 0,
+        "Name": "Blocks",
         "Enabled": true
       }
     ],
