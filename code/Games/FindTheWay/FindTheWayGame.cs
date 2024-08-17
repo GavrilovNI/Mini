@@ -11,6 +11,8 @@ namespace Mini.Games.FindTheWay;
 
 public class FindTheWayGame : MiniGame
 {
+    private static readonly Vector2Int[] _sideOffsets = new Vector2Int[4] { Vector2Int.Up, Vector2Int.Right, Vector2Int.Down, Vector2Int.Left };
+
     [Property]
     public Vector2Int Size { get; set; } = new Vector2Int(20, 8);
 
@@ -22,29 +24,61 @@ public class FindTheWayGame : MiniGame
     [Property]
     public GameObject HighlightedBlockPrefab { get; set; } = null!;
 
-    [Property]
+    [Property, Group("Rendering")]
     public Color Color { get; set; } = new Color(0.33f, 0.33f, 0.33f);
-    [Property]
+    [Property, Group("Rendering")]
     public Color HighlightColor { get; set; } = Color.White;
+    [Property, Group("Rendering")]
+    public float HighlightSpeed { get; set; } = 5f;
+    [Property, Group("Rendering")]
+    public float HighlightTime { get; set; } = 2f;
+    [Property, Group("Rendering")]
+    public Curve HighlightCurve { get; set; } = 2f;
+    [Property, Group("Rendering")]
+    public float TimeBetweenHighlights { get; set; } = 10f;
 
-    [Property]
-    public float TurnChanceMultiplier = 3f;
-    [Property]
-    public float TimeBetweenHighlights = 15f;
-    [Property]
-    public float MinDistanceWithoutTurn = 2f;
-
+    [Property, Group("Path")]
+    public float TurnChanceMultiplier { get; set; } = 3f;
+    [Property, Group("Path")]
+    public float MinDistanceWithoutTurn { get; set; } = 2f;
 
     private readonly Dictionary<Vector2Int, FindTheWayBlock> _blocks = new();
+    private Task? _highlightTask = null;
+    private TimeSince _timeSinceHightlight;
+
 
     protected override async Task OnGameSetup()
     {
+        _timeSinceHightlight = Time.Now;
         await base.OnGameSetup();
         await BuildBlocks(CancellationToken.None);
     }
 
+    protected override void OnUpdate()
+    {
+        base.OnUpdate();
+
+        if(IsProxy)
+            return;
+
+        if(Status != GameStatus.Started)
+            return;
+
+        if(_highlightTask is null)
+        {
+            if(_timeSinceHightlight >= TimeBetweenHighlights)
+                _highlightTask = HighlightPath(CancellationToken.None);
+        }
+        else if(_highlightTask.IsCompleted)
+        {
+            _timeSinceHightlight = 0;
+            _highlightTask = null;
+        }
+    }
+
+
     [Button("Rebuild"), Group("Debug")]
-    private void BuildBlocksBtn() => BuildBlocks(CancellationToken.None);
+    private void BuildBlocksBtn() => _ = BuildBlocks(CancellationToken.None);
 
     private async Task BuildBlocks(CancellationToken cancellationToken)
     {
@@ -79,8 +113,6 @@ public class FindTheWayGame : MiniGame
 
     private async Task SpawnValidBlocks(Vector2Int startPos, CancellationToken cancellationToken)
     {
-        Vector2Int[] sideOffsets = new Vector2Int[4] { Vector2Int.Up, Vector2Int.Right, Vector2Int.Down, Vector2Int.Left };
-
         var oldOffset = Vector2Int.Up;
         var oldPos = startPos;
         SpawnBlock(oldPos, false);
@@ -106,7 +138,7 @@ public class FindTheWayGame : MiniGame
             }
             else
             {
-                var currentSideOffsetAndPoses = sideOffsets.Select(offset => (offset, position: oldPos + offset))
+                var currentSideOffsetAndPoses = _sideOffsets.Select(offset => (offset, position: oldPos + offset))
                     .Where(x => IsValidToPlace(x.position));
 
                 if(!currentSideOffsetAndPoses.Any())
@@ -219,8 +251,6 @@ public class FindTheWayGame : MiniGame
             throw new ComponentNotFoundException(blockGameObject, typeof(HighlightedBlock));
 
         block.Setup(this);
-        if(!fake)
-            block.Color = Color.Green;
 
         blockGameObject.Enabled = true;
 
@@ -228,6 +258,42 @@ public class FindTheWayGame : MiniGame
         blockGameObject.NetworkSpawn();
 
         _blocks.Add(index, block);
+    }
+
+    [Button("Highlight Path"), Group("Debug")]
+    private void HighlightPathBtn() => _ = HighlightPath(CancellationToken.None);
+
+    private async Task HighlightPath(CancellationToken cancellationToken)
+    {
+        List<Task> tasks = new();
+        HashSet<Vector2Int> hightLightedBlocks = new();
+
+        for(int y = 0; y < Size.y; ++y)
+            tasks.Add(HighlightPath(new Vector2Int(0, y), hightLightedBlocks, cancellationToken));
+
+        await Task.WhenAll(tasks);
+    }
+
+    private async Task HighlightPath(Vector2Int startPos, HashSet<Vector2Int> hightLightedBlocks, CancellationToken cancellationToken)
+    {
+        if(hightLightedBlocks.Contains(startPos))
+            return;
+
+        hightLightedBlocks.Add(startPos);
+
+        List<Task> tasks = new();
+
+        if(_blocks.TryGetValue(startPos, out var block) && block is HighlightedBlock highlightedBlock)
+            tasks.Add(highlightedBlock.Highlight(cancellationToken));
+        else
+            return;
+
+        await Task.DelaySeconds(1f / HighlightSpeed);
+
+        foreach(var offset in _sideOffsets)
+            tasks.Add(HighlightPath(startPos + offset, hightLightedBlocks, cancellationToken));
+
+        await Task.WhenAll(tasks);
     }
 
 

@@ -8,9 +8,6 @@
       {
         "__type": "Mini.Games.FindTheWay.FindTheWayGame",
         "__guid": "83c0e5cc-c3f3-4610-bca8-1f641bcebd19",
-        "MinDistanceWithoutTurn": 3,
-        "TimeBetweenHighlights": 15,
-        "TurnChanceMultiplier": 3,
         "BlockSize": "3,3,1",
         "Color": "0.33,0.33,0.33,1",
         "FakeBlockPrefab": {
@@ -18,11 +15,28 @@
           "prefab": "games/findtheway/fakeblock.prefab"
         },
         "HighlightColor": "1,1,1,1",
+        "HighlightCurve": [
+          {},
+          {
+            "x": 0.25,
+            "y": 1
+          },
+          {
+            "x": 0.75,
+            "y": 1
+          },
+          {
+            "x": 1
+          }
+        ],
         "HighlightedBlockPrefab": {
           "_type": "gameobject",
           "prefab": "games/findtheway/highlightedblock.prefab"
         },
+        "HighlightSpeed": 7,
+        "HighlightTime": 2,
         "MaxGameTime": 60,
+        "MinDistanceWithoutTurn": 3,
         "PlayerPrefab": {
           "_type": "gameobject",
           "prefab": "prefabs/player.prefab"
@@ -32,7 +46,9 @@
           "go": "9b9c2f26-9bc2-4357-95cc-29fc9b310ee0"
         },
         "Size": "20,8",
-        "Status": "Created"
+        "Status": "Created",
+        "TimeBetweenHighlights": 10,
+        "TurnChanceMultiplier": 3
       }
     ],
     "Children": [

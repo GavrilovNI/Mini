@@ -20,6 +20,8 @@ public class HighlightedBlock : FindTheWayBlock
     {
         base.Setup(game);
         HighlightColor = game.HighlightColor;
+        HighlightTime = game.HighlightTime;
+        HighlightCurve = game.HighlightCurve;
     }
 
     [Button("Highlight")]
