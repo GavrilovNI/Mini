@@ -288,7 +288,7 @@ public class FindTheWayGame : MiniGame
         else
             return;
 
-        await Task.DelaySeconds(1f / HighlightSpeed);
+        await Task.DelaySeconds(1f / HighlightSpeed, cancellationToken);
 
         foreach(var offset in _sideOffsets)
             tasks.Add(HighlightPath(startPos + offset, hightLightedBlocks, cancellationToken));
