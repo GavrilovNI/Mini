@@ -8,7 +8,9 @@
       {
         "__type": "Mini.Games.FindTheWay.FindTheWayGame",
         "__guid": "83c0e5cc-c3f3-4610-bca8-1f641bcebd19",
+        "MinDistanceWithoutTurn": 3,
         "TimeBetweenHighlights": 15,
+        "TurnChanceMultiplier": 3,
         "BlockSize": "3,3,1",
         "Color": "0.33,0.33,0.33,1",
         "FakeBlockPrefab": {
@@ -29,7 +31,8 @@
           "_type": "gameobject",
           "go": "9b9c2f26-9bc2-4357-95cc-29fc9b310ee0"
         },
-        "Size": "20,8"
+        "Size": "20,8",
+        "Status": "Created"
       }
     ],
     "Children": [

@@ -3,6 +3,7 @@ using Sandbox.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mini.Games.FallingBlocks;
 
@@ -46,8 +47,10 @@ public sealed class FallingBlocksGame : MiniGame
 
 
 
-    protected override void OnGameStart()
+    protected override async Task OnGameStart()
     {
+        await base.OnGameStart();
+
         _indices = new Vector2Int[Size.x * Size.y];
         int i = 0;
         for(int x = 0; x < Size.x; ++x)
@@ -62,8 +65,10 @@ public sealed class FallingBlocksGame : MiniGame
         _timeSinceBlockSpawned = 0;
     }
 
-    protected override void OnGameStop()
+    protected override async Task OnGameStop()
     {
+        await base.OnGameStop();
+
         foreach(var (_, block) in _notGroundedBlocks)
             block.GameObject.Destroy();
         _notGroundedBlocks.Clear();

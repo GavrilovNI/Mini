@@ -4,6 +4,7 @@ using Sandbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mini.Games;
 
@@ -43,9 +44,14 @@ public abstract class MiniGame : Component, Component.INetworkListener
         if(Status != GameStatus.Created)
             throw new InvalidOperationException("Incorrect game status.");
 
-        OnGameSetup();
-        Status = GameStatus.SetUp;
+        Status = GameStatus.SettingUp;
         TimeSinceStatusChanged = 0;
+
+        _ = OnGameSetup().ContinueWith(t =>
+        {
+            Status = GameStatus.SetUp;
+            TimeSinceStatusChanged = 0;
+        });
     }
 
     [Button("Start"), Group("Debug")]
@@ -57,9 +63,14 @@ public abstract class MiniGame : Component, Component.INetworkListener
         if(Status != GameStatus.SetUp)
             throw new InvalidOperationException("Incorrect game status.");
 
-        OnGameStart();
-        Status = GameStatus.Started;
+        Status = GameStatus.Starting;
         TimeSinceStatusChanged = 0;
+
+        _ = OnGameStart().ContinueWith(t =>
+        {
+            Status = GameStatus.Started;
+            TimeSinceStatusChanged = 0;
+        });
     }
 
     [Button("Stop"), Group("Debug")]
@@ -71,9 +82,14 @@ public abstract class MiniGame : Component, Component.INetworkListener
         if(Status != GameStatus.Started)
             throw new InvalidOperationException("Incorrect game status.");
 
-        OnGameStop();
-        Status = GameStatus.Stopped;
+        Status = GameStatus.Stopping;
         TimeSinceStatusChanged = 0;
+
+        _ = OnGameStop().ContinueWith(t =>
+        {
+            Status = GameStatus.Stopped;
+            TimeSinceStatusChanged = 0;
+        });
     }
 
 
@@ -165,13 +181,15 @@ public abstract class MiniGame : Component, Component.INetworkListener
 
 
 
-    protected virtual void OnGameSetup()
+    protected virtual Task OnGameSetup()
     {
         foreach(var connection in Connection.All)
             SpawnPlayer(connection);
+
+        return Task.CompletedTask;
     }
-    protected virtual void OnGameStart() { }
-    protected virtual void OnGameStop() { }
+    protected virtual Task OnGameStart() => Task.CompletedTask;
+    protected virtual Task OnGameStop() => Task.CompletedTask;
 
     public virtual ISet<ulong> GetWinners()
     {

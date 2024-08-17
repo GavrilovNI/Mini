@@ -4,6 +4,8 @@ using Sandbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Mini.Games.FindTheWay;
 
@@ -35,20 +37,22 @@ public class FindTheWayGame : MiniGame
 
     private readonly Dictionary<Vector2Int, FindTheWayBlock> _blocks = new();
 
-    protected override void OnGameSetup()
+    protected override async Task OnGameSetup()
     {
-        base.OnGameSetup();
-        BuildBlocks();
+        await base.OnGameSetup();
+        await BuildBlocks(CancellationToken.None);
     }
 
-    [Button("Rebuild")]
-    private void BuildBlocks()
+    [Button("Rebuild"), Group("Debug")]
+    private void BuildBlocksBtn() => BuildBlocks(CancellationToken.None);
+
+    private async Task BuildBlocks(CancellationToken cancellationToken)
     {
         foreach(var (pos, _) in _blocks)
             DestroyBlock(pos);
 
-        SpawnValidBlocks();
-        FillWithFakeBlocks();
+        await SpawnValidBlocks(cancellationToken);
+        await FillWithFakeBlocks(cancellationToken);
     }
 
     private static int GetRandomIndexByChances(IEnumerable<float> chances)
@@ -71,9 +75,9 @@ public class FindTheWayGame : MiniGame
         return index - 1;
     }
 
-    private void SpawnValidBlocks() => SpawnValidBlocks(new Vector2Int(0, Game.Random.Next(Size.y)));
+    private async Task SpawnValidBlocks(CancellationToken cancellationToken) => SpawnValidBlocks(new Vector2Int(0, Game.Random.Next(Size.y)), cancellationToken);
 
-    private void SpawnValidBlocks(Vector2Int startPos)
+    private async Task SpawnValidBlocks(Vector2Int startPos, CancellationToken cancellationToken)
     {
         Vector2Int[] sideOffsets = new Vector2Int[4] { Vector2Int.Up, Vector2Int.Right, Vector2Int.Down, Vector2Int.Left };
 
@@ -89,6 +93,9 @@ public class FindTheWayGame : MiniGame
 
         do
         {
+            if(cancellationToken.IsCancellationRequested)
+                return;
+
             Vector2Int newPos;
             Vector2Int newOffset;
 
@@ -113,6 +120,7 @@ public class FindTheWayGame : MiniGame
             }
 
             SpawnBlock(newPos, false);
+            await Task.Yield();
 
             bool turned = newOffset != oldOffset && newOffset != Vector2Int.Zero - oldOffset;
             distanceWithoutTurn = turned ? 1 : distanceWithoutTurn + 1;
@@ -133,7 +141,7 @@ public class FindTheWayGame : MiniGame
         while(true);
 
         if(oldPos.x + 1 != Size.x)
-            SpawnValidBlocks(closestToEndPosition + Vector2Int.Right);
+            await SpawnValidBlocks(closestToEndPosition + Vector2Int.Right, cancellationToken);
 
         bool IsValidToPlace(Vector2Int position)
         {
@@ -161,7 +169,7 @@ public class FindTheWayGame : MiniGame
         }
     }
 
-    private void FillWithFakeBlocks()
+    private async Task FillWithFakeBlocks(CancellationToken cancellationToken)
     {
         for(int x = 0; x < Size.x; ++x)
         {
@@ -169,7 +177,13 @@ public class FindTheWayGame : MiniGame
             {
                 var fillPos = new Vector2Int(x, y);
                 if(!_blocks.ContainsKey(fillPos))
+                {
+                    if(cancellationToken.IsCancellationRequested)
+                        return;
+
                     SpawnBlock(fillPos, true);
+                    await Task.Yield();
+                }
             }
         }
     }
