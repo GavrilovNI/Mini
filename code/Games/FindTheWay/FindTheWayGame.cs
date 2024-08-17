@@ -75,7 +75,7 @@ public class FindTheWayGame : MiniGame
         return index - 1;
     }
 
-    private async Task SpawnValidBlocks(CancellationToken cancellationToken) => SpawnValidBlocks(new Vector2Int(0, Game.Random.Next(Size.y)), cancellationToken);
+    private Task SpawnValidBlocks(CancellationToken cancellationToken) => SpawnValidBlocks(new Vector2Int(0, Game.Random.Next(Size.y)), cancellationToken);
 
     private async Task SpawnValidBlocks(Vector2Int startPos, CancellationToken cancellationToken)
     {
