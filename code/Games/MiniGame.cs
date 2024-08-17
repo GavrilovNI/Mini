@@ -81,6 +81,9 @@ public abstract class MiniGame : Component, Component.INetworkListener
     {
         _spawnPoints = GameObject.Components.GetAll<SpawnPoint>(FindMode.EverythingInSelfAndDescendants)
             .OrderBy(x => Guid.NewGuid()).ToList();
+
+        if(_spawnPoints.Count == 0)
+            Log.Warning("No spawn points were found.");
     }
 
     protected override void OnUpdate()
