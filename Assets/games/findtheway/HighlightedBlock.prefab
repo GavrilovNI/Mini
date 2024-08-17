@@ -1,0 +1,59 @@
+{
+  "RootObject": {
+    "__guid": "1ae36060-cf66-47d2-97db-78f38f4cf70b",
+    "Flags": 0,
+    "Name": "HighlightedBlock",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.ModelRenderer",
+        "__guid": "d360d344-f382-4702-9f17-e86334240237",
+        "BodyGroups": 18446744073709551615,
+        "Model": "models/dev/box.vmdl",
+        "RenderType": "On",
+        "Tint": "0.33,0.33,0.33,1"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "3724f6b7-d804-408b-9fec-c4448bd1e542",
+        "Center": "0,0,0",
+        "IsTrigger": false,
+        "Scale": "50,50,50",
+        "Static": false
+      },
+      {
+        "__type": "Mini.Games.FindTheWay.HighlightedBlock",
+        "__guid": "433a5e2f-82df-42f6-af82-b16c8aafdbf2",
+        "Color": "0.33,0.33,0.33,1",
+        "HighlightColor": "1,1,1,1",
+        "HighlightCurve": [
+          {},
+          {
+            "x": 0.25,
+            "y": 1
+          },
+          {
+            "x": 0.75,
+            "y": 1
+          },
+          {
+            "x": 1
+          }
+        ],
+        "HighlightTime": 3,
+        "ModelRenderer": {
+          "_type": "component",
+          "component_id": "d360d344-f382-4702-9f17-e86334240237",
+          "go": "1ae36060-cf66-47d2-97db-78f38f4cf70b",
+          "component_type": "ModelRenderer"
+        }
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
