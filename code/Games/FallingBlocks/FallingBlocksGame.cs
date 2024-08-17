@@ -8,8 +8,6 @@ namespace Mini.Games.FallingBlocks;
 
 public sealed class FallingBlocksGame : MiniGame
 {
-    public readonly Vector3 BlockModelSize = 50f;
-
     [Property]
     public Vector2Int Size { get; set; } = 8;
 
@@ -124,9 +122,9 @@ public sealed class FallingBlocksGame : MiniGame
         if(_notGroundedBlocks.ContainsKey(index))
             throw new InvalidOperationException("There is still falling block at given index.");
 
-        var position = new Vector3((index.x + 0.5f) * BlockSize.x * BlockModelSize.x,
-            (index.y + 0.5f) * BlockSize.y * BlockModelSize.y,
-            SpawningHeight + BlockSize.z * BlockModelSize.z * (0.5f + _groundedBlocksCount.GetValueOrDefault(index, 0)));
+        var position = new Vector3((index.x + 0.5f) * BlockSize.x * Consts.CubeModelSize.x,
+            (index.y + 0.5f) * BlockSize.y * Consts.CubeModelSize.y,
+            SpawningHeight + BlockSize.z * Consts.CubeModelSize.z * (0.5f + _groundedBlocksCount.GetValueOrDefault(index, 0)));
 
         var cloneConfig = new CloneConfig(new global::Transform(position, Transform.Rotation, BlockSize), GameObject, false);
 
