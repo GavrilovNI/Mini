@@ -1,5 +1,5 @@
 {
-  "__guid": "7d0327bf-fd23-448e-b32d-d4d130aab92e",
+  "__guid": "a3b48e7e-2ded-4938-b71c-33da429d6baf",
   "GameObjects": [
     {
       "__guid": "2ce6b6a4-d99a-4f72-9ddf-83456ce60c8d",
@@ -43,7 +43,6 @@
       "__guid": "e8454cb1-58b1-4856-b496-7d755f874765",
       "Flags": 0,
       "Name": "GamesLauncher",
-      "Position": "65.23445,65.23447,-92.25546",
       "Enabled": true,
       "NetworkMode": 1,
       "Components": [
@@ -53,13 +52,13 @@
           "GamesCountToVote": 15,
           "GamesLoader": {
             "_type": "component",
-            "component_id": "a07daad8-2436-43e3-82ab-9897f2acc1ef",
+            "component_id": "2ecf5ce7-ad71-4c46-93b1-30893f61b260",
             "go": "e8454cb1-58b1-4856-b496-7d755f874765",
             "component_type": "GamesLoader"
           },
           "GamesVoter": {
             "_type": "component",
-            "component_id": "96f434f8-94fb-4d39-8ea5-d80aa1edf839",
+            "component_id": "89efa426-c33b-4830-aa65-b6f1e75a0059",
             "go": "e8454cb1-58b1-4856-b496-7d755f874765",
             "component_type": "GamesVoter"
           },
@@ -69,18 +68,18 @@
           },
           "TimeAfterEnd": 15,
           "TimeBeforeStart": 2,
-          "VotingTime": 30
+          "VotingTime": 5
         },
         {
           "__type": "Mini.GamesLoader",
-          "__guid": "a07daad8-2436-43e3-82ab-9897f2acc1ef"
+          "__guid": "2ecf5ce7-ad71-4c46-93b1-30893f61b260"
         },
         {
           "__type": "Mini.GamesVoter",
-          "__guid": "96f434f8-94fb-4d39-8ea5-d80aa1edf839",
+          "__guid": "89efa426-c33b-4830-aa65-b6f1e75a0059",
           "GamesLoader": {
             "_type": "component",
-            "component_id": "a07daad8-2436-43e3-82ab-9897f2acc1ef",
+            "component_id": "2ecf5ce7-ad71-4c46-93b1-30893f61b260",
             "go": "e8454cb1-58b1-4856-b496-7d755f874765",
             "component_type": "GamesLoader"
           }
@@ -103,7 +102,7 @@
         },
         {
           "__type": "Mini.UI.MainHUD",
-          "__guid": "128e940f-b3c0-4a8b-91a9-685d4ac99bf2",
+          "__guid": "8fd43218-7f39-4c1c-acc0-879e1d11d22f",
           "GamesLauncher": {
             "_type": "component",
             "component_id": "8e2186f5-c6a5-40b1-9c0a-34d4e7a6a670",
@@ -113,19 +112,19 @@
         },
         {
           "__type": "Mini.UI.GameVotingUI",
-          "__guid": "6d60a424-1d04-4b86-89bd-45c291f54d67",
+          "__guid": "a8dccb12-5c5a-46f1-a0e4-807d1584bb39",
           "AutoHeight": true,
           "AutoWidth": true,
           "GamePlateAspectRatio": 0.8,
           "GamesLoader": {
             "_type": "component",
-            "component_id": "a07daad8-2436-43e3-82ab-9897f2acc1ef",
+            "component_id": "2ecf5ce7-ad71-4c46-93b1-30893f61b260",
             "go": "e8454cb1-58b1-4856-b496-7d755f874765",
             "component_type": "GamesLoader"
           },
           "GamesVoter": {
             "_type": "component",
-            "component_id": "96f434f8-94fb-4d39-8ea5-d80aa1edf839",
+            "component_id": "89efa426-c33b-4830-aa65-b6f1e75a0059",
             "go": "e8454cb1-58b1-4856-b496-7d755f874765",
             "component_type": "GamesVoter"
           },
