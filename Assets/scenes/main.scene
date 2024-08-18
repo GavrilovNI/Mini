@@ -68,7 +68,7 @@
           },
           "TimeAfterEnd": 15,
           "TimeBeforeStart": 2,
-          "VotingTime": 5
+          "VotingTime": 30
         },
         {
           "__type": "Mini.GamesLoader",
