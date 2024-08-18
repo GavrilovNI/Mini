@@ -31,7 +31,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
     public int PlayingPlayersCount => Players.Count;
 
 
-    private List<SpawnPoint> _spawnPoints = null!;
+    protected List<SpawnPoint> SpawnPoints = null!;
     private int _nextSpawnPointIndex = 0;
 
 
@@ -94,17 +94,6 @@ public abstract class MiniGame : Component, Component.INetworkListener
         });
     }
 
-
-
-    protected override void OnAwake()
-    {
-        _spawnPoints = GameObject.Components.GetAll<SpawnPoint>(FindMode.EverythingInSelfAndDescendants)
-            .OrderBy(x => Guid.NewGuid()).ToList();
-
-        if(_spawnPoints.Count == 0)
-            Log.Warning("No spawn points were found.");
-    }
-
     protected override void OnUpdate()
     {
         if(IsProxy || Status != GameStatus.Started)
@@ -125,8 +114,8 @@ public abstract class MiniGame : Component, Component.INetworkListener
         if(existingPlayer.IsValid())
             throw new InvalidOperationException("Player already spawned");
 
-        var spawnPoint = _spawnPoints[_nextSpawnPointIndex];
-        _nextSpawnPointIndex = (_nextSpawnPointIndex + 1) % _spawnPoints.Count;
+        var spawnPoint = SpawnPoints[_nextSpawnPointIndex];
+        _nextSpawnPointIndex = (_nextSpawnPointIndex + 1) % SpawnPoints.Count;
 
         var startLocation = spawnPoint.Transform.World.WithScale(1f);
         var playerGameObject = PlayerPrefab.Clone(startLocation, null, false, $"Player - {connection.DisplayName}");
@@ -185,6 +174,11 @@ public abstract class MiniGame : Component, Component.INetworkListener
 
     protected virtual Task OnGameSetup()
     {
+        UpdateSpawnPoints();
+
+        if(SpawnPoints.Count == 0)
+            Log.Warning("No spawn points were found.");
+
         foreach(var connection in Connection.All)
             SpawnPlayer(connection);
 
@@ -200,4 +194,11 @@ public abstract class MiniGame : Component, Component.INetworkListener
 
         return PlayingPlayers.Select(p => p.Network.OwnerConnection.SteamId).ToHashSet();
     }
+
+    protected virtual void UpdateSpawnPoints()
+    {
+        SpawnPoints = GameObject.Components.GetAll<SpawnPoint>(FindMode.EverythingInSelfAndDescendants)
+            .OrderBy(x => Guid.NewGuid()).ToList();
+    }
+
 }
