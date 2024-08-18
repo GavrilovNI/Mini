@@ -28,9 +28,6 @@ public class GamesLauncher : Component
     [Property]
     public float TimeAfterEnd { get; set; } = 15f;
 
-    [Property]
-    private GameObject TestGamePrefab { get; set; } = null!;
-
     private const int MinPlayersToPlay = 1;
 
     [Sync]
@@ -52,9 +49,6 @@ public class GamesLauncher : Component
     private GameStatus _oldGameStatus;
 
 
-
-    [Button("StartTestGame")]
-    private void StartTestGame() => StartGame(TestGamePrefab, new GameInfo());
 
     [Button("StartRandomGame")]
     private void StartRandomGame()
