@@ -14,13 +14,17 @@
 	}
 
 	
-	@if(!GamesLauncher.HasEnoughPlayers)
+	
+	@if(GamesLauncher.GameStatus == GameStatus.None)
 	{
-		<label class="title">Waiting Players</label>
-	}
-	else if(GamesLauncher.GameStatus == GameStatus.None)
-	{
-		<label class="title">Voting ends in @timeUntilGameStatusEnd.CeilToInt()</label>
+		@if(!GamesLauncher.HasEnoughPlayers)
+		{
+			<label class="title">Waiting Players</label>
+		}
+		else
+		{
+			<label class="title">Voting ends in @timeUntilGameStatusEnd.CeilToInt()</label>
+		}
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.SetUp)
 	{
