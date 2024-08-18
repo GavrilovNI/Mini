@@ -24,7 +24,17 @@ public class FindTheWayGame : MiniGame
     [Property]
     public GameObject HighlightedBlockPrefab { get; set; } = null!;
     [Property]
+    public GameObject SpawnPointPrefab { get; set; } = null!;
+    [Property]
+    public GameObject SpawnPointParent { get; set; } = null!;
+    [Property]
     public GameObject BlocksParent { get; set; } = null!;
+    [Property]
+    public GameObject SpawnPlatform { get; set; } = null!;
+    [Property]
+    public GameObject FinishPlatform { get; set; } = null!;
+    [Property]
+    public GameObject KillingZone { get; set; } = null!;
 
     [Property, Group("Rendering")]
     public Color Color { get; set; } = new Color(0.33f, 0.33f, 0.33f);
@@ -52,6 +62,9 @@ public class FindTheWayGame : MiniGame
     protected override async Task OnGameSetup()
     {
         _timeSinceHightlight = Time.Now;
+
+        UpdatePlatforms();
+        CreateSpawnPoints();
         await base.OnGameSetup();
         await BuildBlocks(CancellationToken.None);
     }
@@ -78,6 +91,39 @@ public class FindTheWayGame : MiniGame
         }
     }
 
+
+    [Button("Update Platforms"), Group("Debug")]
+    private void UpdatePlatforms()
+    {
+        SpawnPlatform.Transform.Scale = SpawnPlatform.Transform.World.Scale.WithY(BlockSize.y * Size.y);
+        SpawnPlatform.Transform.Position = SpawnPlatform.Transform.Position
+            .WithY(SpawnPlatform.Transform.Scale.y / 2f * Consts.CubeModelSize);
+
+
+        FinishPlatform.Transform.Scale = FinishPlatform.Transform.World.Scale.WithY(BlockSize.y * Size.y);
+        FinishPlatform.Transform.Position = FinishPlatform.Transform.World.Position
+            .WithY(SpawnPlatform.Transform.Scale.y / 2f * Consts.CubeModelSize)
+            .WithX(SpawnPlatform.Transform.Scale.x / 2f * Consts.CubeModelSize + BlockSize.x * Size.x * Consts.CubeModelSize);
+
+        KillingZone.Transform.Scale = KillingZone.Transform.Scale.WithX(BlockSize.x * Size.x * 2).WithY(BlockSize.y * Size.y * 2);
+        KillingZone.Transform.Position = KillingZone.Transform.Position.WithY(SpawnPlatform.Transform.Position.y)
+            .WithX(BlockSize.x * Size.x * Consts.CubeModelSize / 2f);
+    }
+
+    [Button("Recreate Spawn Points"), Group("Debug")]
+    private void CreateSpawnPoints()
+    {
+        foreach(var spawnPoint in GameObject.Components.GetAll<SpawnPoint>(FindMode.EverythingInSelfAndDescendants))
+            spawnPoint.GameObject.Destroy();
+
+        for(int i = 0; i < Size.y; ++i)
+        {
+            var position = new Vector3(-SpawnPlatform.Transform.Scale.x * Consts.CubeModelSize / 2f, BlockSize.y * Consts.CubeModelSize * (i + 0.5f), SpawnPlatform.Transform.Scale.z * Consts.CubeModelSize / 2f);
+            SpawnPointPrefab.Clone(SpawnPointParent, position, Rotation.Identity, Vector3.One).NetworkSpawn();  
+        }
+
+        UpdateSpawnPoints();
+    }
 
     [Button("Rebuild"), Group("Debug")]
     private void BuildBlocksBtn() => _ = BuildBlocks(CancellationToken.None);

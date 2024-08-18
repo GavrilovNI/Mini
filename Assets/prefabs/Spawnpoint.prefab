@@ -1,0 +1,21 @@
+{
+  "RootObject": {
+    "__guid": "817159b4-bb11-4d69-b616-8a64c3cbdbe3",
+    "Flags": 0,
+    "Name": "Spawnpoint",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.SpawnPoint",
+        "__guid": "21f7c40f-c9c2-474b-8159-1679ba30691f",
+        "Color": "0.8902,0.31765,0.05098,1"
+      }
+    ]
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

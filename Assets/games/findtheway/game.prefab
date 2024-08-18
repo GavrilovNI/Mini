@@ -18,6 +18,10 @@
           "_type": "gameobject",
           "prefab": "games/findtheway/fakeblock.prefab"
         },
+        "FinishPlatform": {
+          "_type": "gameobject",
+          "go": "7732f60e-8a2c-4e11-985e-f63e35c9a5bb"
+        },
         "HighlightColor": "1,1,1,1",
         "HighlightCurve": [
           {},
@@ -39,6 +43,10 @@
         },
         "HighlightSpeed": 7,
         "HighlightTime": 2,
+        "KillingZone": {
+          "_type": "gameobject",
+          "go": "8f57ac76-2fef-497e-8030-cc661a38d639"
+        },
         "MaxGameTime": 60,
         "MinDistanceWithoutTurn": 3,
         "PlayerPrefab": {
@@ -50,6 +58,18 @@
           "go": "9b9c2f26-9bc2-4357-95cc-29fc9b310ee0"
         },
         "Size": "20,8",
+        "SpawnPlatform": {
+          "_type": "gameobject",
+          "go": "70895795-b1b5-4277-a16e-bd97e7b929ea"
+        },
+        "SpawnPointParent": {
+          "_type": "gameobject",
+          "go": "ec9ec8a9-79be-4555-9977-fb5d48f6bdd1"
+        },
+        "SpawnPointPrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/spawnpoint.prefab"
+        },
         "Status": "Created",
         "StopGameIfNotEnoughPlayer": false,
         "TimeBetweenHighlights": 10,
@@ -107,21 +127,104 @@
             "__guid": "ec9ec8a9-79be-4555-9977-fb5d48f6bdd1",
             "Flags": 0,
             "Name": "SpawnPoints",
+            "Enabled": true
+          },
+          {
+            "__guid": "70895795-b1b5-4277-a16e-bd97e7b929ea",
+            "Flags": 0,
+            "Name": "SpawnPlatform",
+            "Position": "-125,250,0",
+            "Scale": "5,10,1",
             "Enabled": true,
-            "Children": [
+            "NetworkMode": 1,
+            "Components": [
               {
-                "__guid": "817159b4-bb11-4d69-b616-8a64c3cbdbe3",
-                "Flags": 0,
-                "Name": "Spawnpoint",
-                "Position": "-415.9376,0,0",
-                "Enabled": true,
-                "Components": [
-                  {
-                    "__type": "Sandbox.SpawnPoint",
-                    "__guid": "21f7c40f-c9c2-474b-8159-1679ba30691f",
-                    "Color": "0.8902,0.31765,0.05098,1"
-                  }
-                ]
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "6f73fc1f-2fbb-4312-8f0f-d6a018f6d322",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/dev/box.vmdl",
+                "RenderType": "On",
+                "Tint": "0.63721,1,0.66744,1"
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "d0409475-a2c0-4c1b-b699-b2ee210b640f",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "50,50,50",
+                "Static": false
+              }
+            ]
+          },
+          {
+            "__guid": "7732f60e-8a2c-4e11-985e-f63e35c9a5bb",
+            "Flags": 0,
+            "Name": "FinishPlatform",
+            "Position": "125,250,0",
+            "Scale": "5,10,1",
+            "Enabled": true,
+            "NetworkMode": 1,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "09b45756-4de3-4e23-ba51-f2d471cfbd89",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/dev/box.vmdl",
+                "RenderType": "On",
+                "Tint": "0.92674,1,0.37209,1"
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "e4617ab1-59ca-4c63-b429-a20eebfc63ed",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "OnTriggerEnter": {
+                  "__version": 7,
+                  "__guid": "d5f45a3f-9e51-493a-bd05-eda7168334a5",
+                  "UserData": {
+                    "Title": "On Trigger Enter"
+                  },
+                  "Variables": [],
+                  "Nodes": [
+                    {
+                      "Id": 0,
+                      "Type": "input"
+                    }
+                  ],
+                  "Links": []
+                },
+                "Scale": "50,50,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "f6225a61-33e2-44b7-9433-ddae727d25c4",
+                "Center": "0,0,50",
+                "IsTrigger": true,
+                "Scale": "50,50,50",
+                "Static": false
+              }
+            ]
+          },
+          {
+            "__guid": "8f57ac76-2fef-497e-8030-cc661a38d639",
+            "Flags": 0,
+            "Name": "KillingZone",
+            "Position": "0,0,-50",
+            "Enabled": true,
+            "NetworkMode": 1,
+            "Components": [
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "5949d1ca-ffb0-4db5-bb87-27eb17db48ac",
+                "Center": "0,0,0",
+                "IsTrigger": true,
+                "Scale": "50,50,50",
+                "Static": false
+              },
+              {
+                "__type": "Mini.UtilComponents.KillingZone",
+                "__guid": "dc236fc2-ecad-4214-bf01-e0d8edfb0b3b"
               }
             ]
           }
