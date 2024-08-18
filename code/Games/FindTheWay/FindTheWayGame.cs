@@ -349,7 +349,7 @@ public class FindTheWayGame : MiniGame
         List<Task> tasks = new();
 
         if(_blocks.TryGetValue(startPos, out var block) && block is HighlightedBlock highlightedBlock)
-            tasks.Add(highlightedBlock.Highlight(cancellationToken));
+            highlightedBlock.Highlight();
         else
             return;
 

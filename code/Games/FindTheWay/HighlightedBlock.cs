@@ -25,24 +25,16 @@ public class HighlightedBlock : FindTheWayBlock
     }
 
     [Button("Highlight")]
-    private void HighlightBtn() => _ = Highlight(HighlightTime, CancellationToken.None);
-
-    public Task Highlight(CancellationToken cancellationToken) => Highlight(HighlightTime, cancellationToken);
-    public async Task Highlight(float time, CancellationToken cancellationToken)
+    [Broadcast(NetPermission.OwnerOnly)]
+    public async void Highlight()
     {
         TimeSince timeSinceStart = 0;
 
-        while(timeSinceStart < time)
+        while(timeSinceStart < HighlightTime)
         {
-            Color color = Color.Lerp(Color, HighlightColor, HighlightCurve.Evaluate(timeSinceStart / time));
+            Color color = Color.Lerp(Color, HighlightColor, HighlightCurve.Evaluate(timeSinceStart / HighlightTime));
             ModelRenderer.Tint = color;
             await Task.Frame();
-
-            if(cancellationToken.IsCancellationRequested)
-            {
-                ModelRenderer.Tint = Color;
-                return;
-            }
         }
 
         ModelRenderer.Tint = Color;
