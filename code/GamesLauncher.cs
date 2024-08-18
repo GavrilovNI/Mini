@@ -2,6 +2,7 @@
 using Mini.Games;
 using Sandbox;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Mini;
@@ -41,8 +42,14 @@ public class GamesLauncher : Component
     [Sync]
     public bool HasEnoughPlayers { get; private set; } = false;
 
+    [Sync]
+    protected NetList<ulong> NetWinners { get; private set; } = new();
+
+    public ISet<ulong> Winners => NetWinners.ToHashSet();
+
     private TimeSince _timeSinceVotingStarted;
     private TimeSince _timeSinceEnoughPlayersConnected;
+    private GameStatus _oldGameStatus;
 
 
 
@@ -105,15 +112,20 @@ public class GamesLauncher : Component
 
     protected override void OnUpdate()
     {
+        if(IsProxy)
+            return;
+
         UpdateGameStartRequirements();
 
         if(!CurrentGame.IsValid())
         {
+            _oldGameStatus = GameStatus;
             GameStatus = GameStatus.None;
             HandleVoting();
             return;
         }
 
+        _oldGameStatus = GameStatus;
         GameStatus = CurrentGame.Status;
 
         if(Connection.All.Count < MinPlayersToPlay && GameStatus == GameStatus.SetUp)
@@ -168,6 +180,12 @@ public class GamesLauncher : Component
         }
         else if(CurrentGame.Status == GameStatus.Stopped)
         {
+            if(_oldGameStatus != GameStatus.Stopped)
+            {
+                foreach(var winner in CurrentGame.GetWinners())
+                    NetWinners.Add(winner);
+            }
+
             TimeUntilGameStatusEnd = TimeAfterEnd - CurrentGame.TimeSinceStatusChanged;
 
             if(CurrentGame.TimeSinceStatusChanged >= TimeAfterEnd)

@@ -34,8 +34,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
     protected List<SpawnPoint> SpawnPoints = null!;
     private int _nextSpawnPointIndex = 0;
 
-    [Sync]
-    private NetList<ulong> NetWinners { get; set; } = new();
+    protected readonly HashSet<ulong> Winners = new();
 
 
 
@@ -70,7 +69,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
         Status = GameStatus.Starting;
         TimeSinceStatusChanged = 0;
 
-        NetWinners.Clear();
+        Winners.Clear();
 
         _ = OnGameStart().ContinueWith(t =>
         {
@@ -91,9 +90,9 @@ public abstract class MiniGame : Component, Component.INetworkListener
         Status = GameStatus.Stopping;
         TimeSinceStatusChanged = 0;
 
-        NetWinners.Clear();
+        Winners.Clear();
         foreach(var winner in ChooseWinners())
-            NetWinners.Add(winner);
+            Winners.Add(winner);
 
         _ = OnGameStop().ContinueWith(t =>
         {
@@ -203,5 +202,5 @@ public abstract class MiniGame : Component, Component.INetworkListener
     protected virtual Task OnGameStop() => Task.CompletedTask;
 
     protected virtual ISet<ulong> ChooseWinners() => PlayingPlayers.Select(p => p.Network.OwnerConnection.SteamId).ToHashSet();
-    public ISet<ulong> GetWinners() => NetWinners.ToHashSet();
+    public ISet<ulong> GetWinners() => Winners;
 }

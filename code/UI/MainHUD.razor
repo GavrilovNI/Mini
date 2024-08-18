@@ -32,7 +32,7 @@
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.Stopped)
 	{
-		var winners = GamesLauncher.CurrentGame.GetWinners()
+		var winners = GamesLauncher.Winners
 			.Select(steamId => Connection.All.FirstOrDefault(c => c.SteamId == steamId, null)?.DisplayName)
 			.Where(name => name is not null);
 
