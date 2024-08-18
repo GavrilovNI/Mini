@@ -2,13 +2,14 @@
   "RootObject": {
     "__guid": "1ae36060-cf66-47d2-97db-78f38f4cf70b",
     "Flags": 0,
-    "Name": "HighlightedBlock",
+    "Name": "highlightedblock",
     "Enabled": true,
     "Components": [
       {
         "__type": "Sandbox.ModelRenderer",
         "__guid": "d360d344-f382-4702-9f17-e86334240237",
         "BodyGroups": 18446744073709551615,
+        "MaterialOverride": "materials/bordered_square.vmat",
         "Model": "models/dev/box.vmdl",
         "RenderType": "On",
         "Tint": "0.33,0.33,0.33,1"
@@ -48,7 +49,9 @@
           "component_type": "ModelRenderer"
         }
       }
-    ]
+    ],
+    "Children": [],
+    "__variables": []
   },
   "ShowInMenu": false,
   "MenuPath": null,

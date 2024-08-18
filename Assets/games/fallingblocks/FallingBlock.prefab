@@ -10,6 +10,7 @@
         "__type": "Sandbox.ModelRenderer",
         "__guid": "f4d33b0d-ab2e-43c5-9ace-fbeedf271fa4",
         "BodyGroups": 18446744073709551615,
+        "MaterialOverride": "materials/bordered_square.vmat",
         "Model": "models/dev/box.vmdl",
         "RenderType": "Off",
         "Tint": "1,1,1,1"
@@ -30,6 +31,12 @@
           "component_id": "ef32a300-7eeb-4658-8948-b30f487d8268",
           "go": "db5618c3-4894-494d-ad00-e9f6f7739be3",
           "component_type": "BoxCollider"
+        },
+        "Model": {
+          "_type": "component",
+          "component_id": "f4d33b0d-ab2e-43c5-9ace-fbeedf271fa4",
+          "go": "db5618c3-4894-494d-ad00-e9f6f7739be3",
+          "component_type": "ModelRenderer"
         },
         "Speed": 300
       }
