@@ -34,6 +34,8 @@ public abstract class MiniGame : Component, Component.INetworkListener
     protected List<SpawnPoint> SpawnPoints = null!;
     private int _nextSpawnPointIndex = 0;
 
+    [Sync]
+    private NetList<ulong> NetWinners { get; set; } = new();
 
 
 
@@ -68,6 +70,8 @@ public abstract class MiniGame : Component, Component.INetworkListener
         Status = GameStatus.Starting;
         TimeSinceStatusChanged = 0;
 
+        NetWinners.Clear();
+
         _ = OnGameStart().ContinueWith(t =>
         {
             Status = GameStatus.Started;
@@ -86,6 +90,10 @@ public abstract class MiniGame : Component, Component.INetworkListener
 
         Status = GameStatus.Stopping;
         TimeSinceStatusChanged = 0;
+
+        NetWinners.Clear();
+        foreach(var winner in ChooseWinners())
+            NetWinners.Add(winner);
 
         _ = OnGameStop().ContinueWith(t =>
         {
@@ -184,16 +192,6 @@ public abstract class MiniGame : Component, Component.INetworkListener
 
         return Task.CompletedTask;
     }
-    protected virtual Task OnGameStart() => Task.CompletedTask;
-    protected virtual Task OnGameStop() => Task.CompletedTask;
-
-    public virtual ISet<ulong> GetWinners()
-    {
-        if(Status != GameStatus.Stopped)
-            throw new InvalidOperationException("Incorrect game status.");
-
-        return PlayingPlayers.Select(p => p.Network.OwnerConnection.SteamId).ToHashSet();
-    }
 
     protected virtual void UpdateSpawnPoints()
     {
@@ -201,4 +199,9 @@ public abstract class MiniGame : Component, Component.INetworkListener
             .OrderBy(x => Guid.NewGuid()).ToList();
     }
 
+    protected virtual Task OnGameStart() => Task.CompletedTask;
+    protected virtual Task OnGameStop() => Task.CompletedTask;
+
+    protected virtual ISet<ulong> ChooseWinners() => PlayingPlayers.Select(p => p.Network.OwnerConnection.SteamId).ToHashSet();
+    public ISet<ulong> GetWinners() => NetWinners.ToHashSet();
 }
