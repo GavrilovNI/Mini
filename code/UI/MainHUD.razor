@@ -37,7 +37,7 @@
 			.Where(name => name is not null);
 
 		<label class="winners">Winners are @string.Join(", ", winners)</label>
-		<label class="title">Choosing game in @timeUntilGameStatusEnd.CeilToInt()</label>
+		<label class="title">Voting starts in @timeUntilGameStatusEnd.CeilToInt()</label>
 	}
 </root>
 
