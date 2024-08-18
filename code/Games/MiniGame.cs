@@ -26,9 +26,9 @@ public abstract class MiniGame : Component, Component.INetworkListener
     public GameObject PlayersParent { get; set; } = null!;
 
 
-    private readonly List<Player> _players = new();
-    public IEnumerable<Player> PlayingPlayers => _players;
-    public int PlayingPlayersCount => _players.Count;
+    protected readonly List<Player> Players = new();
+    public IEnumerable<Player> PlayingPlayers => Players;
+    public int PlayingPlayersCount => Players.Count;
 
 
     private List<SpawnPoint> _spawnPoints = null!;
@@ -118,7 +118,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
     }
 
 
-    public Player? GetPlayer(Connection connection) => _players.FirstOrDefault(p => p.Network.OwnerConnection == connection, null);
+    public Player? GetPlayer(Connection connection) => Players.FirstOrDefault(p => p.Network.OwnerConnection == connection, null);
     protected void SpawnPlayer(Connection connection)
     {
         var existingPlayer = GetPlayer(connection);
@@ -136,7 +136,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
         if(!player.IsValid())
             throw new ComponentNotFoundException(playerGameObject, typeof(Player));
 
-        _players.Add(player);
+        Players.Add(player);
         player.Died += OnPlayerDied;
 
         playerGameObject.Enabled = true;
@@ -158,7 +158,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
 
         player.Died -= OnPlayerDied;
         player.GameObject.Destroy();
-        _players.Remove(player);
+        Players.Remove(player);
 
         if(StopGameIfNotEnoughPlayer && Status == GameStatus.Started && Players.Count <= 1)
             Stop();
