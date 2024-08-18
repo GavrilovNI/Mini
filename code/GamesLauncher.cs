@@ -66,6 +66,9 @@ public class GamesLauncher : Component
         if(CurrentGame.IsValid())
             throw new InvalidOperationException("Another game already exists.");
 
+
+        GamesVoter.Clear();
+
         var gameGameObject = GamesLoader.CloneGamePrefab(gameId, new CloneConfig(new global::Transform(), GameObject, false));
         var gameInfo = GamesLoader.GetGameInfo(gameId);
         StartGameByGameObject(gameGameObject, gameInfo);
@@ -194,8 +197,7 @@ public class GamesLauncher : Component
         if(TimeUntilGameStatusEnd <= 0)
         {
             var choosedGame = GamesVoter.GetMostWantedGame();
-            GamesVoter.ClearGames();
-            GamesVoter.ClearVotes();
+            GamesVoter.Clear();
             StartGame(choosedGame);
         }
     }

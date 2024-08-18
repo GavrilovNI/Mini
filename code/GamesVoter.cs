@@ -38,13 +38,9 @@ public class GamesVoter : Component
             NetGames.Add(game.GameId);
     }
 
-    public void ClearGames()
+    public void Clear()
     {
         NetGames.Clear();
-    }
-
-    public void ClearVotes()
-    {
         NetVotes.Clear();
     }
 
