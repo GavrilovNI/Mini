@@ -2,7 +2,7 @@
   "RootObject": {
     "__guid": "c900a688-0326-43ba-ac29-2aeb95b6d7d5",
     "Flags": 0,
-    "Name": "fallingblocks",
+    "Name": "game",
     "Enabled": true,
     "NetworkMode": 1,
     "Components": [
@@ -45,7 +45,7 @@
         },
         "FallingBlockPrefab": {
           "_type": "gameobject",
-          "prefab": "prefabs/fallingblock.prefab"
+          "prefab": "games/fallingblocks/fallingblock.prefab"
         },
         "MaxGameTime": 120,
         "PlayerPrefab": {
@@ -81,7 +81,9 @@
               "y": 1
             }
           ]
-        }
+        },
+        "Status": "Created",
+        "StopGameIfNotEnoughPlayer": true
       }
     ],
     "Children": [
