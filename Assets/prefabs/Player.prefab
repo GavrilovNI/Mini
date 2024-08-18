@@ -97,7 +97,8 @@
       {
         "__type": "Mini.Players.Player",
         "__guid": "47bdc0ae-8885-4e8b-b9c5-52dd2c9b7d9c",
-        "Health": 100
+        "Health": 100,
+        "MaxHealth": 100
       }
     ],
     "Children": [

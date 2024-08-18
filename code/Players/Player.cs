@@ -12,6 +12,14 @@ public sealed class Player : Component, IDamageable, IHealthProvider
     [Property]
     public float Health { get; private set; } = 100f;
 
+    [Sync, HostSync]
+    [Property]
+    public float MaxHealth { get; private set; } = 100f;
+
+    public bool IsDead => Health <= 0;
+
+
+
     public void OnDamage(in DamageInfo damageInfo)
     {
         if(damageInfo.Damage < 0)
@@ -26,7 +34,10 @@ public sealed class Player : Component, IDamageable, IHealthProvider
         if(damage < 0)
             throw new ArgumentOutOfRangeException(nameof(damage), damage, "Damage is negative.");
 
-        Health -= damage;
+        if(IsProxy)
+            return;
+
+        Health = Math.Max(0, Health - damage);
 
         if(Health <= 0)
             OnDied();
@@ -38,17 +49,20 @@ public sealed class Player : Component, IDamageable, IHealthProvider
         if(health < 0)
             throw new ArgumentOutOfRangeException(nameof(health), health, "Healing health is negative.");
 
+        if(IsDead)
+            throw new InvalidOperationException("Can't heal dead player.");
+
         if(IsProxy)
             return;
 
-        Health += health;
+        Health = Math.Min(MaxHealth, Health + health);
     }
 
     [Broadcast(NetPermission.HostOnly)]
     private void OnDied()
     {
-        if(Health > 0)
-            throw new InvalidOperationException("Health os positive.");
+        if(!IsDead)
+            throw new InvalidOperationException("Health is positive.");
 
         Died?.Invoke(this);
 
