@@ -16,6 +16,8 @@ public abstract class MiniGame : Component, Component.INetworkListener
 
     [Property, Group("Main Settings")]
     public float MaxGameTime { get; set; } = 120f;
+    [Property, Group("Main Settings")]
+    public bool StopGameIfNotEnoughPlayer { get; set; } = true;
 
 
     [Property, Group("Players")]
@@ -158,7 +160,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
         player.GameObject.Destroy();
         _players.Remove(player);
 
-        if(Status == GameStatus.Started && _players.Count <= 1)
+        if(StopGameIfNotEnoughPlayer && Status == GameStatus.Started && Players.Count <= 1)
             Stop();
     }
 

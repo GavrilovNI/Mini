@@ -116,9 +116,10 @@ public class GamesLauncher : Component
 
         GameStatus = CurrentGame.Status;
 
-        if(!HasEnoughPlayers)
+        if(Connection.All.Count < MinPlayersToPlay && GameStatus == GameStatus.SetUp)
         {
-            ResetGame();
+            if(CurrentGame.Status == GameStatus.Started)
+                CurrentGame.Stop();
             return;
         }
 

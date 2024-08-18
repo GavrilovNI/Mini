@@ -51,6 +51,7 @@
         },
         "Size": "20,8",
         "Status": "Created",
+        "StopGameIfNotEnoughPlayer": false,
         "TimeBetweenHighlights": 10,
         "TurnChanceMultiplier": 3
       }
