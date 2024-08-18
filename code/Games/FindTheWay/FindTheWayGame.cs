@@ -236,8 +236,8 @@ public class FindTheWayGame : MiniGame
         if(_blocks.TryGetValue(index, out var existingBlock) && existingBlock.IsValid())
             throw new InvalidOperationException($"Block at {index} was already spawned.");
 
-        var position = new Vector3((index.x + 0.5f) * BlockSize.x * Consts.CubeModelSize.x,
-            (index.y + 0.5f) * BlockSize.y * Consts.CubeModelSize.y, 0f);
+        var position = new Vector3((index.x + 0.5f) * BlockSize.x * Consts.CubeModelSize,
+            (index.y + 0.5f) * BlockSize.y * Consts.CubeModelSize, 0f);
 
         var cloneConfig = new CloneConfig(new global::Transform(position, Transform.Rotation, BlockSize), BlocksParent, false);
 
