@@ -128,10 +128,9 @@ public class GamesLauncher : Component
         _oldGameStatus = GameStatus;
         GameStatus = CurrentGame.Status;
 
-        if(Connection.All.Count < MinPlayersToPlay && GameStatus == GameStatus.SetUp)
+        if(!HasEnoughPlayers && GameStatus == GameStatus.SetUp)
         {
-            if(CurrentGame.Status == GameStatus.Started)
-                CurrentGame.Stop();
+            ResetGame();
             return;
         }
 
@@ -153,12 +152,7 @@ public class GamesLauncher : Component
 
     private void UpdateGameStartRequirements()
     {
-        bool hasEnoughPlayers;
-        if(CurrentGame.IsValid())
-            hasEnoughPlayers = CurrentGame.PlayingPlayersCount >= MinPlayersToPlay;
-        else
-            hasEnoughPlayers = Connection.All.Count >= MinPlayersToPlay;
-
+        bool hasEnoughPlayers = Connection.All.Count >= MinPlayersToPlay;
         if(hasEnoughPlayers && !HasEnoughPlayers)
             _timeSinceEnoughPlayersConnected = 0;
         HasEnoughPlayers = hasEnoughPlayers;
