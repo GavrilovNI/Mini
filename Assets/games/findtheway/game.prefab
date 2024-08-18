@@ -136,7 +136,6 @@
             "Position": "-125,250,0",
             "Scale": "5,10,1",
             "Enabled": true,
-            "NetworkMode": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
@@ -163,7 +162,6 @@
             "Position": "125,250,0",
             "Scale": "5,10,1",
             "Enabled": true,
-            "NetworkMode": 1,
             "Components": [
               {
                 "__type": "Sandbox.ModelRenderer",
@@ -212,7 +210,6 @@
             "Name": "KillingZone",
             "Position": "0,0,-50",
             "Enabled": true,
-            "NetworkMode": 1,
             "Components": [
               {
                 "__type": "Sandbox.BoxCollider",

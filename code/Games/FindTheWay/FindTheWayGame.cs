@@ -110,6 +110,7 @@ public class FindTheWayGame : MiniGame
 
 
     [Button("Update Platforms"), Group("Debug")]
+    [Broadcast(NetPermission.OwnerOnly)]
     private void UpdatePlatforms()
     {
         SpawnPlatform.Transform.Scale = SpawnPlatform.Transform.World.Scale.WithY(BlockSize.y * Size.y);
