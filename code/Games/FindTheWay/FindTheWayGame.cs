@@ -1,5 +1,6 @@
 ﻿using Mini.Exceptions;
 using Mini.Games.FallingBlocks;
+using Mini.Players;
 using Sandbox;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,8 @@ public class FindTheWayGame : MiniGame
     private Task? _highlightTask = null;
     private TimeSince _timeSinceHightlight;
 
+    private HashSet<ulong> _finishedPlayers = new();
+
 
     protected override async Task OnGameSetup()
     {
@@ -65,8 +68,23 @@ public class FindTheWayGame : MiniGame
 
         UpdatePlatforms();
         CreateSpawnPoints();
+
+        FinishPlatform.Components.GetAll<Collider>().First(c => c.IsTrigger).OnTriggerEnter = OnFinishEnter;
+
         await base.OnGameSetup();
         await BuildBlocks(CancellationToken.None);
+    }
+
+    private void OnFinishEnter(Collider collider)
+    {
+        if(IsProxy)
+            return;
+
+        var player = collider.Components.Get<Player>();
+        Log.Info(player);
+
+        if(player.IsValid())
+            _finishedPlayers.Add(player.Network.OwnerConnection.SteamId);
     }
 
     protected override void OnUpdate()
@@ -344,6 +362,7 @@ public class FindTheWayGame : MiniGame
         await Task.WhenAll(tasks);
     }
 
+    protected override ISet<ulong> ChooseWinners() => _finishedPlayers;
 
     protected override void OnValidate()
     {
