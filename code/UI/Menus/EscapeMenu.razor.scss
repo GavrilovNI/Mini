@@ -1,0 +1,104 @@
+EscapeMenu {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	font-weight: bold;
+	pointer-events: all;
+	font-family: Poppins;
+	pointer-events: all;
+	backdrop-filter: blur(5px);
+
+	&.disabled {
+		opacity: 0;
+	}
+
+	.title {
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%, 0);
+		top: 50px;
+		font-weight: 250;
+		text-stroke: 5px black;
+		color: white;
+		font-size: 200px;
+	}
+
+	.buttons {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 300px;
+		transform: translate(-50%, -50%);
+		background-color: red;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		padding: 15px;
+		background-color: #666;
+		border-radius: 65px;
+
+		.button {
+			font-size: 50px;
+			height: 100px;
+
+			.label {
+				width: 100%;
+			}
+		}
+	}
+
+	.button {
+		.label {
+			border-radius: 50%;
+			white-space: nowrap;
+			color: white;
+			padding: 10px;
+			text-stroke: 5px black;
+			text-align: center;
+		}
+
+		&.disabled {
+			.label {
+				background-color: #555;
+			}
+		}
+
+		&:not(.disabled) {
+			.label {
+				background-color: #888;
+
+				&:hover {
+					background-color: #aaa;
+				}
+
+				&:active {
+					background-color: #bbb;
+				}
+			}
+		}
+
+		&.light {
+			&.disabled {
+				.label {
+					background-color: #666;
+				}
+			}
+
+			&:not(.disabled) {
+				.label {
+					background-color: #999;
+
+					&:hover {
+						background-color: #bbb;
+					}
+
+					&:active {
+						background-color: #ccc;
+					}
+				}
+			}
+		}
+	}
+}

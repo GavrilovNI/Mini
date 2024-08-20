@@ -131,6 +131,29 @@
           "Width": 5
         }
       ]
+    },
+    {
+      "__guid": "a304036a-7268-415b-a1fd-95d80d02af62",
+      "Flags": 0,
+      "Name": "EscapeMenu",
+      "Position": "-518.5465,-1222.09,1922.512",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "e438b26f-bbd2-4505-9fb6-c56d5e85f974",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 200
+        },
+        {
+          "__type": "Mini.UI.Menus.EscapeMenu",
+          "__guid": "80d47393-53c8-43d4-99dd-98ce517c51f0",
+          "MainMenuScene": "scenes/mainmenu.scene",
+          "Opened": false
+        }
+      ]
     }
   ],
   "SceneProperties": {
