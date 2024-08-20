@@ -17,6 +17,8 @@ public sealed class FallingBlocksGame : MiniGame
 
     [Property]
     public GameObject FallingBlockPrefab { get; set; } = null!;
+    [Property]
+    public GameObject FallingBlocksParent { get; set; } = null!;
 
     [Property]
     public float DifficultyIncreaseTime = 60f;
@@ -131,7 +133,7 @@ public sealed class FallingBlocksGame : MiniGame
             (index.y + 0.5f) * BlockSize.y * Consts.CubeModelSize,
             SpawningHeight + BlockSize.z * Consts.CubeModelSize * (0.5f + _groundedBlocksCount.GetValueOrDefault(index, 0)));
 
-        var cloneConfig = new CloneConfig(new global::Transform(position, Transform.Rotation, BlockSize), GameObject, false);
+        var cloneConfig = new CloneConfig(new global::Transform(position, Transform.Rotation, BlockSize), FallingBlocksParent, false);
 
         var fallingBlockGameObject = FallingBlockPrefab.Clone(cloneConfig);
 

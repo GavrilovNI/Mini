@@ -49,6 +49,10 @@
           "_type": "gameobject",
           "prefab": "games/fallingblocks/fallingblock.prefab"
         },
+        "FallingBlocksParent": {
+          "_type": "gameobject",
+          "go": "3ec6166e-21b1-4b30-a1b9-b5ea330d3bc4"
+        },
         "MaxGameTime": 120,
         "PlayerPrefab": {
           "_type": "gameobject",
@@ -557,6 +561,12 @@
         "__guid": "8092e1d3-7632-4e36-80ca-1b57ae4bd68c",
         "Flags": 0,
         "Name": "Players",
+        "Enabled": true
+      },
+      {
+        "__guid": "3ec6166e-21b1-4b30-a1b9-b5ea330d3bc4",
+        "Flags": 0,
+        "Name": "Blocks",
         "Enabled": true
       }
     ],
