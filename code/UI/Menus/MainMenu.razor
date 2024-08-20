@@ -98,13 +98,6 @@
 		_lobbiesUpdatingTask = GameNetworkSystem.QueryLobbies();
 		_lobbies = await _lobbiesUpdatingTask;
 
-		/*_lobbies = _lobbies.Append(new LobbyInformation() { Name = "asdsadasdasdasdadasd", Members = 1, MaxMembers = 3 });
-		_lobbies = _lobbies.Concat(_lobbies);
-		_lobbies = _lobbies.Concat(_lobbies);
-		_lobbies = _lobbies.Concat(_lobbies);
-		_lobbies = _lobbies.Concat(_lobbies);
-		_lobbies = _lobbies.Concat(_lobbies);*/
-
 		_timeSinceLobbiesUpdated = 0;
 
 		Log.Info("updated");
