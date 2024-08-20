@@ -8,11 +8,11 @@ public sealed class Player : Component, IDamageable, IHealthProvider
 {
     public event Action<Player>? Died;
 
-    [Sync, HostSync]
+    [HostSync]
     [Property]
     public float Health { get; private set; } = 100f;
 
-    [Sync, HostSync]
+    [HostSync]
     [Property]
     public float MaxHealth { get; private set; } = 100f;
 
@@ -28,14 +28,13 @@ public sealed class Player : Component, IDamageable, IHealthProvider
         Damage(damageInfo.Damage);
     }
 
-    [Broadcast(NetPermission.HostOnly)]
     public void Damage(float damage)
     {
         if(damage < 0)
             throw new ArgumentOutOfRangeException(nameof(damage), damage, "Damage is negative.");
 
-        if(IsProxy)
-            return;
+        if(!Connection.Local.IsHost)
+            throw new InvalidOperationException("Tried damage player by non-host.");
 
         Health = Math.Max(0, Health - damage);
 
@@ -43,7 +42,6 @@ public sealed class Player : Component, IDamageable, IHealthProvider
             OnDied();
     }
 
-    [Broadcast(NetPermission.HostOnly)]
     public void Heal(float health)
     {
         if(health < 0)
@@ -52,8 +50,8 @@ public sealed class Player : Component, IDamageable, IHealthProvider
         if(IsDead)
             throw new InvalidOperationException("Can't heal dead player.");
 
-        if(IsProxy)
-            return;
+        if(!Connection.Local.IsHost)
+            throw new InvalidOperationException("Tried heal player by non-host.");
 
         Health = Math.Min(MaxHealth, Health + health);
     }
