@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using Mini.Networking.Exceptions;
+using Sandbox;
 using System;
 using static Sandbox.Component;
 
@@ -30,14 +31,11 @@ public sealed class Player : Component, IDamageable, IHealthProvider
 
     public void Damage(float damage)
     {
+        NotEnoughNetworkAuthorityException.ThrowIfLocalIsNotHost();
         if(damage < 0)
             throw new ArgumentOutOfRangeException(nameof(damage), damage, "Damage is negative.");
-
         if(IsDead)
             throw new InvalidOperationException("Can't damage dead player.");
-
-        if(!Connection.Local.IsHost)
-            throw new InvalidOperationException("Tried damage player by non-host.");
 
         Health = Math.Max(0, Health - damage);
 
@@ -47,14 +45,11 @@ public sealed class Player : Component, IDamageable, IHealthProvider
 
     public void Heal(float health)
     {
+        NotEnoughNetworkAuthorityException.ThrowIfLocalIsNotHost();
         if(health < 0)
             throw new ArgumentOutOfRangeException(nameof(health), health, "Healing health is negative.");
-
         if(IsDead)
             throw new InvalidOperationException("Can't heal dead player.");
-
-        if(!Connection.Local.IsHost)
-            throw new InvalidOperationException("Tried heal player by non-host.");
 
         Health = Math.Min(MaxHealth, Health + health);
     }
@@ -80,11 +75,9 @@ public sealed class Player : Component, IDamageable, IHealthProvider
     [Button("Kill")]
     public void Kill()
     {
+        NotEnoughNetworkAuthorityException.ThrowIfLocalIsNotHost();
         if(IsDead)
             throw new InvalidOperationException("Can't kill dead player.");
-
-        if(!Connection.Local.IsHost)
-            throw new InvalidOperationException("Tried kill player by non-host.");
 
         Health = 0;
         OnDied();
