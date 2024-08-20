@@ -80,6 +80,13 @@ public sealed class Player : Component, IDamageable, IHealthProvider
     [Button("Kill")]
     public void Kill()
     {
-        Damage(Health);
+        if(IsDead)
+            throw new InvalidOperationException("Can't kill dead player.");
+
+        if(!Connection.Local.IsHost)
+            throw new InvalidOperationException("Tried kill player by non-host.");
+
+        Health = 0;
+        OnDied();
     }
 }
