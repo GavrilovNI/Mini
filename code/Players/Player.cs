@@ -33,6 +33,9 @@ public sealed class Player : Component, IDamageable, IHealthProvider
         if(damage < 0)
             throw new ArgumentOutOfRangeException(nameof(damage), damage, "Damage is negative.");
 
+        if(IsDead)
+            throw new InvalidOperationException("Can't damage dead player.");
+
         if(!Connection.Local.IsHost)
             throw new InvalidOperationException("Tried damage player by non-host.");
 
