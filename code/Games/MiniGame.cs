@@ -172,7 +172,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
     }
     public virtual void OnDisconnected(Connection connection)
     {
-        var player = PlayingPlayers.FirstOrDefault(p => p.Network.OwnerConnection == connection, null);
+        var player = PlayingPlayers.FirstOrDefault(p => p.IsValid() && p.Network.OwnerConnection == connection, null);
         if(player is not null)
             OnPlayerDied(player);
     }
