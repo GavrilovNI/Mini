@@ -71,6 +71,12 @@ public sealed class Player : Component, IDamageable, IHealthProvider
             GameObject.Destroy();
     }
 
+    protected override void OnDestroy()
+    {
+        if(Connection.Local.IsHost && !IsDead)
+            Kill();
+    }
+
     [Button("Kill")]
     public void Kill()
     {
