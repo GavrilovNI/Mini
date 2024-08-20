@@ -62,10 +62,6 @@
             "go": "e8454cb1-58b1-4856-b496-7d755f874765",
             "component_type": "GamesVoter"
           },
-          "TestGamePrefab": {
-            "_type": "gameobject",
-            "prefab": "games/fallingblocks/game.prefab"
-          },
           "TimeAfterEnd": 15,
           "TimeBeforeStart": 2,
           "VotingTime": 30
