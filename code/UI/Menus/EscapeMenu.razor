@@ -1,6 +1,7 @@
 @using System;
 @using Sandbox;
 @using Sandbox.UI;
+@using Sandbox.Network;
 
 @namespace Mini.UI.Menus
 
@@ -51,6 +52,7 @@
 
 	private void Leave()
 	{
+		GameNetworkSystem.Disconnect();
 		var loadedMainMenu = Game.ActiveScene.LoadFromFile(MainMenuScene);
 		if(!loadedMainMenu)
 			Log.Error("Couldn't load main menu.");
