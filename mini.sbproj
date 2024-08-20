@@ -21,7 +21,7 @@
     "PerMapRanking": false,
     "LeaderboardType": "None",
     "CsProjName": "",
-    "StartupScene": "scenes/main.scene",
+    "StartupScene": "scenes/mainmenu.scene",
     "Compiler": {
       "RootNamespace": "Mini",
       "DefineConstants": "SANDBOX;ADDON;DEBUG",
