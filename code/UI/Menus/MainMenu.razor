@@ -1,0 +1,154 @@
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Sandbox;
+@using Sandbox.UI;
+@using Sandbox.Network;
+
+@namespace Mini.UI.Menus
+
+@inherits PanelComponent
+
+<root>
+	<label class="Title">MINI</label>
+
+	<div class="buttons">
+		<div class="create-lobby-button button" @onclick=@CreateLobby>
+			<label class="button-label">Create Lobby</label>
+		</div>
+		<div class="settings-button button disabled">
+			<label class="button-label">Settings</label>
+		</div>
+		<div class="quit-nutton button" @onclick=@Quit>
+			<label class="button-label">Quit</label>
+		</div>
+	</div>
+
+	<div class="lobbies-container">
+		@{
+			var lobbies = _lobbies;
+		}
+
+		@if(!lobbies.Any())
+		{
+			<label class="no-lobbies-text">No lobbies found :(</label>
+			<div class="create-lobby-button button light" @onclick=@CreateLobby>
+				<label class="button-label">Create Lobby</label>
+			</div>
+		}
+
+		<div class="lobbies">
+			@foreach(var lobby in lobbies)
+			{
+				<div class="lobby">
+					<div class="info">
+						<label class="name">@lobby.Name</label>
+						<label class="members">@(lobby.Members)/@(lobby.MaxMembers)</label>
+					</div>
+					<div class="join-lobby-button button" @onclick=@(() => _ = TryJoinLobby(lobby.OwnerId))>
+						<label>Join</label>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</root>
+
+@code
+{
+	[Property]
+	public float LobbiesUpdateTime { get; set; } = 5f;
+	[Property]
+	public string MainMenuScene { get; set; } = "scenes/mainmenu.scene";
+	[Property]
+	public string NewLobbyScene { get; set; } = "scenes/main.scene";
+
+
+	private bool _connectingToLobby = false;
+	private Task<List<LobbyInformation>> _lobbiesUpdatingTask;
+	private TimeSince _timeSinceLobbiesUpdated;
+	private IEnumerable<LobbyInformation> _lobbies = Enumerable.Empty<LobbyInformation>();
+
+
+	[Button("Update Lobbies")]
+	private void UpdateLobbiesBtn() => _ = UpdateLobbies();
+
+	protected override void OnAwake()
+	{
+		_lobbiesUpdatingTask = Task.FromResult(new List<LobbyInformation>());
+	}
+
+	protected override void OnStart()
+	{
+		_ = UpdateLobbies();
+	}
+
+	protected override void OnUpdate()
+	{
+		if (_lobbiesUpdatingTask.IsCompleted && _timeSinceLobbiesUpdated >= LobbiesUpdateTime)
+			_ = UpdateLobbies();
+	}
+
+	private async Task UpdateLobbies()
+	{
+		if(!_lobbiesUpdatingTask.IsCompleted)
+			throw new InvalidOperationException("Lobbies are still updating.");
+
+		_lobbiesUpdatingTask = GameNetworkSystem.QueryLobbies();
+		_lobbies = await _lobbiesUpdatingTask;
+
+		/*_lobbies = _lobbies.Append(new LobbyInformation() { Name = "asdsadasdasdasdadasd", Members = 1, MaxMembers = 3 });
+		_lobbies = _lobbies.Concat(_lobbies);
+		_lobbies = _lobbies.Concat(_lobbies);
+		_lobbies = _lobbies.Concat(_lobbies);
+		_lobbies = _lobbies.Concat(_lobbies);
+		_lobbies = _lobbies.Concat(_lobbies);*/
+
+		_timeSinceLobbiesUpdated = 0;
+
+		Log.Info("updated");
+	}
+
+	private async Task<bool> TryJoinLobby(ulong steamId)
+	{
+		if(_connectingToLobby)
+			return false;
+
+		_connectingToLobby = true;
+		var connected = await GameNetworkSystem.TryConnectSteamId(steamId);
+
+		if(!connected)
+		{
+			var loadedMainMenu = Game.ActiveScene.LoadFromFile(MainMenuScene);
+			if (!loadedMainMenu)
+				Log.Error("Couldn't load main menu.");
+		}
+
+		_connectingToLobby = false;
+
+		return connected;
+	}
+
+	private void CreateLobby()
+	{
+		var loadedScene = Game.ActiveScene.LoadFromFile(NewLobbyScene);
+		if(!loadedScene)
+			Log.Error("Couldn't load scene for new lobby.");
+	}
+
+	private void Quit()
+	{
+		Game.Close();
+	}
+
+	protected override int BuildHash()
+	{
+		var hashcode = 0;
+		foreach(var lobby in _lobbies)
+		{
+			hashcode = HashCode.Combine(hashcode, lobby);
+		}
+		return hashcode;
+	}
+}
