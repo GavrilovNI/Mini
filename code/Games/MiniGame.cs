@@ -175,6 +175,9 @@ public abstract class MiniGame : Component, Component.INetworkListener
         var player = PlayingPlayers.FirstOrDefault(p => p.IsValid() && p.Network.OwnerConnection == connection, null);
         if(player is not null)
             OnPlayerDied(player);
+
+        if(StopGameIfNotEnoughPlayer && Status == GameStatus.Started && Players.Count <= 1)
+            Stop();
     }
 
 
