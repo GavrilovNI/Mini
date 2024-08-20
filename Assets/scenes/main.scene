@@ -34,8 +34,10 @@
       "Enabled": true,
       "Components": [
         {
-          "__type": "Mini.Networking.NetworkAutoJoiner",
-          "__guid": "5facf98f-219d-4f06-9bd0-037487a4a7bd"
+          "__type": "Sandbox.NetworkHelper",
+          "__guid": "4b71ffdd-73cc-47d1-a09a-2f55fde3f710",
+          "SpawnPoints": [],
+          "StartServer": true
         }
       ]
     },
