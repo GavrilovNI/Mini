@@ -102,8 +102,6 @@
 		_lobbies = _lobbies.Where(l => l.OwnerId != Steam.SteamId);
 
 		_timeSinceLobbiesUpdated = 0;
-
-		Log.Info("updated");
 	}
 
 	private async Task<bool> TryJoinLobby(ulong steamId)
