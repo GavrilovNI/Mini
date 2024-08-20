@@ -64,7 +64,7 @@ public sealed class Player : Component, IDamageable, IHealthProvider
 
         Died?.Invoke(this);
 
-        if(!IsProxy)
+        if(GameObject.IsValid() && (!IsProxy || Connection.Local.IsHost))
             GameObject.Destroy();
     }
 
