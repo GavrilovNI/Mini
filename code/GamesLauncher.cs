@@ -28,8 +28,6 @@ public class GamesLauncher : Component
     [Property]
     public float TimeAfterEnd { get; set; } = 15f;
 
-    private const int MinPlayersToPlay = 1;
-
     [Sync]
     public GameStatus GameStatus { get; private set; }
 
@@ -149,7 +147,7 @@ public class GamesLauncher : Component
 
     private void UpdateGameStartRequirements()
     {
-        bool hasEnoughPlayers = Connection.All.Count >= MinPlayersToPlay;
+        bool hasEnoughPlayers = Connection.All.Count >= Consts.MinPlayersToPlay;
         if(hasEnoughPlayers && !HasEnoughPlayers)
             _timeSinceEnoughPlayersConnected = 0;
         HasEnoughPlayers = hasEnoughPlayers;

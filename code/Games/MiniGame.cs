@@ -156,7 +156,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
         player.GameObject.Destroy();
         Players.Remove(player);
 
-        if(StopGameIfNotEnoughPlayer && Status == GameStatus.Started && Players.Count <= 1)
+        if(StopGameIfNotEnoughPlayer && Status == GameStatus.Started && Players.Count < Consts.MinPlayersToPlay)
             Stop();
     }
 
@@ -176,7 +176,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
         if(player is not null)
             OnPlayerDied(player);
 
-        if(StopGameIfNotEnoughPlayer && Status == GameStatus.Started && Players.Count <= 1)
+        if(StopGameIfNotEnoughPlayer && Status == GameStatus.Started && Players.Count < Consts.MinPlayersToPlay)
             Stop();
     }
 
