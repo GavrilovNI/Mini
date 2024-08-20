@@ -40,7 +40,8 @@
 			.Select(steamId => Connection.All.FirstOrDefault(c => c.SteamId == steamId, null)?.DisplayName)
 			.Where(name => name is not null);
 
-		<label class="winners">Winners are @string.Join(", ", winners)</label>
+		var winnersString = winners.Any() ? "Winners are " + string.Join(", ", winners) : "Nobody won :(";
+		<label class="winners">@winnersString</label>
 		<label class="title">Voting starts in @timeUntilGameStatusEnd.CeilToInt()</label>
 	}
 </root>
