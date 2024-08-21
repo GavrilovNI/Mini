@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Mini.Networking;
 
-public sealed class GameNetwork : Component, Component.INetworkListener
+public sealed class GameNetwork : Component
 {
     [Property]
     public bool StartServer { get; set; } = true;
@@ -16,6 +16,7 @@ public sealed class GameNetwork : Component, Component.INetworkListener
     public string MainMenuScene { get; set; } = "scenes/mainmenu.scene";
 
     private ulong _hostId;
+    private bool _wasConnected;
 
     protected override async Task OnLoad()
     {
@@ -40,19 +41,18 @@ public sealed class GameNetwork : Component, Component.INetworkListener
             {
                 GameNetworkSystem.Disconnect();
             }
-        }    
-    }
+        }
 
-    public void OnConnected(Connection channel)
-    {
-        _hostId = Connection.Host.SteamId;
-    }
-
-    public void OnDisconnected(Connection channel)
-    {
-        var loadedMainMenu = Game.ActiveScene.LoadFromFile(MainMenuScene);
-        if(!loadedMainMenu)
-            Log.Error("Couldn't load main menu.");
+        if(GameNetworkSystem.IsActive)
+        {
+            _wasConnected = true;
+        }
+        else if(_wasConnected)
+        {
+            var loadedMainMenu = Game.ActiveScene.LoadFromFile(MainMenuScene);
+            if(!loadedMainMenu)
+                Log.Error("Couldn't load main menu.");
+        }
     }
 
     protected override void OnDestroy()
