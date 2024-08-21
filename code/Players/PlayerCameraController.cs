@@ -6,9 +6,9 @@ namespace Mini.Players;
 public sealed class PlayerCameraController : Component, INetworkSpawn
 {
     [Property]
-    private GameObject Camera { get; set; } = null!;
+    public GameObject Camera { get; private set; } = null!;
     [Property]
-    private GameObject Eye { get; set; } = null!;
+    public GameObject Eye { get; private set; } = null!;
 
     [Property]
     public bool IsFirstPerson { get; set; } = true;
