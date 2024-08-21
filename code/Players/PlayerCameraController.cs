@@ -1,4 +1,5 @@
 ﻿using Sandbox;
+using System;
 using static Sandbox.Component;
 
 namespace Mini.Players;
@@ -13,10 +14,16 @@ public sealed class PlayerCameraController : Component, INetworkSpawn
     [Property]
     public bool IsFirstPerson { get; set; } = true;
     [Property, HideIf(nameof(IsFirstPerson), true)]
-    public float BackingDistance { get; set; } = 100;
+    public float MinBackingDistance { get; set; } = 100;
+    [Property, HideIf(nameof(IsFirstPerson), true)]
+    public float MaxBackingDistance { get; set; } = 300;
+    [Property, HideIf(nameof(IsFirstPerson), true)]
+    public float BackingDistanceChangeSpeed { get; set; } = 10;
 
     [Property]
     private ModelRenderer? Model { get; set; }
+
+    private float _backingDistance;
 
 
     public void OnNetworkSpawn(Connection owner)
@@ -29,15 +36,26 @@ public sealed class PlayerCameraController : Component, INetworkSpawn
         UpdateModelRenderType();
     }
 
+    protected override void OnAwake()
+    {
+        _backingDistance = MinBackingDistance;
+    }
+
     protected override void OnUpdate()
     {
         if(!Network.IsProxy)
         {
+            UpdateBackingDistance();
             Rotate();
             ClipBack();
         }
 
         UpdateModelRenderType();
+    }
+
+    private void UpdateBackingDistance()
+    {
+        _backingDistance = Math.Clamp(_backingDistance -= Input.MouseWheel.y * BackingDistanceChangeSpeed, MinBackingDistance, MaxBackingDistance);
     }
 
     private void UpdateModelRenderType()
@@ -65,7 +83,7 @@ public sealed class PlayerCameraController : Component, INetworkSpawn
         }
 
         var cameraBackward = Camera.Transform.Rotation.Backward;
-        var traceResult = Scene.Trace.Ray(Eye.Transform.Position, Eye.Transform.Position + cameraBackward * BackingDistance)
+        var traceResult = Scene.Trace.Ray(Eye.Transform.Position, Eye.Transform.Position + cameraBackward * _backingDistance)
                                     .WithCollisionRules("player")
                                     .IgnoreGameObject(GameObject)
                                     .Radius(1f)
@@ -75,7 +93,9 @@ public sealed class PlayerCameraController : Component, INetworkSpawn
 
     protected override void OnValidate()
     {
-        if(BackingDistance < 0f)
-            BackingDistance = 0f;
+        if(MinBackingDistance < 0f)
+            MinBackingDistance = 0f;
+        if(MaxBackingDistance < MinBackingDistance)
+            MaxBackingDistance = MinBackingDistance;
     }
 }

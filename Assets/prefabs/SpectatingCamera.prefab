@@ -8,7 +8,7 @@
       {
         "__type": "Mini.Players.PlayerCameraController",
         "__guid": "ff00b385-5828-437e-b74b-92ffdd12d815",
-        "BackingDistance": 100,
+        "BackingDistanceChangeSpeed": 10,
         "Camera": {
           "_type": "gameobject",
           "go": "3a0d9e4d-dc11-4ee4-9094-88fb9e5bd03a"
@@ -17,7 +17,9 @@
           "_type": "gameobject",
           "go": "502eea79-39fe-4da1-8071-4bec6d487f88"
         },
-        "IsFirstPerson": false
+        "IsFirstPerson": false,
+        "MaxBackingDistance": 300,
+        "MinBackingDistance": 100
       },
       {
         "__type": "Mini.SpectatingCamera",
