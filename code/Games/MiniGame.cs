@@ -116,7 +116,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
     }
 
 
-    public Player? GetPlayer(Connection connection) => Players.FirstOrDefault(p => p.Network.OwnerConnection == connection, null);
+    public Player? GetPlayer(Connection connection) => Players.FirstOrDefault(p => p!.Network.OwnerConnection == connection, null);
     protected void SpawnPlayer(Connection connection)
     {
         var existingPlayer = GetPlayer(connection);
