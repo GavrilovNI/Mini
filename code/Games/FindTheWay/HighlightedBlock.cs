@@ -26,7 +26,9 @@ public class HighlightedBlock : FindTheWayBlock
 
     [Button("Highlight")]
     [Broadcast(NetPermission.OwnerOnly)]
-    public async void Highlight()
+    public void Highlight() => _ = HighlightLocally();
+
+    public async Task HighlightLocally()
     {
         TimeSince timeSinceStart = 0;
 
