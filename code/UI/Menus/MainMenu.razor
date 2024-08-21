@@ -97,7 +97,7 @@
 		if(!_lobbiesUpdatingTask.IsCompleted)
 			throw new InvalidOperationException("Lobbies are still updating.");
 
-		_lobbiesUpdatingTask = GameNetworkSystem.QueryLobbies();
+		_lobbiesUpdatingTask = Sandbox.Networking.QueryLobbies();
 		_lobbies = await _lobbiesUpdatingTask;
 
 		_timeSinceLobbiesUpdated = 0;
