@@ -134,6 +134,14 @@
           "Opened": false
         }
       ]
+    },
+    {
+      "__guid": "c7ac417e-ec83-466e-b548-e1b5d3369283",
+      "Flags": 0,
+      "Name": "spectatingcamera",
+      "Enabled": true,
+      "__Prefab": "prefabs/spectatingcamera.prefab",
+      "__PrefabVariables": {}
     }
   ],
   "SceneProperties": {
