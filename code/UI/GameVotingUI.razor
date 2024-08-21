@@ -11,6 +11,9 @@
 <root class="@(GamesVoter.IsVoting ? "" : "hidden")">
 
 	@{
+		if (GamesVoter.GamesCount == 0)
+			return;
+
 		var width = AutoWidth ? Math.Min(GamesVoter.GamesCount, MathF.Sqrt(GamesVoter.GamesCount * Screen.Width / Screen.Height).CeilToInt()) : Width;
 		var height = AutoHeight ? GamesVoter.GamesCount / width + (GamesVoter.GamesCount % width > 0 ? 1 : 0) : Height;
 		var gamesEnumerator = GamesVoter.Games.GetEnumerator();
