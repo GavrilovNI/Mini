@@ -1,5 +1,6 @@
 ﻿using Sandbox;
 using Sandbox.Network;
+using System;
 using System.Threading.Tasks;
 
 namespace Mini.Networking;
@@ -15,7 +16,7 @@ public sealed class GameNetwork : Component
     [Property]
     public string MainMenuScene { get; set; } = "scenes/mainmenu.scene";
 
-    private ulong _hostId;
+    private Guid _hostId;
     private bool _wasConnected;
 
     protected override async Task OnLoad()
@@ -30,17 +31,15 @@ public sealed class GameNetwork : Component
             GameNetworkSystem.CreateLobby();
         }
 
-        _hostId = Connection.Host.SteamId;
+        _hostId = Connection.Host.Id;
     }
 
     protected override void OnUpdate()
     {
-        if(DisconnectIfHostLeft && GameNetworkSystem.IsActive && !Connection.Local.IsHost)
+        if(DisconnectIfHostLeft && GameNetworkSystem.IsActive)
         {
-            if(Connection.Host.SteamId != _hostId)
-            {
+            if(Connection.Host.Id != _hostId)
                 GameNetworkSystem.Disconnect();
-            }
         }
 
         if(GameNetworkSystem.IsActive)
