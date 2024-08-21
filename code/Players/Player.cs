@@ -9,6 +9,9 @@ public sealed class Player : Component, IDamageable, IHealthProvider
 {
     public event Action<Player>? Died;
 
+    [Property]
+    public GameObject Eye { get; private set; } = null!;
+
     [HostSync]
     [Property]
     public float Health { get; private set; } = 100f;

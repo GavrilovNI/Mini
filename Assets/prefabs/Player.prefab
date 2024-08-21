@@ -97,6 +97,10 @@
       {
         "__type": "Mini.Players.Player",
         "__guid": "47bdc0ae-8885-4e8b-b9c5-52dd2c9b7d9c",
+        "Eye": {
+          "_type": "gameobject",
+          "go": "c552cd65-57dc-4bec-a5fb-b17977cb1f3b"
+        },
         "Health": 100,
         "MaxHealth": 100
       }
