@@ -6,16 +6,15 @@
       "Flags": 0,
       "Name": "Network",
       "Enabled": true,
+      "NetworkMode": 1,
       "Components": [
         {
-          "__type": "Sandbox.NetworkHelper",
-          "__guid": "4b71ffdd-73cc-47d1-a09a-2f55fde3f710",
-          "SpawnPoints": [],
+          "__type": "Mini.Networking.GameNetwork",
+          "__guid": "c3e55251-9c4f-453c-9f56-087273d523ec",
+          "DisconnectIfHostLeft": true,
+          "DisconnectOnDestroy": true,
+          "MainMenuScene": "scenes/mainmenu.scene",
           "StartServer": true
-        },
-        {
-          "__type": "Mini.Networking.OnDestroyDisconnector",
-          "__guid": "545ba013-d9f5-450b-8a6c-199f463142d4"
         }
       ]
     },
