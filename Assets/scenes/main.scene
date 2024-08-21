@@ -2,32 +2,6 @@
   "__guid": "a3b48e7e-2ded-4938-b71c-33da429d6baf",
   "GameObjects": [
     {
-      "__guid": "2ce6b6a4-d99a-4f72-9ddf-83456ce60c8d",
-      "Flags": 0,
-      "Name": "Main Camera",
-      "Position": "-300,0,100",
-      "Enabled": true,
-      "Components": [
-        {
-          "__type": "Sandbox.CameraComponent",
-          "__guid": "7638b23c-0ae1-41d7-9cf3-785d5043c8bd",
-          "BackgroundColor": "0.33333,0.46275,0.52157,1",
-          "ClearFlags": "All",
-          "FieldOfView": 60,
-          "IsMainCamera": false,
-          "Orthographic": false,
-          "OrthographicHeight": 1204,
-          "Priority": 1,
-          "RenderExcludeTags": "",
-          "RenderTags": "",
-          "TargetEye": "None",
-          "Viewport": "0,0,1,1",
-          "ZFar": 10000,
-          "ZNear": 10
-        }
-      ]
-    },
-    {
       "__guid": "fb244dd1-43e3-4465-bd8c-5d91e80c8526",
       "Flags": 0,
       "Name": "Network",
