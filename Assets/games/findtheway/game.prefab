@@ -71,7 +71,8 @@
           "prefab": "prefabs/spawnpoint.prefab"
         },
         "Status": "Created",
-        "StopGameIfNotEnoughPlayer": false,
+        "StopGameIfNotEnoughPlayers": false,
+        "StopGameIfZeroPlayers": true,
         "TimeBetweenHighlights": 10,
         "TurnChanceMultiplier": 3
       }

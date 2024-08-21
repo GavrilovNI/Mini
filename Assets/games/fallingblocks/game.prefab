@@ -91,7 +91,8 @@
           ]
         },
         "Status": "Created",
-        "StopGameIfNotEnoughPlayer": true
+        "StopGameIfNotEnoughPlayers": true,
+        "StopGameIfZeroPlayers": true
       }
     ],
     "Children": [
