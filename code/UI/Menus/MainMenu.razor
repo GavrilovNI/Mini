@@ -6,6 +6,7 @@
 @using Sandbox.Utility;
 @using Sandbox.UI;
 @using Sandbox.Network;
+@using Mini.Networking;
 
 @namespace Mini.UI.Menus
 
@@ -108,7 +109,7 @@
 			return false;
 
 		_connectingToLobby = true;
-		var connected = await GameNetworkSystem.TryConnectSteamId(steamId);
+		bool connected = await NetworkUtils.TryConnectSteamId(Task, steamId, true);
 
 		if(!connected)
 		{
