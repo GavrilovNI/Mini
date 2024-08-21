@@ -88,6 +88,9 @@
 
 	protected override void OnUpdate()
 	{
+		if (Input.EscapePressed)
+			Input.EscapePressed = false;
+
 		if (_lobbiesUpdatingTask.IsCompleted && _timeSinceLobbiesUpdated >= LobbiesUpdateTime)
 			_ = UpdateLobbies();
 	}
