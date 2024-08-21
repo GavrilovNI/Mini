@@ -151,7 +151,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
     }
     protected virtual void OnPlayerDied(Player player)
     {
-        if(IsProxy)
+        if(!IsValid || IsProxy)
             return;
 
         player.Died -= OnPlayerDied;
