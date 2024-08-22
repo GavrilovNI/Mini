@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using Mini.Exceptions;
+using Sandbox;
 using Sandbox.Utility;
 using System;
 using System.Collections.Generic;
@@ -136,8 +137,9 @@ public sealed class FallingBlocksGame : MiniGame
         var cloneConfig = new CloneConfig(new global::Transform(position, Transform.Rotation, BlockSize), FallingBlocksParent, false);
 
         var fallingBlockGameObject = FallingBlockPrefab.Clone(cloneConfig);
-
         var fallingBlock = fallingBlockGameObject.Components.Get<FallingBlock>(true);
+        if(!fallingBlock.IsValid())
+            throw new ComponentNotFoundException(fallingBlockGameObject, typeof(FallingBlock));
 
         _notGroundedBlocks.Add(index, fallingBlock);
 
