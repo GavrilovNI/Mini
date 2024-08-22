@@ -9,6 +9,7 @@ namespace Mini.Players;
 public sealed class Player : Component, IDamageable, IHealthProvider, Component.INetworkSpawn
 {
     public event Action<Player>? Died;
+    public event Action<Player>? Destroyed;
 
     [Property]
     public GameObject Eye { get; private set; } = null!;
@@ -91,8 +92,7 @@ public sealed class Player : Component, IDamageable, IHealthProvider, Component.
 
     protected override void OnDestroy()
     {
-        if(Connection.Local.IsHost && !IsDead)
-            Kill();
+        Destroyed?.Invoke(this);
     }
 
     [Button("Kill")]

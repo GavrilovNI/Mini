@@ -136,6 +136,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
 
         Players.Add(player);
         player.Died += OnPlayerDied;
+        player.Destroyed += OnPlayerDestroyed;
 
         playerGameObject.Enabled = true;
 
@@ -149,15 +150,25 @@ public abstract class MiniGame : Component, Component.INetworkListener
     {
 
     }
+
     protected virtual void OnPlayerDied(Player player)
     {
         if(!IsValid || IsProxy)
             return;
 
-        player.Died -= OnPlayerDied;
-        player.GameObject.Destroy();
         Players.Remove(player);
+        player.GameObject.Destroy();
+        TryStopGameByPlayersCount();
+    }
 
+    protected virtual void OnPlayerDestroyed(Player player)
+    {
+        if(!IsValid || IsProxy)
+            return;
+
+        player.Died -= OnPlayerDied;
+        player.Destroyed -= OnPlayerDestroyed;
+        Players.Remove(player);
         TryStopGameByPlayersCount();
     }
 
