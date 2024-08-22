@@ -4,6 +4,7 @@
 @using System;
 @using System.Collections.Generic;
 @using System.Linq;
+@using System.Threading.Tasks;
 
 @namespace Mini.UI
 
@@ -46,6 +47,8 @@
 
 @code
 {
+    public static Chat? Instance { get; set; } = null!;
+
     public const int MaxMessages = 4096;
 
     [Property]
@@ -67,6 +70,20 @@
         Opened = opened;
         if(Opened)
             _inputBox.Focus();
+    }
+
+    protected override Task OnLoad()
+    {
+        if(Instance.IsValid() && Connection.Local.IsHost)
+        {
+            GameObject.Destroy();
+            return Task.CompletedTask;
+        }
+
+        if(!Scene.IsEditor)
+            Instance = this;
+
+        return Task.CompletedTask;
     }
 
     protected override void OnUpdate()
