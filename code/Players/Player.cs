@@ -5,7 +5,7 @@ using static Sandbox.Component;
 
 namespace Mini.Players;
 
-public sealed class Player : Component, IDamageable, IHealthProvider
+public sealed class Player : Component, IDamageable, IHealthProvider, Component.INetworkSpawn
 {
     public event Action<Player>? Died;
 
@@ -23,6 +23,14 @@ public sealed class Player : Component, IDamageable, IHealthProvider
     public bool IsDead => Health <= 0;
 
 
+    public void OnNetworkSpawn(Connection owner)
+    {
+        if(IsProxy)
+            return;
+
+        if(SpectatingCamera.Instance.IsValid())
+            SpectatingCamera.Instance.GameObject.Enabled = false;
+    }
 
     public void OnDamage(in DamageInfo damageInfo)
     {
@@ -67,6 +75,13 @@ public sealed class Player : Component, IDamageable, IHealthProvider
 
         if(GameObject.IsValid() && (!IsProxy || Connection.Local.IsHost))
             GameObject.Destroy();
+
+
+        if(!IsProxy)
+        {
+            if(SpectatingCamera.Instance.IsValid())
+                SpectatingCamera.Instance.GameObject.Enabled = true;
+        }
     }
 
     protected override void OnDestroy()

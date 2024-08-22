@@ -1,12 +1,13 @@
 ﻿using Mini.Players;
 using Sandbox;
 using System.Linq;
-using static Sandbox.PhysicsContact;
 
 namespace Mini;
 
 public class SpectatingCamera : Component
 {
+    public static SpectatingCamera? Instance { get; private set; }
+
     [Property]
     public GameObject? Target { get; private set; }
 
@@ -28,7 +29,14 @@ public class SpectatingCamera : Component
 
     protected override void OnAwake()
     {
+        if(Instance.IsValid())
+        {
+            GameObject.Destroy();
+            return;
+        }
+
         CameraController.IsFirstPerson = Target.IsValid();
+        Instance = this;
     }
 
     public void SetTarget(GameObject? target)
