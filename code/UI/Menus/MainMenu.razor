@@ -31,6 +31,12 @@
 	{
 		<i class="updating-icon">autorenew</i>
 	}
+	else
+	{
+		<div class="update-button button" @onclick=@(() => _ = UpdateLobbies())>
+			<i class="icon">autorenew</i>
+		</div>
+	}
 
 	<div class="lobbies-container">
 		@{
