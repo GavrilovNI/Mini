@@ -161,7 +161,10 @@ public class GamesLauncher : Component
             TimeUntilGameStatusEnd = TimeBeforeStart - timeSinceStartRequirementsMet;
 
             if(TimeUntilGameStatusEnd <= 0)
+            {
+                NetWinners.Clear();
                 CurrentGame.Start();
+            }
         }
         else if(CurrentGame.Status == GameStatus.Started)
         {
@@ -171,6 +174,7 @@ public class GamesLauncher : Component
         {
             if(_oldGameStatus != GameStatus.Stopped)
             {
+                NetWinners.Clear();
                 foreach(var winner in CurrentGame.GetWinners())
                     NetWinners.Add(winner);
             }
