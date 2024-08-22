@@ -21,6 +21,8 @@ public class GamesLauncher : Component
     public int GamesCountToVote { get; set; } = 15;
     [Property]
     public float VotingTime { get; set; } = 20f;
+    [Property, Description("Time to vote after all players voted.")]
+    public float VotingEndTime { get; set; } = 3f;
 
     [Property]
     public float TimeBeforeStart { get; set; } = 30f;
@@ -43,8 +45,10 @@ public class GamesLauncher : Component
     public ISet<ulong> Winners => NetWinners.ToHashSet();
 
     private TimeSince _timeSinceVotingStarted;
+    private TimeSince _timeSinceAllPlayersVoted;
     private TimeSince _timeSinceEnoughPlayersConnected;
     private GameStatus _oldGameStatus;
+    private bool _allPlayersVoted;
 
 
 
@@ -190,11 +194,23 @@ public class GamesLauncher : Component
     {
         if(!GamesVoter.IsVoting)
         {
+            _allPlayersVoted = false;
             _timeSinceVotingStarted = 0;
+            GamesVoter.Clear();
             GamesVoter.ChooseGames(Math.Min(GamesCountToVote, GamesLoader.GamesCount));
         }
 
         TimeUntilGameStatusEnd = VotingTime - Math.Min(_timeSinceVotingStarted, _timeSinceEnoughPlayersConnected);
+
+        bool allPlayersVoted = GamesVoter.Votes.Select(v => v.Key).ToHashSet().Overlaps(Connection.All.Select(c => c.SteamId));
+        if(allPlayersVoted)
+        {
+            if(!_allPlayersVoted)
+                _timeSinceAllPlayersVoted = 0;
+
+            TimeUntilGameStatusEnd = Math.Min(TimeUntilGameStatusEnd, VotingEndTime - _timeSinceAllPlayersVoted);
+        }
+        _allPlayersVoted = allPlayersVoted;
 
         if(TimeUntilGameStatusEnd <= 0)
         {

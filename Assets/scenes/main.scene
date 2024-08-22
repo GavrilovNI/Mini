@@ -43,6 +43,7 @@
           },
           "TimeAfterEnd": 10,
           "TimeBeforeStart": 10,
+          "VotingEndTime": 3,
           "VotingTime": 30
         },
         {
