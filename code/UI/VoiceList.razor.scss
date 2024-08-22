@@ -1,0 +1,45 @@
+VoiceList {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transform: translateY(-50%);
+    gap: 5px;
+
+    .entry {
+        position: relative;
+        height: 50px;
+        width: 100%;
+
+        .icon {
+            height: 100%;
+            aspect-ratio: 1;
+            font-size: 50px;
+            color: white;
+            text-stroke: 3px black;
+        }
+
+        .player-icon {
+            margin-left: 5px;
+            height: 100%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+        }
+
+        .player-name {
+            position: absolute;
+            height: 100%;
+            width: 60%;
+            right: 0;
+            font-family: Poppins;
+            color: white;
+            text-stroke: 5px black;
+            text-align: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+}

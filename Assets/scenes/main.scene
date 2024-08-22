@@ -163,6 +163,35 @@
           "MaxMessageTime": 10
         }
       ]
+    },
+    {
+      "__guid": "cc056125-48a7-4198-8ed1-35beaf6bc637",
+      "Flags": 0,
+      "Name": "PlayerVoices",
+      "Position": "-865.4682,-6029.153,2161.615",
+      "Enabled": true,
+      "NetworkMode": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "ba54c4a2-87f0-495f-81a6-83ac55db008a",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 100
+        },
+        {
+          "__type": "Mini.UI.VoiceList",
+          "__guid": "3b8394b6-7211-4d49-bd09-917369e26b20",
+          "CreatePlayerVoices": true,
+          "HighAmplitudeBorderColor": "0,1,0,1",
+          "LowAmplitudeBorderColor": "0.5,0.5,0.5,1",
+          "PlayerVoicePrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/playervoice.prefab"
+          }
+        }
+      ]
     }
   ],
   "SceneProperties": {
