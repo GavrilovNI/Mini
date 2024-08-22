@@ -27,6 +27,11 @@
 		</div>
 	</div>
 
+	@if(_lobbiesUpdatingTask is not null && !_lobbiesUpdatingTask.IsCompleted)
+	{
+		<i class="updating-icon">autorenew</i>
+	}
+
 	<div class="lobbies-container">
 		@{
 			var lobbies = _lobbies;
