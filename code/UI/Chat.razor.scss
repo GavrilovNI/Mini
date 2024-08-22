@@ -12,6 +12,7 @@ Chat {
 	align-items: stretch;
 	font-size: 17px;
 	font-family: Poppins;
+	pointer-events: none;
 	gap: 10px;
 
 	.output-container {
@@ -20,7 +21,6 @@ Chat {
 		width: 100%;
 		top: 0;
 		bottom: 50px;
-		pointer-events: all;
 		flex-direction: column;
 		justify-content: flex-end;
 
@@ -77,6 +77,8 @@ Chat {
 	}
 
 	&.open {
+		pointer-events: all;
+
 		.input {
 			background-color: #444;
 		}
