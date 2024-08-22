@@ -1,0 +1,157 @@
+﻿@using Mini.Networking.Exceptions;
+@using Sandbox;
+@using Sandbox.UI;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+
+@namespace Mini.UI
+
+@inherits PanelComponent
+@implements Component.INetworkListener
+
+<root class=@(Opened ? "open" : string.Empty)>
+    @{
+        IEnumerable<Entry> entries = _entries;
+        if(Opened)
+            entries = _oldEntries.Concat(entries);
+    }
+    @if(entries.Any())
+    {
+        <div class="output-container">
+            <div class="output">
+                @foreach(var entry in entries)
+                {
+                    <div class="chat_entry">
+                        @if(entry.steamid > 0)
+                        {
+                            <div class="avatar" style="background-image: url( avatar:@entry.steamid )"></div>
+                        }
+                        <div class="author">@entry.author</div>
+                        @if(entry.steamid > 0)
+                        {
+                            <label class="separator">:</label>
+                        }
+                        <div class="message">@entry.message</div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <div class="input">
+        <TextEntry @ref="_inputBox" onsubmit="@ChatFinished"></TextEntry>
+    </div>
+</root>
+
+@code
+{
+    public const int MaxMessages = 4096;
+
+    [Property]
+    public float MaxMessageTime { get; set; } = 10f;
+
+    public bool Opened { get; private set; } = false;
+
+    public record Entry(ulong steamid, string author, string message, RealTimeSince timeSinceAdded);
+
+    private TextEntry _inputBox;
+    private List<Entry> _oldEntries = new();
+    private List<Entry> _entries = new();
+
+
+    public void Open() => SetOpened(true);
+    public void Close() => SetOpened(false);
+    public void SetOpened(bool opened)
+    {
+        Opened = opened;
+        if(Opened)
+            _inputBox.Focus();
+    }
+
+    protected override void OnUpdate()
+    {
+        if(_inputBox is null)
+            return;
+
+        Panel.AcceptsFocus = false;
+
+        if (Input.Pressed("chat"))
+            SetOpened(!Opened);
+
+        var entriesToRemove = _entries.Where(x => x.timeSinceAdded > MaxMessageTime).ToList();
+
+        if(entriesToRemove.Count > 0)
+        {
+            _oldEntries.AddRange(entriesToRemove);
+            foreach (var entry in entriesToRemove)
+                _entries.Remove(entry);
+
+            StateHasChanged();
+        }
+
+        var messagesCount = _oldEntries.Count + _entries.Count;
+        if(messagesCount > MaxMessages)
+            _oldEntries.RemoveRange(0, Math.Min(_oldEntries.Count, messagesCount - MaxMessages));
+    }
+
+    private void ChatFinished()
+    {
+        var text = _inputBox.Text;
+        _inputBox.Text = "";
+
+        Close();
+
+        if(string.IsNullOrWhiteSpace(text))
+            return;
+
+        AddText(text);
+    }
+
+    [Broadcast]
+    public void AddText(string message)
+    {
+        message = message.Truncate(300);
+
+        if(string.IsNullOrWhiteSpace(message))
+            return;
+
+        var author = Rpc.Caller.DisplayName;
+        var steamid = Rpc.Caller.SteamId;
+
+        Log.Info($"{author}: {message}");
+
+        _entries.Add(new Entry(steamid, author, message, 0.0f));
+        StateHasChanged();
+    }
+
+    [Broadcast(NetPermission.HostOnly)]
+    public void AddSystemText(string message)
+    {
+        message = message.Truncate(300);
+
+        if(string.IsNullOrWhiteSpace(message))
+            return;
+
+        _entries.Add(new Entry(0, "ℹ️", message, 0.0f));
+        StateHasChanged();
+    }
+
+    void Component.INetworkListener.OnConnected(Connection channel)
+    {
+        if(IsProxy)
+            return;
+
+        AddSystemText($"{channel.DisplayName} has joined the game");
+    }
+
+    void Component.INetworkListener.OnDisconnected(Connection channel)
+    {
+        if(IsProxy)
+            return;
+
+        AddSystemText($"{channel.DisplayName} has left the game");
+    }
+
+    protected override int BuildHash() => Opened.GetHashCode();
+}

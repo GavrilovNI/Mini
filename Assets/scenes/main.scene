@@ -141,6 +141,28 @@
       "Enabled": true,
       "__Prefab": "prefabs/spectatingcamera.prefab",
       "__PrefabVariables": {}
+    },
+    {
+      "__guid": "840df57b-2c8d-4eae-8e3b-213de9251886",
+      "Flags": 0,
+      "Name": "Chat",
+      "Position": "-834.8896,-6267.19,2070.259",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "c4d66fcb-8c58-4bc7-af34-31d39c945e6f",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 105
+        },
+        {
+          "__type": "Mini.UI.Chat",
+          "__guid": "161c1f03-1757-4d3a-bf1c-d543e59620c3",
+          "MaxMessageTime": 10
+        }
+      ]
     }
   ],
   "SceneProperties": {
