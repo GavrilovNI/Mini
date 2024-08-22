@@ -82,6 +82,8 @@ public sealed class Player : Component, IDamageable, IHealthProvider, Component.
 
         if(!IsProxy)
         {
+            MainHUD.Instance?.ShowDeathMessage();
+
             if(SpectatingCamera.Instance.IsValid())
                 SpectatingCamera.Instance.GameObject.Enabled = true;
         }

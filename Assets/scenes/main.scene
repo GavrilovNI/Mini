@@ -78,6 +78,7 @@
         {
           "__type": "Mini.UI.MainHUD",
           "__guid": "8fd43218-7f39-4c1c-acc0-879e1d11d22f",
+          "DeathMessageTime": 5,
           "GamesLauncher": {
             "_type": "component",
             "component_id": "8e2186f5-c6a5-40b1-9c0a-34d4e7a6a670",

@@ -19,6 +19,19 @@ MainHUD {
 		right: 10px;
 	}
 
+	.death-message {
+		position: absolute;
+		width: 100%;
+		height: 100px;
+		top: 30%;
+		font-family: Poppins;
+		color: red;
+		text-stroke: 5 black;
+		font-size: 100px;
+		white-space: nowrap;
+		text-align: center;
+	}
+
 	.winners {
 		position: absolute;
 		width: 100%;

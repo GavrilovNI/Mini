@@ -1,5 +1,6 @@
 @using System;
 @using System.Linq;
+@using System.Threading.Tasks;
 @using Sandbox;
 @using Sandbox.UI;
 @using Mini.Games;
@@ -13,7 +14,10 @@
 		float timeUntilGameStatusEnd = GamesLauncher.TimeUntilGameStatusEnd;
 	}
 
-	
+	@if(_showDeathMessage)
+	{
+		<label class="death-message">You Died!</label>
+	}
 	
 	@if(GamesLauncher.GameStatus == GameStatus.None)
 	{
@@ -48,8 +52,46 @@
 
 @code
 {
+	public static MainHUD? Instance { get; set; } = null!;
+
 	[Property]
 	public GamesLauncher GamesLauncher { get; set; } = null!;
+	[Property]
+	public float DeathMessageTime { get; set; } = 3f;
 
-	protected override int BuildHash() => HashCode.Combine(GamesLauncher.HasEnoughPlayers, GamesLauncher.TimeUntilGameStatusEnd, GamesLauncher.GameStatus, Time.Now);
+	private TimeSince _timeSinceDeathMessageEnabled = 0;
+	private bool _showDeathMessage = false;
+
+	protected override Task OnLoad()
+	{
+		if(Instance.IsValid() && Connection.Local.IsHost)
+		{
+			GameObject.Destroy();
+			return Task.CompletedTask;
+		}
+
+		if(!Scene.IsEditor)
+			Instance = this;
+
+		return Task.CompletedTask;
+	}
+
+	protected override void OnUpdate()
+	{
+		if(_showDeathMessage && _timeSinceDeathMessageEnabled > DeathMessageTime)
+		{
+			_showDeathMessage = false;
+			StateHasChanged();
+		}
+	}
+
+	[Button("Show Death Message")]
+	public void ShowDeathMessage()
+	{
+		_showDeathMessage = true;
+		_timeSinceDeathMessageEnabled = 0;
+		StateHasChanged();
+	}
+
+	protected override int BuildHash() => HashCode.Combine(GamesLauncher.HasEnoughPlayers, GamesLauncher.TimeUntilGameStatusEnd, GamesLauncher.GameStatus, Time.Now, _showDeathMessage);
 }
