@@ -1,0 +1,217 @@
+{
+  "RootObject": {
+    "__guid": "916f6721-0ffb-4005-bea1-896016d48635",
+    "Flags": 0,
+    "Name": "game",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Mini.Games.BlockRun.BlockRunGame",
+        "__guid": "55910188-7b22-4ba1-91de-140f0d5d7c78",
+        "BlockPrefab": {
+          "_type": "gameobject",
+          "prefab": "games/blockrun/blockrunblock.prefab"
+        },
+        "BlockSize": "1,1,0.25",
+        "BlocksParent": {
+          "_type": "gameobject",
+          "go": "63c900eb-3061-4c5c-b92e-061b3de732c1"
+        },
+        "Gap": 8,
+        "KillingZone": {
+          "_type": "gameobject",
+          "go": "3fc877e6-5ff7-48f6-a8dc-97d0f454cf0c"
+        },
+        "LevelHeight": 400,
+        "LevelInfos": [
+          {
+            "Size": "25,25",
+            "Color": "0.93953,0.50109,0,1"
+          },
+          {
+            "Size": "21,21",
+            "Color": "0.84419,0.92093,0,1"
+          },
+          {
+            "Size": "15,15",
+            "Color": "0.02475,0.66512,0.09946,1"
+          }
+        ],
+        "MaxGameTime": 300,
+        "PlayerPrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/player.prefab"
+        },
+        "PlayersParent": {
+          "_type": "gameobject",
+          "go": "3b2592b5-8c14-4069-a3ce-470919e46ecd"
+        },
+        "SpawnPlatform": {
+          "_type": "gameobject",
+          "go": "eb934b98-f056-418e-ad24-a35144d787d8"
+        },
+        "SpawnPointPrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/spawnpoint.prefab"
+        },
+        "SpawnPointsParent": {
+          "_type": "gameobject",
+          "go": "92168e72-7e75-4b2e-9d60-4084471e3e40"
+        },
+        "Status": "Created",
+        "StopGameIfNotEnoughPlayers": true,
+        "StopGameIfZeroPlayers": true
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "f88efcce-de9c-43f1-87e1-e82cfbd5d990",
+        "Flags": 0,
+        "Name": "Room",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "eb934b98-f056-418e-ad24-a35144d787d8",
+            "Flags": 0,
+            "Name": "SpawnPlatform",
+            "Scale": "1,1,10",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.PlaneCollider",
+                "__guid": "2a56c9ad-d725-4dd9-80d3-369882912048",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "50,50",
+                "Static": true
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "82118437-1475-4ab7-87ad-fa7a35e67666",
+                "Center": "25.5,0,25",
+                "IsTrigger": false,
+                "Scale": "1,50,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "34c979f7-272f-49d2-9f2b-2dd5f5d9d2ae",
+                "Center": "-25.5,0,25",
+                "IsTrigger": false,
+                "Scale": "1,50,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "cf2e740b-c004-4126-9afc-351c57fc0644",
+                "Center": "0,25.5,25",
+                "IsTrigger": false,
+                "Scale": "50,1,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "76607d38-38b5-45a9-9352-b3c316dabaca",
+                "Center": "0,-25.5,25",
+                "IsTrigger": false,
+                "Scale": "50,1,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "b2e094aa-5253-4da4-8057-e3b5e91bc4d9",
+                "Center": "0,0,50.5",
+                "IsTrigger": false,
+                "Scale": "50,50,1",
+                "Static": false
+              }
+            ]
+          },
+          {
+            "__guid": "4a1f963d-fdc1-4ecd-a406-e90629dcdad5",
+            "Flags": 0,
+            "Name": "Sun",
+            "Rotation": "-0.1464466,0.3535534,0.3535534,0.8535535",
+            "Tags": "light_directional,light",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.DirectionalLight",
+                "__guid": "209ac74d-9e4f-4fac-a55c-ab9e590f5546",
+                "FogMode": "Enabled",
+                "FogStrength": 1,
+                "LightColor": "0.91373,0.98039,1,1",
+                "Shadows": true,
+                "SkyColor": "0,0,0,0"
+              }
+            ]
+          },
+          {
+            "__guid": "5f989438-e3a1-4c8b-87f5-a2a50c5605d0",
+            "Flags": 0,
+            "Name": "Sun",
+            "Rotation": "-0.3535534,0.8535534,0.1464467,0.3535534",
+            "Tags": "light_directional,light",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.DirectionalLight",
+                "__guid": "29e28b76-f7ce-4434-90d5-97f32334d826",
+                "FogMode": "Enabled",
+                "FogStrength": 1,
+                "LightColor": "0.91373,0.98039,1,1",
+                "Shadows": true,
+                "SkyColor": "0,0,0,0"
+              }
+            ]
+          },
+          {
+            "__guid": "92168e72-7e75-4b2e-9d60-4084471e3e40",
+            "Flags": 0,
+            "Name": "SpawnPoints",
+            "Enabled": true
+          },
+          {
+            "__guid": "3fc877e6-5ff7-48f6-a8dc-97d0f454cf0c",
+            "Flags": 0,
+            "Name": "KillingZone",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "da164bb0-ff65-450c-9e41-b3f50dc2e484",
+                "Center": "0,0,0",
+                "IsTrigger": true,
+                "Scale": "50,50,50",
+                "Static": false
+              },
+              {
+                "__type": "Mini.UtilComponents.KillingZone",
+                "__guid": "28c61e7b-9246-4c61-a8d9-68438301c33d"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__guid": "3b2592b5-8c14-4069-a3ce-470919e46ecd",
+        "Flags": 0,
+        "Name": "Players",
+        "Enabled": true
+      },
+      {
+        "__guid": "63c900eb-3061-4c5c-b92e-061b3de732c1",
+        "Flags": 0,
+        "Name": "Blocks",
+        "Enabled": true
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

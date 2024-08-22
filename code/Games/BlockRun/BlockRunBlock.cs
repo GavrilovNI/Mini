@@ -3,7 +3,7 @@ using Sandbox;
 
 namespace Mini.Games.BlockRun;
 
-public class BlockRunBlock : Component, Component.ICollisionListener
+public class BlockRunBlock : Component, Component.ITriggerListener
 {
     [Property, RequireComponent]
     public ModelRenderer Model { get; set; } = null!;
@@ -28,9 +28,12 @@ public class BlockRunBlock : Component, Component.ICollisionListener
         TimeSinceStartedToBreak = 0;
     }
 
-    public void OnCollisionStart(Collision _)
+    public void OnTriggerEnter(Collider collider)
     {
         if(IsProxy || IsBreaking)
+            return;
+
+        if(collider.GameObject.Components.Get<BlockRunBlock>().IsValid())
             return;
 
         Break();

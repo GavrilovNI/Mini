@@ -3,6 +3,7 @@
     "__guid": "21d78567-bb95-4fc8-bcd6-897f54dace36",
     "Flags": 0,
     "Name": "blockrunblock",
+    "Scale": "1,1,0.25",
     "Enabled": true,
     "Components": [
       {
@@ -10,7 +11,7 @@
         "__guid": "55bf212d-44f8-42d4-bd41-326d7bc98597",
         "BodyGroups": 18446744073709551615,
         "Model": "models/dev/box.vmdl",
-        "RenderType": "On",
+        "RenderType": "Off",
         "Tint": "1,1,1,1"
       },
       {
@@ -19,6 +20,14 @@
         "Center": "0,0,0",
         "IsTrigger": false,
         "Scale": "50,50,50",
+        "Static": false
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "f769981c-0adb-4d8a-9552-928503ddcce4",
+        "Center": "0,0,25.5",
+        "IsTrigger": true,
+        "Scale": "50,50,1",
         "Static": false
       },
       {
