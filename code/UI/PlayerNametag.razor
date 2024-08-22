@@ -6,6 +6,10 @@
 @inherits PanelComponent
 
 <root class="@(Network.IsProxy ? "" : "hidden")">
+	@{
+		if (Network.OwnerConnection is null)
+			return;
+	}
 	<label class="name">@(Network.OwnerConnection.DisplayName)</label>
 </root>
 
