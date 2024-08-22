@@ -105,6 +105,24 @@
         },
         "Health": 100,
         "MaxHealth": 100
+      },
+      {
+        "__type": "Mini.Players.PlayerFootsteps",
+        "__guid": "1296aa34-6669-41d3-8079-f27b80f9ec0d",
+        "MaxGroundDistance": 20,
+        "MinTimeBetweenSteps": 0.2,
+        "Model": {
+          "_type": "component",
+          "component_id": "6475ac87-1a43-446f-bc5d-02675f94eaf9",
+          "go": "1cebab66-67ff-4fac-892f-af650dac8097",
+          "component_type": "SkinnedModelRenderer"
+        },
+        "MovementController": {
+          "_type": "component",
+          "component_id": "dc676966-7e38-4490-9196-c2f37449f2f1",
+          "go": "20c32008-465a-4542-bcb6-0d20e8b6e184",
+          "component_type": "PlayerMovementController"
+        }
       }
     ],
     "Children": [

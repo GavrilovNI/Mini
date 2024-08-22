@@ -6,6 +6,9 @@ namespace Mini.Players;
 
 public sealed class PlayerMovementController : Component
 {
+    public event Action<PlayerMovementController>? Jumped;
+    public event Action<PlayerMovementController>? Grounded;
+
     [RequireComponent]
     [Property]
     private CharacterController CharacterController { get; set; } = null!;
@@ -66,11 +69,15 @@ public sealed class PlayerMovementController : Component
     [Sync]
     public bool IsSprinting { get; private set; }
 
+    private bool _wasGrounded;
+
 
     protected override void OnStart()
     {
         if(!Network.IsProxy)
             SetHeight(StandingHeight);
+
+        _wasGrounded = CharacterController.IsOnGround;
     }
 
     protected override void OnUpdate()
@@ -169,6 +176,9 @@ public sealed class PlayerMovementController : Component
 
         if(CharacterController.IsOnGround)
         {
+            if(!_wasGrounded)
+                OnGrounded();
+
             CharacterController.Velocity = Vector3.VectorPlaneProject(CharacterController.Velocity, Transform.Rotation.Up);
             CharacterController.Accelerate(WishVelocity);
             CharacterController.ApplyFriction(GroundFriction);
@@ -179,18 +189,36 @@ public sealed class PlayerMovementController : Component
             CharacterController.Accelerate(WishVelocity.ClampLength(MaxForce));
             CharacterController.ApplyFriction(AirFriction);
         }
+        _wasGrounded = CharacterController.IsOnGround;
 
         CharacterController.Move();
 
 
         if(CharacterController.IsOnGround)
         {
+            if(!_wasGrounded)
+                OnGrounded();
+
             CharacterController.Velocity = Vector3.VectorPlaneProject(CharacterController.Velocity, Transform.Rotation.Up);
         }
         else
         {
             CharacterController.Velocity += gravity * Time.Delta * 0.5f;
         }
+        _wasGrounded = CharacterController.IsOnGround;
+    }
+
+    [Broadcast(NetPermission.OwnerOnly)]
+    private void OnGrounded()
+    {
+        Grounded?.Invoke(this);
+    }
+
+    [Broadcast(NetPermission.OwnerOnly)]
+    private void OnJumped()
+    {
+        Jumped?.Invoke(this);
+        AnimationHelper?.TriggerJump();
     }
 
     private void RotateBody()
@@ -215,13 +243,7 @@ public sealed class PlayerMovementController : Component
             upDirection = Transform.Rotation.Up;
 
         CharacterController.Punch(upDirection * JumpForce);
-        RunJumpAnimation();
-    }
-
-    [Broadcast]
-    private void RunJumpAnimation()
-    {
-        AnimationHelper?.TriggerJump();
+        OnJumped();
     }
 
     private void Animate()
