@@ -105,8 +105,11 @@
 		if(!_lobbiesUpdatingTask.IsCompleted)
 			throw new InvalidOperationException("Lobbies are still updating.");
 
-		_lobbiesUpdatingTask = Sandbox.Networking.QueryLobbies();
-		_lobbies = await _lobbiesUpdatingTask;
+		using(var timeFixer = Time.Scope(Time.Now, Time.Delta))
+		{
+			_lobbiesUpdatingTask = Sandbox.Networking.QueryLobbies();
+			_lobbies = await _lobbiesUpdatingTask;
+		}
 
 		_timeSinceLobbiesUpdated = 0;
 	}
@@ -145,10 +148,10 @@
 
 	protected override int BuildHash()
 	{
-		var hashcode = 0;
+		var hashcode = HashCode.Combine(_lobbies.Count(), _lobbiesUpdatingTask, _lobbiesUpdatingTask.IsCompleted);
 		foreach(var lobby in _lobbies)
 		{
-			hashcode = HashCode.Combine(hashcode, lobby);
+			hashcode = HashCode.Combine(hashcode, lobby.LobbyId, lobby.OwnerId, lobby.Members, lobby.MaxMembers);
 		}
 		return hashcode;
 	}
