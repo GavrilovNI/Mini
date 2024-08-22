@@ -15,5 +15,5 @@
 
 @code
 {
-	protected override int BuildHash() => System.HashCode.Combine(Network.OwnerConnection);
+	protected override int BuildHash() => System.HashCode.Combine(Network.OwnerConnection, Network.OwnerConnection?.DisplayName);
 }
