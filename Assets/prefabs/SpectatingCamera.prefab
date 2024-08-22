@@ -59,6 +59,11 @@
             "Viewport": "0,0,1,1",
             "ZFar": 50000,
             "ZNear": 10
+          },
+          {
+            "__type": "Sandbox.AudioListener",
+            "__guid": "74f3ffaa-0ea0-4178-9078-3e45559dc60e",
+            "UseCameraDirection": true
           }
         ]
       }

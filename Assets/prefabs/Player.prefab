@@ -1080,6 +1080,11 @@
                         "component_type": "CameraComponent"
                       }
                     ]
+                  },
+                  {
+                    "__type": "Sandbox.AudioListener",
+                    "__guid": "94c86712-a457-4db4-a114-f29a8f48634c",
+                    "UseCameraDirection": true
                   }
                 ]
               }
