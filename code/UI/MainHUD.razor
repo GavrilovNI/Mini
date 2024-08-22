@@ -11,7 +11,9 @@
 
 <root>
 	@{
-		float timeUntilGameStatusEnd = GamesLauncher.TimeUntilGameStatusEnd;
+		int timeUntilGameStatusEnd = GamesLauncher.TimeUntilGameStatusEnd.Relative.CeilToInt();
+		string timeUntilGameStatusEndString = timeUntilGameStatusEnd > 60 ?
+			$"{timeUntilGameStatusEnd / 60}:{timeUntilGameStatusEnd % 60:00}" : timeUntilGameStatusEnd.ToString();
 	}
 
 	@if(_showDeathMessage)
@@ -27,16 +29,16 @@
 		}
 		else
 		{
-			<label class="title">Voting ends in @timeUntilGameStatusEnd.CeilToInt()</label>
+			<label class="title">Voting ends in @timeUntilGameStatusEndString</label>
 		}
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.SetUp)
 	{
-		<label class="title">Game starts in @timeUntilGameStatusEnd.CeilToInt()</label>
+		<label class="title">Game starts in @timeUntilGameStatusEndString</label>
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.Started)
 	{
-		<label class="title">Game ends in @timeUntilGameStatusEnd.CeilToInt()</label>
+		<label class="title">Game ends in @timeUntilGameStatusEndString</label>
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.Stopped)
 	{
@@ -46,7 +48,7 @@
 
 		var winnersString = winners.Any() ? "Winners are " + string.Join(", ", winners) : "Nobody won :(";
 		<label class="winners">@winnersString</label>
-		<label class="title">Voting starts in @timeUntilGameStatusEnd.CeilToInt()</label>
+		<label class="title">Voting starts in @timeUntilGameStatusEndString</label>
 	}
 </root>
 
