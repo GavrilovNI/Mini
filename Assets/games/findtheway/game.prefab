@@ -234,7 +234,7 @@
             "__guid": "6048de01-1559-46b6-b5ce-f129a9030658",
             "Flags": 0,
             "Name": "SpawnBarrier",
-            "Scale": "1,1,5",
+            "Scale": "1,1,10",
             "Enabled": true,
             "Components": [
               {
