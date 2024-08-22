@@ -1,4 +1,5 @@
 ﻿using Mini.Networking.Exceptions;
+using Mini.UI;
 using Sandbox;
 using System;
 using static Sandbox.Component;
@@ -76,6 +77,8 @@ public sealed class Player : Component, IDamageable, IHealthProvider, Component.
         if(GameObject.IsValid() && (!IsProxy || Connection.Local.IsHost))
             GameObject.Destroy();
 
+        if(Connection.Local.IsHost)
+            Chat.Instance?.AddSystemText($"Player {Network.OwnerConnection.DisplayName} died!");
 
         if(!IsProxy)
         {
