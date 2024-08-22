@@ -32,6 +32,10 @@
 			<label class="title">Voting ends in @timeUntilGameStatusEndString</label>
 		}
 	}
+	else if(GamesLauncher.GameStatus == GameStatus.SettingUp)
+	{
+		<label class="title">Setting up the game</label>
+	}
 	else if(GamesLauncher.GameStatus == GameStatus.SetUp)
 	{
 		<label class="title">Game starts in @timeUntilGameStatusEndString</label>
