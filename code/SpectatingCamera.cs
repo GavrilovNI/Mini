@@ -11,9 +11,6 @@ public class SpectatingCamera : Component
     [Property]
     public GameObject? Target { get; private set; }
 
-    [Property]
-    public bool FindFirstTarget { get; set; } = true;
-
     [Property, RequireComponent]
     public PlayerCameraController CameraController { get; set; } = null!;
 
@@ -24,7 +21,6 @@ public class SpectatingCamera : Component
 
 
     private GameObject? _lastTarget;
-    private bool _firstTargetFound = false;
 
 
     protected override void OnAwake()
@@ -49,7 +45,6 @@ public class SpectatingCamera : Component
         if(target is null)
             Transform.Position = CameraController.Camera.Transform.Position;
         CameraController.IsFirstPerson = target is null;
-        _firstTargetFound = true;
     }
 
     protected override void OnUpdate()
@@ -84,18 +79,6 @@ public class SpectatingCamera : Component
         {
             SetTarget(null);
             OnLostTarget();
-        }
-
-        if(FindFirstTarget && !_firstTargetFound)
-        {
-            var players = Scene.Components.GetAll<Player>(FindMode.EnabledInSelfAndDescendants);
-
-            var target = players.Where(p => p.Network.OwnerConnection == Connection.Local).FirstOrDefault()?.Eye;
-            if(!target.IsValid())
-                target = players.Where(p => p.Network.OwnerConnection != Connection.Local).FirstOrDefault()?.Eye;
-
-            if(target.IsValid())
-                SetTarget(target);
         }
 
         if(Input.Pressed("Jump"))

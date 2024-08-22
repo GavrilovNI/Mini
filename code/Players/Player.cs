@@ -14,6 +14,9 @@ public sealed class Player : Component, IDamageable, IHealthProvider, Component.
     [Property]
     public GameObject Eye { get; private set; } = null!;
 
+    [Property]
+    public GameObject Camera { get; private set; } = null!;
+
     [HostSync]
     [Property]
     public float Health { get; private set; } = 100f;
@@ -84,15 +87,26 @@ public sealed class Player : Component, IDamageable, IHealthProvider, Component.
         if(!IsProxy)
         {
             MainHUD.Instance?.ShowDeathMessage();
-
-            if(SpectatingCamera.Instance.IsValid())
-                SpectatingCamera.Instance.GameObject.Enabled = true;
+            EnableSpectatingCamera();
         }
     }
 
     protected override void OnDestroy()
     {
         Destroyed?.Invoke(this);
+        if(!IsProxy)
+            EnableSpectatingCamera();
+    }
+
+    private void EnableSpectatingCamera()
+    {
+        var spectatingCamera = SpectatingCamera.Instance;
+        if(spectatingCamera.IsValid())
+        {
+            spectatingCamera.SetTarget(null);
+            spectatingCamera.Transform.World = Camera.Transform.World;
+            spectatingCamera.GameObject.Enabled = true;
+        }
     }
 
     [Button("Kill")]
