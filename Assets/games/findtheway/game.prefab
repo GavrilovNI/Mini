@@ -58,6 +58,10 @@
           "go": "9b9c2f26-9bc2-4357-95cc-29fc9b310ee0"
         },
         "Size": "20,8",
+        "SpawnBarrier": {
+          "_type": "gameobject",
+          "go": "6048de01-1559-46b6-b5ce-f129a9030658"
+        },
         "SpawnPlatform": {
           "_type": "gameobject",
           "go": "70895795-b1b5-4277-a16e-bd97e7b929ea"
@@ -223,6 +227,55 @@
               {
                 "__type": "Mini.UtilComponents.KillingZone",
                 "__guid": "4f6e8927-c0c6-4cfe-8b71-fe60a30a09ab"
+              }
+            ]
+          },
+          {
+            "__guid": "6048de01-1559-46b6-b5ce-f129a9030658",
+            "Flags": 0,
+            "Name": "SpawnBarrier",
+            "Scale": "1,1,5",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "8414d8a2-8c63-474d-8b1b-835d013589a1",
+                "Center": "0,0,25",
+                "IsTrigger": false,
+                "Scale": "50,50,1",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "3f94ee4d-b33b-4018-8e19-7d02cec8d693",
+                "Center": "25,0,0",
+                "IsTrigger": false,
+                "Scale": "1,50,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "cdfd9226-ab31-49b7-ba63-3fda548c09e7",
+                "Center": "-25,0,0",
+                "IsTrigger": false,
+                "Scale": "1,50,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "fed161d8-1499-4458-846e-809467da75a1",
+                "Center": "0,25,0",
+                "IsTrigger": false,
+                "Scale": "50,1,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "e52f2f04-9bc1-480e-95b0-1ba24cb3b506",
+                "Center": "0,-25,0",
+                "IsTrigger": false,
+                "Scale": "50,1,50",
+                "Static": false
               }
             ]
           }

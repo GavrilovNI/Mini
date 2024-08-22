@@ -36,6 +36,8 @@ public class FindTheWayGame : MiniGame
     public GameObject FinishPlatform { get; set; } = null!;
     [Property]
     public GameObject KillingZone { get; set; } = null!;
+    [Property]
+    public GameObject SpawnBarrier { get; set; } = null!;
 
     [Property, Group("Rendering")]
     public Color Color { get; set; } = new Color(0.33f, 0.33f, 0.33f);
@@ -73,6 +75,18 @@ public class FindTheWayGame : MiniGame
 
         await base.OnGameSetup();
         await BuildBlocks(CancellationToken.None);
+    }
+
+    protected override async Task OnGameStart()
+    {
+        await base.OnGameStart();
+        EnableBarrier(false);
+    }
+
+    [Broadcast(NetPermission.OwnerOnly)]
+    private void EnableBarrier(bool enabled)
+    {
+        SpawnBarrier.Enabled = enabled;
     }
 
     private void OnFinishEnter(Collider collider)
@@ -117,6 +131,8 @@ public class FindTheWayGame : MiniGame
         SpawnPlatform.Transform.Position = SpawnPlatform.Transform.Position
             .WithY(SpawnPlatform.Transform.Scale.y / 2f * Consts.CubeModelSize);
 
+        SpawnBarrier.Transform.Scale = SpawnPlatform.Transform.World.Scale.WithZ(SpawnBarrier.Transform.Scale.z);
+        SpawnBarrier.Transform.Position = SpawnBarrier.Transform.Scale.WithX(-SpawnBarrier.Transform.Scale.x).WithZ(0f) * Consts.CubeModelSize / 2f;
 
         FinishPlatform.Transform.Scale = FinishPlatform.Transform.World.Scale.WithY(BlockSize.y * Size.y);
         FinishPlatform.Transform.Position = FinishPlatform.Transform.World.Position
