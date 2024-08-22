@@ -35,6 +35,9 @@ public class SpectatingCamera : Component
             return;
         }
 
+        if(Scene.IsEditor)
+            return;
+
         CameraController.IsFirstPerson = Target.IsValid();
         Instance = this;
     }
