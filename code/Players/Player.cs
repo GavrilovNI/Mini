@@ -78,7 +78,7 @@ public sealed class Player : Component, IDamageable, IHealthProvider, Component.
         if(GameObject.IsValid() && (!IsProxy || Connection.Local.IsHost))
             GameObject.Destroy();
 
-        if(Connection.Local.IsHost)
+        if(Connection.Local?.IsHost ?? false)
             Chat.Instance?.AddSystemText($"Player {Network.OwnerConnection.DisplayName} died!");
 
         if(!IsProxy)
