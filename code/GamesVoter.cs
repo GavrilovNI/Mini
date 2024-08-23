@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Mini;
 
-public class GamesVoter : Component
+public class GamesVoter : Component, Component.INetworkListener
 {
     [Property]
     public GamesLoader GamesLoader { get; set; } = null!;
@@ -44,6 +44,11 @@ public class GamesVoter : Component
         NetVotes.Clear();
     }
 
+    public void OnDisconnected(Connection channel)
+    {
+        if(!IsProxy)
+            NetVotes.Remove(channel.SteamId);
+    }
 
     [Broadcast]
     public void Vote(string gameId)
