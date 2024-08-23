@@ -59,7 +59,7 @@
 						<label class="name">@lobby.Name</label>
 						<label class="members">@(lobby.Members)/@(lobby.MaxMembers)</label>
 					</div>
-					<div class="join-lobby-button button" @onclick=@(() => _ = TryJoinLobby(lobby.OwnerId))>
+					<div class="join-lobby-button button" @onclick=@(() => _ = TryJoinLobby(lobby))>
 						<label>Join</label>
 					</div>
 				</div>
@@ -120,13 +120,13 @@
 		_timeSinceLobbiesUpdated = 0;
 	}
 
-	private async Task<bool> TryJoinLobby(ulong steamId)
+	private async Task<bool> TryJoinLobby(LobbyInformation lobby)
 	{
 		if(_connectingToLobby)
 			return false;
 
 		_connectingToLobby = true;
-		bool connected = await NetworkUtils.TryConnectSteamId(Task, steamId, true);
+		bool connected = await NetworkUtils.TryConnect(Task, lobby, true);
 
 		if(!connected)
 		{

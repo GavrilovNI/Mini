@@ -24,10 +24,10 @@ public static class NetworkUtils
         return connected;
     }
 
-    public static Task<bool> TryConnectSteamId(TaskSource taskSource, ulong steamId, bool allowLocalConnection = false)
+    public static Task<bool> TryConnect(TaskSource taskSource, LobbyInformation lobby, bool allowLocalConnection = false)
     {
-        if(steamId == Steam.SteamId && allowLocalConnection)
+        if(lobby.OwnerId == Steam.SteamId && allowLocalConnection)
             return TryConnectToLocal(taskSource);
-        return GameNetworkSystem.TryConnectSteamId(steamId);
+        return GameNetworkSystem.TryConnectSteamId(lobby.LobbyId);
     }
 }
