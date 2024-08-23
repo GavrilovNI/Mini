@@ -29,7 +29,8 @@ public sealed class BlockRunGame : MiniGame
     [Property]
     public GameObject KillingZone { get; set; } = null!;
 
-    private Vector2Int _maxSize;
+    [Sync]
+    private Vector2Int MaxSize { get; set; }
 
 
     public record struct LevelInfo
@@ -46,9 +47,9 @@ public sealed class BlockRunGame : MiniGame
 
     protected override async Task OnGameSetup()
     {
-        _maxSize = 0;
+        MaxSize = 0;
         foreach(var levelInfo in LevelInfos)
-            _maxSize = _maxSize.ComponentMax(levelInfo.Size);
+            MaxSize = MaxSize.ComponentMax(levelInfo.Size);
 
         await base.OnGameSetup();
         await SpawnBlocks();
@@ -64,7 +65,7 @@ public sealed class BlockRunGame : MiniGame
     {
         base.SetupRoom();
         var maxHeight = LevelHeight * LevelInfos.Count + BlockSize.z * Consts.CubeModelSize;
-        var maxWorldSize = _maxSize * Consts.CubeModelSize + (_maxSize - 1) * Gap;
+        var maxWorldSize = MaxSize * Consts.CubeModelSize + (MaxSize - 1) * Gap;
 
         SpawnPlatform.Transform.Scale = new Vector3(maxWorldSize / Consts.CubeModelSize).WithZ(SpawnPlatform.Transform.Scale.z);
         SpawnPlatform.Transform.Position = Transform.Position +
@@ -109,7 +110,7 @@ public sealed class BlockRunGame : MiniGame
             {
                 for(int y = 0; y < levelInfo.Size.y; ++y)
                 {
-                    SpawnBlock(new Vector3Int(x, y, z) + (_maxSize - levelInfo.Size) / 2);
+                    SpawnBlock(new Vector3Int(x, y, z) + (MaxSize - levelInfo.Size) / 2);
                     await Task.Yield();
                 }
             }
