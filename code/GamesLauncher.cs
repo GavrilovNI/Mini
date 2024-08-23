@@ -71,7 +71,7 @@ public class GamesLauncher : Component
 
         GamesVoter.Clear();
 
-        var gameGameObject = GamesLoader.CloneGamePrefab(gameId, new CloneConfig(new global::Transform(), GameObject, false));
+        var gameGameObject = GamesLoader.CloneGamePrefab(gameId, new CloneConfig(new global::Transform(), null, false));
         var gameInfo = GamesLoader.GetGameInfo(gameId);
         StartGameByGameObject(gameGameObject, gameInfo);
     }
@@ -84,7 +84,7 @@ public class GamesLauncher : Component
         if(CurrentGame.IsValid())
             throw new InvalidOperationException("Another game already exists.");
 
-        var gameGameObject = gamePrefab.Clone(new CloneConfig(new global::Transform(), GameObject, false));
+        var gameGameObject = gamePrefab.Clone(new CloneConfig(new global::Transform(), null, false));
         StartGameByGameObject(gameGameObject, gameInfo);
     }
 
@@ -98,7 +98,6 @@ public class GamesLauncher : Component
         if(!game.IsValid())
             throw new ComponentNotFoundException(GameObject, typeof(MiniGame));
 
-        gameGameObject.Enabled = true;
         CurrentGame = game;
         CurrentGameInfo = gameInfo;
 
