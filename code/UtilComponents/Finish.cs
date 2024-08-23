@@ -2,6 +2,7 @@
 using Mini.Players;
 using Sandbox;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Mini.UtilComponents;
 
@@ -12,7 +13,7 @@ public class Finish : Component, Component.ITriggerListener
     
 
     private readonly HashSet<Player> _players = new();
-    public IEnumerable<Player> FinishedPlayers => _players;
+    public List<Player> FinishedPlayers => _players.ToList();
 
     public void OnTriggerEnter(Collider other)
     {
