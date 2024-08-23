@@ -2,6 +2,7 @@
 using Mini.Players;
 using Sandbox;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mini;
 
@@ -24,23 +25,27 @@ public class SpectatingCamera : Component
 
     private GameObject? _lastTargetObject;
 
-
-    protected override void OnAwake()
+    protected override Task OnLoad()
     {
+        if(Scene.IsEditor)
+            return Task.CompletedTask;
+
         if(Instance.IsValid())
         {
             GameObject.Destroy();
-            return;
+            return Task.CompletedTask;
         }
+        Instance = this;
+        return Task.CompletedTask;
+    }
 
-        if(Scene.IsEditor)
-            return;
 
+    protected override void OnAwake()
+    {
         var targetObject = TargetObject;
         TargetObject = null;
+        Target = null;
         SetTarget(targetObject);
-
-        Instance = this;
     }
 
     public void SetTarget(GameObject? target)
