@@ -45,6 +45,9 @@ public sealed class PlayerCameraController : Component, INetworkSpawn
     {
         if(!Network.IsProxy)
         {
+            if(Input.Pressed("View"))
+                IsFirstPerson = !IsFirstPerson;
+
             UpdateBackingDistance();
             Rotate();
             ClipBack();
@@ -60,8 +63,13 @@ public sealed class PlayerCameraController : Component, INetworkSpawn
 
     private void UpdateModelRenderType()
     {
+        var renderType = IsFirstPerson && !Network.IsProxy ? ModelRenderer.ShadowRenderType.ShadowsOnly : ModelRenderer.ShadowRenderType.On;
+
         if(Model.IsValid())
-            Model.RenderType = IsFirstPerson && !Network.IsProxy ? ModelRenderer.ShadowRenderType.ShadowsOnly : ModelRenderer.ShadowRenderType.On;
+        {
+            foreach(var model in Model.Components.GetAll<ModelRenderer>(FindMode.EverythingInSelfAndDescendants))
+                model.RenderType = renderType;
+        }
     }
 
     private void Rotate()
