@@ -1,0 +1,23 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using System.Collections.Generic;
+
+@namespace Mini.UI
+
+@inherits PanelComponent
+
+<root>
+	@foreach(var (input, description) in GlyphDescriptions)
+	{
+		<div class="entry">
+			<GlyphUI class="glyph" input=@input size=medium outline=true/>
+			<label class="description">@description</label>
+		</div>
+	}
+</root>
+
+@code
+{
+	[Property]
+	public Dictionary<string, string> GlyphDescriptions { get; set; } = new();
+}

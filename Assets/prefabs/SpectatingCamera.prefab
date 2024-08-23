@@ -66,6 +66,33 @@
             "UseCameraDirection": true
           }
         ]
+      },
+      {
+        "__guid": "c44e5179-b22c-4e80-b631-f7b2a9e7bd6a",
+        "Flags": 0,
+        "Name": "Glyphs",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ScreenPanel",
+            "__guid": "ed756a07-9f71-4057-b3e0-7d94cd2d813b",
+            "AutoScreenScale": true,
+            "Opacity": 1,
+            "Scale": 1,
+            "ZIndex": 100
+          },
+          {
+            "__type": "Mini.UI.Glyphs",
+            "__guid": "6f5ba378-abae-415b-9fe3-2daf632c192e",
+            "GlyphDescriptions": {
+              "view": "View",
+              "jump": "Spectating mode",
+              "attack1": "Previous player",
+              "attack2": "Next player",
+              "run": "Speed up"
+            }
+          }
+        ]
       }
     ],
     "__variables": []

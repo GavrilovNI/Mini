@@ -1111,6 +1111,39 @@
                     "__guid": "94c86712-a457-4db4-a114-f29a8f48634c",
                     "UseCameraDirection": true
                   }
+                ],
+                "Children": [
+                  {
+                    "__guid": "0b9fdac8-43e6-4d26-bd44-2fc74290d081",
+                    "Flags": 0,
+                    "Name": "InputHints",
+                    "Position": "0,0,0",
+                    "Enabled": true,
+                    "Components": [
+                      {
+                        "__type": "Sandbox.ScreenPanel",
+                        "__guid": "ad4e4334-f872-40c4-9402-500636d5a836",
+                        "AutoScreenScale": true,
+                        "Opacity": 1,
+                        "Scale": 1,
+                        "ZIndex": 100
+                      },
+                      {
+                        "__type": "Mini.UI.InputHints",
+                        "__guid": "87c33479-65cf-4e05-89bc-5544014a9efd",
+                        "GlyphDescriptions": {
+                          "Forward": "Forward",
+                          "Left": "Left",
+                          "Backward": "Backward",
+                          "Right": "Right",
+                          "Jump": "Jump",
+                          "Run": "Run",
+                          "Duck": "Crouch",
+                          "View2": "View"
+                        }
+                      }
+                    ]
+                  }
                 ]
               }
             ]
