@@ -132,8 +132,6 @@ public sealed class BlockRunGame : MiniGame
         block.Color = LevelInfos[index.z].Color;
 
         blockGameObject.Enabled = true;
-
-        blockGameObject.NetworkMode = NetworkMode.Object;
         blockGameObject.NetworkSpawn();
     }
 
