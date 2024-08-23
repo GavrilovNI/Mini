@@ -96,7 +96,7 @@ public class GamesLauncher : Component
         var game = gameGameObject.Components.Get<MiniGame>(true);
 
         if(!game.IsValid())
-            throw new ComponentNotFoundException(GameObject, typeof(MiniGame));
+            throw new ComponentNotFoundException(gameGameObject, typeof(MiniGame));
 
         CurrentGame = game;
         CurrentGameInfo = gameInfo;
