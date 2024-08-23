@@ -63,6 +63,8 @@ public sealed class BlockRunGame : MiniGame
         EnableSpawnPlatform(false);
     }
 
+    [Button("Setup Room"), Group("Debug")]
+    [Broadcast(NetPermission.OwnerOnly)]
     private void SetupRoom()
     {
         var maxHeight = LevelHeight * LevelInfos.Count + BlockSize.z * Consts.CubeModelSize;
