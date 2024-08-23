@@ -83,6 +83,19 @@ public class FindTheWayGame : MiniGame
         EnableBarrier(false);
     }
 
+    protected override bool TryStopGameByPlayersCount()
+    {
+        if(base.TryStopGameByPlayersCount())
+            return true;
+
+        if(Players.Select(p => p.Network.OwnerConnection.SteamId).ToHashSet().IsSubsetOf(_finishedPlayers))
+        {
+            Stop();
+            return true;
+        }
+        return false;
+    }
+
     [Broadcast(NetPermission.OwnerOnly)]
     private void EnableBarrier(bool enabled)
     {
