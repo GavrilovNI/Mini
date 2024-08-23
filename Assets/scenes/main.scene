@@ -137,14 +137,6 @@
       ]
     },
     {
-      "__guid": "c7ac417e-ec83-466e-b548-e1b5d3369283",
-      "Flags": 0,
-      "Name": "spectatingcamera",
-      "Enabled": true,
-      "__Prefab": "prefabs/spectatingcamera.prefab",
-      "__PrefabVariables": {}
-    },
-    {
       "__guid": "840df57b-2c8d-4eae-8e3b-213de9251886",
       "Flags": 0,
       "Name": "Chat",
@@ -192,6 +184,28 @@
             "_type": "gameobject",
             "prefab": "prefabs/playervoice.prefab"
           }
+        }
+      ]
+    },
+    {
+      "__guid": "d44ef5e1-edab-4f95-bcb0-80dae113d23b",
+      "Flags": 0,
+      "Name": "LocalPrefabsSpawner",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Mini.LocalPrefabsSpawner",
+          "__guid": "ebaeb35b-77fc-4e92-ba51-cf792a1a270c",
+          "Prefabs": [
+            {
+              "Prefab": {
+                "_type": "gameobject",
+                "prefab": "prefabs/spectatingcamera.prefab"
+              },
+              "PrefabVariables": {}
+            }
+          ],
+          "SpawnOnLoad": true
         }
       ]
     }
