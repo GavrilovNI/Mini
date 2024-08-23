@@ -86,6 +86,9 @@ public abstract class MiniGame : Component, Component.INetworkListener
         if(IsProxy)
             return;
 
+        if(Status == GameStatus.Stopping || Status == GameStatus.Stopped)
+            return;
+
         if(Status != GameStatus.Started)
             throw new InvalidOperationException("Incorrect game status.");
 
