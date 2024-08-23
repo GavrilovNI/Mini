@@ -67,7 +67,7 @@ public class RedLightGreenLightGame : MiniGame
         if(IsProxy)
             return;
 
-        var runningPlayers = PlayingPlayers.Except(Finish.FinishedPlayers);
+        var runningPlayers = PlayingPlayers.ToList().Except(Finish.FinishedPlayers);
         foreach(var player in runningPlayers)
         {
             if(player.Transform.Position.AlmostEqual(_lastPlayerPositions[player], MaxMoveDistance))
