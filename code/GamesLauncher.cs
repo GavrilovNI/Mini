@@ -202,7 +202,7 @@ public class GamesLauncher : Component
 
         TimeUntilGameStatusEnd = VotingTime - Math.Min(_timeSinceVotingStarted, _timeSinceEnoughPlayersConnected);
 
-        bool allPlayersVoted = GamesVoter.Votes.Select(v => v.Key).ToHashSet().Overlaps(Connection.All.Select(c => c.SteamId));
+        bool allPlayersVoted = GamesVoter.Votes.Any() && Connection.All.Select(c => c.SteamId).ToHashSet().IsSubsetOf(GamesVoter.Votes.Select(v => v.Key));
         if(allPlayersVoted)
         {
             if(!_allPlayersVoted)
