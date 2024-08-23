@@ -104,9 +104,11 @@ public class FindTheWayGame : MiniGame
             return;
 
         var player = collider.Components.Get<Player>();
-
         if(player.IsValid())
+        {
             _finishedPlayers.Add(player.Network.OwnerConnection.SteamId);
+            TryStopGameByPlayersCount();
+        }
     }
 
     protected override void OnUpdate()
