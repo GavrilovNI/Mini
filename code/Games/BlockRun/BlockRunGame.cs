@@ -50,7 +50,6 @@ public sealed class BlockRunGame : MiniGame
         foreach(var levelInfo in LevelInfos)
             _maxSize = _maxSize.ComponentMax(levelInfo.Size);
 
-        SetupRoom();
         CreateSpawnPoints();
 
         await base.OnGameSetup();
@@ -63,10 +62,9 @@ public sealed class BlockRunGame : MiniGame
         EnableSpawnPlatform(false);
     }
 
-    [Button("Setup Room"), Group("Debug")]
-    [Broadcast(NetPermission.OwnerOnly)]
-    private void SetupRoom()
+    protected override void SetupRoom()
     {
+        base.SetupRoom();
         var maxHeight = LevelHeight * LevelInfos.Count + BlockSize.z * Consts.CubeModelSize;
         var maxWorldSize = _maxSize * Consts.CubeModelSize + (_maxSize - 1) * Gap;
 

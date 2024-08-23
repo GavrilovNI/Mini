@@ -67,8 +67,6 @@ public class FindTheWayGame : MiniGame
     protected override async Task OnGameSetup()
     {
         _timeSinceHightlight = Time.Now;
-
-        UpdatePlatforms();
         CreateSpawnPoints();
 
         FinishPlatform.Components.GetAll<Collider>().First(c => c.IsTrigger).OnTriggerEnter = OnFinishEnter;
@@ -135,11 +133,9 @@ public class FindTheWayGame : MiniGame
         }
     }
 
-
-    [Button("Update Platforms"), Group("Debug")]
-    [Broadcast(NetPermission.OwnerOnly)]
-    private void UpdatePlatforms()
+    protected override void SetupRoom()
     {
+        base.SetupRoom();
         SpawnPlatform.Transform.Scale = SpawnPlatform.Transform.World.Scale.WithY(BlockSize.y * Size.y);
         SpawnPlatform.Transform.Position = SpawnPlatform.Transform.Position
             .WithY(SpawnPlatform.Transform.Scale.y / 2f * Consts.CubeModelSize);

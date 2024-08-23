@@ -207,6 +207,7 @@ public abstract class MiniGame : Component, Component.INetworkListener
 
     protected virtual Task OnGameSetup()
     {
+        SetupRoom();
         UpdateSpawnPoints();
 
         if(SpawnPoints.Count == 0)
@@ -218,6 +219,14 @@ public abstract class MiniGame : Component, Component.INetworkListener
         return Task.CompletedTask;
     }
 
+    [Button("Setup Room"), Group("Debug")]
+    [Broadcast(NetPermission.OwnerOnly)]
+    protected virtual void SetupRoom()
+    {
+
+    }
+
+    [Button("Update Spawn Points"), Group("Debug")]
     protected virtual void UpdateSpawnPoints()
     {
         SpawnPoints = GameObject.Components.GetAll<SpawnPoint>(FindMode.EverythingInSelfAndDescendants)
