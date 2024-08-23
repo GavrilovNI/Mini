@@ -1139,7 +1139,9 @@
                           "Jump": "Jump",
                           "Run": "Run",
                           "Duck": "Crouch",
-                          "View2": "View"
+                          "View": "View",
+                          "Voice": "Talk",
+                          "Chat": "Chat"
                         }
                       }
                     ]

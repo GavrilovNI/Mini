@@ -82,14 +82,16 @@
             "ZIndex": 100
           },
           {
-            "__type": "Mini.UI.Glyphs",
-            "__guid": "6f5ba378-abae-415b-9fe3-2daf632c192e",
+            "__type": "Mini.UI.InputHints",
+            "__guid": "af5fc3f7-8538-479a-9bd9-6ea27991a2ab",
             "GlyphDescriptions": {
               "view": "View",
               "jump": "Spectating mode",
               "attack1": "Previous player",
               "attack2": "Next player",
-              "run": "Speed up"
+              "run": "Speed up",
+              "voice": "Talk",
+              "chat": "Chat"
             }
           }
         ]
