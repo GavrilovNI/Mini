@@ -19,6 +19,32 @@ MainHUD {
 		right: 10px;
 	}
 
+	.game-name {
+		position: absolute;
+		width: 100%;
+		top: 100px;
+		height: 70px;
+		text-align: center;
+		font-size: 50px;
+		font-family: Poppins;
+		color: #fff;
+		text-stroke: 5 black;
+		white-space: nowrap;
+	}
+
+	.game-desc {
+		position: absolute;
+		width: 50%;
+		left: 25%;
+		top: 170px;
+		height: 50px;
+		text-align: center;
+		font-size: 25px;
+		font-family: Poppins;
+		color: #fff;
+		text-stroke: 5 black;
+	}
+
 	.death-message {
 		position: absolute;
 		width: 100%;

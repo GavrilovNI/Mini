@@ -54,6 +54,13 @@
 		<label class="winners">@winnersString</label>
 		<label class="title">Voting starts in @timeUntilGameStatusEndString</label>
 	}
+
+	@if(GamesLauncher.GameStatus == GameStatus.SettingUp || GamesLauncher.GameStatus == GameStatus.SetUp)
+	{
+		var gameInfo = GamesLauncher.CurrentGameInfo;
+		<label class="game-name">@gameInfo.Name</label>
+		<label class="game-desc">@gameInfo.Description</label>
+	}
 </root>
 
 @code
