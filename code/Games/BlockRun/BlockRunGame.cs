@@ -75,7 +75,7 @@ public sealed class BlockRunGame : MiniGame
 
         KillingZone.Transform.Position = SpawnPlatform.Transform.Position
             .WithZ(Transform.Position.z - KillingZone.Transform.Scale.z / 2f * Consts.CubeModelSize);
-        KillingZone.Transform.Scale = (SpawnPlatform.Transform.Scale * 2).WithZ(KillingZone.Transform.Scale.z);
+        KillingZone.Transform.Scale = (SpawnPlatform.Transform.Scale * 10).WithZ(KillingZone.Transform.Scale.z);
     }
 
     private void CreateSpawnPoints()
