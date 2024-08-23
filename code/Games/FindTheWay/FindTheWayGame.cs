@@ -340,8 +340,6 @@ public class FindTheWayGame : MiniGame
         block.Setup(this);
 
         blockGameObject.Enabled = true;
-
-        blockGameObject.NetworkMode = NetworkMode.Object;
         blockGameObject.NetworkSpawn();
 
         _blocks.Add(index, block);
