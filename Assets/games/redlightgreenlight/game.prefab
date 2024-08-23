@@ -43,7 +43,7 @@
           "go": "f6842ff5-5f22-43a2-a1d9-61dd18b02650"
         },
         "Status": "Created",
-        "StopGameIfNotEnoughPlayers": true,
+        "StopGameIfNotEnoughPlayers": false,
         "StopGameIfZeroPlayers": true,
         "YellowColorTime": 0.7
       }
