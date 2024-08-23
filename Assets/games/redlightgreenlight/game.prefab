@@ -21,6 +21,7 @@
           "component_type": "IndicatingLight"
         },
         "MaxGameTime": 45,
+        "MaxMoveDistance": 3,
         "MaxTimeToChangeLight": 3,
         "MinTimeToChangeLight": 0.3,
         "PlayerPrefab": {

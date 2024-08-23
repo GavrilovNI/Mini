@@ -23,6 +23,8 @@ public class RedLightGreenLightGame : MiniGame
     public float MaxTimeToChangeLight { get; set; } = 3f;
     [Property]
     public float YellowColorTime { get; set; } = 0.7f;
+    [Property]
+    public float MaxMoveDistance { get; set; } = 3f;
 
     private readonly Dictionary<Player, Vector3> _lastPlayerPositions = new();
 
@@ -68,13 +70,13 @@ public class RedLightGreenLightGame : MiniGame
         var runningPlayers = PlayingPlayers.Except(Finish.FinishedPlayers);
         foreach(var player in runningPlayers)
         {
+            if(player.Transform.Position.AlmostEqual(_lastPlayerPositions[player], MaxMoveDistance))
+                continue;
+
             if(IndicatingLight.CurrentColor == IndicatingLight.LightColor.Red)
             {
                 if(RunZone.Players.Contains(player))
-                {
-                    if(!player.Transform.Position.AlmostEqual(_lastPlayerPositions[player]))
-                        player.Kill();
-                }
+                    player.Kill();
             }
 
             _lastPlayerPositions[player] = player.Transform.Position;
