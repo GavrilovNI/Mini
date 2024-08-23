@@ -50,8 +50,6 @@ public sealed class BlockRunGame : MiniGame
         foreach(var levelInfo in LevelInfos)
             _maxSize = _maxSize.ComponentMax(levelInfo.Size);
 
-        CreateSpawnPoints();
-
         await base.OnGameSetup();
         await SpawnBlocks();
     }
@@ -78,8 +76,11 @@ public sealed class BlockRunGame : MiniGame
         KillingZone.Transform.Scale = (SpawnPlatform.Transform.Scale * 10).WithZ(KillingZone.Transform.Scale.z);
     }
 
-    private void CreateSpawnPoints()
+    protected override void UpdateSpawnPoints()
     {
+        foreach(var spawnPoint in GameObject.Components.GetAll<SpawnPoint>(FindMode.EverythingInSelfAndDescendants))
+            spawnPoint.GameObject.Destroy();
+
         var offset = SpawnPlatform.Transform.Scale / 4 * Consts.CubeModelSize;
         for(int x = -1; x <= 1; ++x)
         {
@@ -89,6 +90,8 @@ public sealed class BlockRunGame : MiniGame
                 SpawnPointPrefab.Clone(SpawnPointsParent, position, Rotation.Identity, Vector3.One).NetworkSpawn();
             }
         }
+
+        base.UpdateSpawnPoints();
     }
 
     [Broadcast(NetPermission.OwnerOnly)]

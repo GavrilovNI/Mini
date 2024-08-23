@@ -67,8 +67,6 @@ public class FindTheWayGame : MiniGame
     protected override async Task OnGameSetup()
     {
         _timeSinceHightlight = Time.Now;
-        CreateSpawnPoints();
-
         FinishPlatform.Components.GetAll<Collider>().First(c => c.IsTrigger).OnTriggerEnter = OnFinishEnter;
 
         await base.OnGameSetup();
@@ -153,8 +151,7 @@ public class FindTheWayGame : MiniGame
             .WithX(BlockSize.x * Size.x * Consts.CubeModelSize / 2f);
     }
 
-    [Button("Recreate Spawn Points"), Group("Debug")]
-    private void CreateSpawnPoints()
+    protected override void UpdateSpawnPoints()
     {
         foreach(var spawnPoint in GameObject.Components.GetAll<SpawnPoint>(FindMode.EverythingInSelfAndDescendants))
             spawnPoint.GameObject.Destroy();
@@ -162,10 +159,9 @@ public class FindTheWayGame : MiniGame
         for(int i = 0; i < Size.y; ++i)
         {
             var position = new Vector3(-SpawnPlatform.Transform.Scale.x * Consts.CubeModelSize / 2f, BlockSize.y * Consts.CubeModelSize * (i + 0.5f), SpawnPlatform.Transform.Scale.z * Consts.CubeModelSize / 2f);
-            SpawnPointPrefab.Clone(SpawnPointParent, position, Rotation.Identity, Vector3.One).NetworkSpawn();  
+            SpawnPointPrefab.Clone(SpawnPointParent, position, Rotation.Identity, Vector3.One).NetworkSpawn();
         }
-
-        UpdateSpawnPoints();
+        base.UpdateSpawnPoints();
     }
 
     [Button("Rebuild"), Group("Debug")]
