@@ -1,4 +1,5 @@
-﻿using Mini.Players;
+﻿using Mini.Interfaces;
+using Mini.Players;
 using Sandbox;
 using System.Linq;
 
@@ -9,6 +10,7 @@ public class SpectatingCamera : Component
     public static SpectatingCamera? Instance { get; private set; }
 
     [Property]
+    public GameObject? TargetObject { get; private set; }
     public GameObject? Target { get; private set; }
 
     [Property, RequireComponent]
@@ -20,7 +22,7 @@ public class SpectatingCamera : Component
     public float FastSpeed { get; set; } = 50f;
 
 
-    private GameObject? _lastTarget;
+    private GameObject? _lastTargetObject;
 
 
     protected override void OnAwake()
@@ -34,17 +36,63 @@ public class SpectatingCamera : Component
         if(Scene.IsEditor)
             return;
 
-        CameraController.IsFirstPerson = Target.IsValid();
+        var targetObject = TargetObject;
+        TargetObject = null;
+        SetTarget(targetObject);
+
         Instance = this;
     }
 
     public void SetTarget(GameObject? target)
     {
-        _lastTarget = Target;
-        Target = target;
-        if(target is null)
+        _lastTargetObject = TargetObject;
+
+        CameraController.VisibilityController = null;
+        var visibilityController = _lastTargetObject?.Components.Get<PlayerVisibilityController>(FindMode.EverythingInSelfAndDescendants);
+        if(visibilityController.IsValid() && CameraController == visibilityController.CameraControllerOverride)
+        {
+            visibilityController.CameraControllerOverride = null;
+            visibilityController.UpdateVisibility();
+        }
+
+        if(target.IsValid())
+        {
+            var eyeProvider = target.Components.Get<IEyeProvider>();
+            if(eyeProvider is null)
+            {
+                TargetObject = target;
+                Target = target;
+            }
+            else
+            {
+                TargetObject = target;
+                Target = eyeProvider.Eye;
+            }
+
+            CameraController.SetView(false);
+        }
+        else
+        {
+            TargetObject = null;
+            Target = null;
             Transform.Position = CameraController.Camera.Transform.Position;
-        CameraController.IsFirstPerson = target is null;
+            CameraController.SetView(true);
+        }
+
+
+        if(TargetObject.IsValid())
+        {
+            visibilityController = TargetObject?.Components.Get<PlayerVisibilityController>(FindMode.EverythingInSelfAndDescendants);
+
+            if(visibilityController.IsValid())
+            {
+                visibilityController.CameraControllerOverride = CameraController;
+                CameraController.VisibilityController = visibilityController;
+                visibilityController.UpdateVisibility();
+            }
+        }
+
+        CameraController.AllowChangingView = Target.IsValid();
     }
 
     protected override void OnUpdate()
@@ -69,26 +117,31 @@ public class SpectatingCamera : Component
 
     protected virtual void OnLostTarget()
     {
-        Transform.Position = CameraController.Camera.Transform.Position;
-        CameraController.IsFirstPerson = true;
+        if(TargetObject.IsValid())
+        {
+            SetTarget(TargetObject);
+        }
+        else
+        {
+            SetTarget(null);
+            Transform.Position = CameraController.Camera.Transform.Position;
+            CameraController.SetView(true);
+        }
     }
 
     protected virtual void UpdateTarget()
     {
         if(Target is not null && !Target.IsValid())
-        {
-            SetTarget(null);
             OnLostTarget();
-        }
 
         if(Input.Pressed("Jump"))
         {
             if(Target is null)
             {
-                if(_lastTarget.IsValid())
-                    SetTarget(_lastTarget);
+                if(_lastTargetObject.IsValid())
+                    SetTarget(_lastTargetObject);
                 else
-                    SetTarget(Scene.Components.Get<Player>(FindMode.EnabledInSelfAndDescendants)?.Eye);
+                    SetTarget(Scene.Components.Get<Player>(FindMode.EnabledInSelfAndDescendants).GameObject);
             }
             else
             {
@@ -100,25 +153,25 @@ public class SpectatingCamera : Component
             bool moveNext = Input.Pressed("attack2");
             if(Input.Pressed("attack1") || moveNext)
             {
-                var playerEyes = Scene.GetAllComponents<Player>().Select(p => p.Eye);
-                if(!playerEyes.Any())
+                var players = Scene.GetAllComponents<Player>().Select(p => p.GameObject);
+                if(!players.Any())
                 {
                     SetTarget(null);
                 }
                 else
                 {
-                    var prevPlayerEye = playerEyes.Last();
+                    var prevPlayer = players.Last();
                     bool found = false;
 
-                    foreach(var player in playerEyes.Append(playerEyes.First()))
+                    foreach(var player in players.Append(players.First()))
                     {
                         if(found)
                         {
-                            SetTarget(prevPlayerEye);
+                            SetTarget(prevPlayer);
                             break;
                         }
 
-                        if(player == Target)
+                        if(player == TargetObject)
                         {
                             if(moveNext)
                             {
@@ -126,12 +179,12 @@ public class SpectatingCamera : Component
                             }
                             else
                             {
-                                SetTarget(prevPlayerEye);
+                                SetTarget(prevPlayer);
                                 break;
                             }
                         }
 
-                        prevPlayerEye = player;
+                        prevPlayer = player;
                     }
                 }
             }

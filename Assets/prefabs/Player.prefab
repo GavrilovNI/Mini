@@ -69,6 +69,7 @@
       {
         "__type": "Mini.Players.PlayerCameraController",
         "__guid": "ab040d9e-ef3e-48b1-88a2-e569453b791d",
+        "AllowChangingView": true,
         "BackingDistanceChangeSpeed": 10,
         "Camera": {
           "_type": "gameobject",
@@ -81,11 +82,11 @@
         "IsFirstPerson": false,
         "MaxBackingDistance": 300,
         "MinBackingDistance": 100,
-        "Model": {
+        "VisibilityController": {
           "_type": "component",
-          "component_id": "6475ac87-1a43-446f-bc5d-02675f94eaf9",
-          "go": "1cebab66-67ff-4fac-892f-af650dac8097",
-          "component_type": "SkinnedModelRenderer"
+          "component_id": "1e0bc493-071e-4b57-bea4-886a631938f5",
+          "go": "20c32008-465a-4542-bcb6-0d20e8b6e184",
+          "component_type": "PlayerVisibilityController"
         }
       },
       {
@@ -108,7 +109,27 @@
           "go": "c552cd65-57dc-4bec-a5fb-b17977cb1f3b"
         },
         "Health": 100,
-        "MaxHealth": 100
+        "MaxHealth": 100,
+        "VisibilityController": {
+          "_type": "component",
+          "component_id": "1e0bc493-071e-4b57-bea4-886a631938f5",
+          "go": "20c32008-465a-4542-bcb6-0d20e8b6e184",
+          "component_type": "PlayerVisibilityController"
+        }
+      },
+      {
+        "__type": "Mini.Players.PlayerVisibilityController",
+        "__guid": "1e0bc493-071e-4b57-bea4-886a631938f5",
+        "CameraController": {
+          "_type": "component",
+          "component_id": "ab040d9e-ef3e-48b1-88a2-e569453b791d",
+          "go": "20c32008-465a-4542-bcb6-0d20e8b6e184",
+          "component_type": "PlayerCameraController"
+        },
+        "Model": {
+          "_type": "gameobject",
+          "go": "1cebab66-67ff-4fac-892f-af650dac8097"
+        }
       },
       {
         "__type": "Mini.Players.PlayerFootsteps",

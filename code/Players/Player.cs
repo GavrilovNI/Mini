@@ -1,4 +1,5 @@
-﻿using Mini.Networking.Exceptions;
+﻿using Mini.Interfaces;
+using Mini.Networking.Exceptions;
 using Mini.UI;
 using Sandbox;
 using System;
@@ -6,16 +7,17 @@ using static Sandbox.Component;
 
 namespace Mini.Players;
 
-public sealed class Player : Component, IDamageable, IHealthProvider, Component.INetworkSpawn
+public sealed class Player : Component, IDamageable, IHealthProvider, Component.INetworkSpawn, IEyeProvider
 {
     public event Action<Player>? Died;
     public event Action<Player>? Destroyed;
 
     [Property]
     public GameObject Eye { get; private set; } = null!;
-
     [Property]
     public GameObject Camera { get; private set; } = null!;
+    [Property]
+    public PlayerVisibilityController VisibilityController { get; private set; } = null!;
 
     [HostSync]
     [Property]
@@ -35,6 +37,7 @@ public sealed class Player : Component, IDamageable, IHealthProvider, Component.
 
         if(SpectatingCamera.Instance.IsValid())
             SpectatingCamera.Instance.GameObject.Enabled = false;
+        VisibilityController.CameraControllerOverride = null;
     }
 
     public void OnDamage(in DamageInfo damageInfo)

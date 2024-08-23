@@ -1,18 +1,21 @@
 ﻿using Sandbox;
 using System;
-using static Sandbox.Component;
 
 namespace Mini.Players;
 
-public sealed class PlayerCameraController : Component, INetworkSpawn
+public sealed class PlayerCameraController : Component
 {
     [Property]
     public GameObject Camera { get; private set; } = null!;
     [Property]
     public GameObject Eye { get; private set; } = null!;
+    [Property]
+    public PlayerVisibilityController? VisibilityController { get; set; }
 
     [Property]
-    public bool IsFirstPerson { get; set; } = true;
+    public bool IsFirstPerson { get; private set; } = true;
+    [Property]
+    public bool AllowChangingView { get; set; } = true;
     [Property, HideIf(nameof(IsFirstPerson), true)]
     public float MinBackingDistance { get; set; } = 100;
     [Property, HideIf(nameof(IsFirstPerson), true)]
@@ -20,20 +23,14 @@ public sealed class PlayerCameraController : Component, INetworkSpawn
     [Property, HideIf(nameof(IsFirstPerson), true)]
     public float BackingDistanceChangeSpeed { get; set; } = 10;
 
-    [Property]
-    private ModelRenderer? Model { get; set; }
 
     private float _backingDistance;
 
 
-    public void OnNetworkSpawn(Connection owner)
+    public void SetView(bool firstPerson)
     {
-        UpdateModelRenderType();
-    }
-
-    protected override void OnStart()
-    {
-        UpdateModelRenderType();
+        IsFirstPerson = firstPerson;
+        ClipBack();
     }
 
     protected override void OnAwake()
@@ -45,31 +42,21 @@ public sealed class PlayerCameraController : Component, INetworkSpawn
     {
         if(!Network.IsProxy)
         {
-            if(Input.Pressed("View"))
-                IsFirstPerson = !IsFirstPerson;
+            if(Input.Pressed("View") && AllowChangingView)
+            {
+                SetView(!IsFirstPerson);
+                VisibilityController?.UpdateVisibility();
+            }
 
             UpdateBackingDistance();
             Rotate();
             ClipBack();
         }
-
-        UpdateModelRenderType();
     }
 
     private void UpdateBackingDistance()
     {
         _backingDistance = Math.Clamp(_backingDistance -= Input.MouseWheel.y * BackingDistanceChangeSpeed, MinBackingDistance, MaxBackingDistance);
-    }
-
-    private void UpdateModelRenderType()
-    {
-        var renderType = IsFirstPerson && !Network.IsProxy ? ModelRenderer.ShadowRenderType.ShadowsOnly : ModelRenderer.ShadowRenderType.On;
-
-        if(Model.IsValid())
-        {
-            foreach(var model in Model.Components.GetAll<ModelRenderer>(FindMode.EverythingInSelfAndDescendants))
-                model.RenderType = renderType;
-        }
     }
 
     private void Rotate()

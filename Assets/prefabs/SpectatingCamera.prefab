@@ -8,6 +8,7 @@
       {
         "__type": "Mini.Players.PlayerCameraController",
         "__guid": "ff00b385-5828-437e-b74b-92ffdd12d815",
+        "AllowChangingView": true,
         "BackingDistanceChangeSpeed": 10,
         "Camera": {
           "_type": "gameobject",
@@ -31,7 +32,6 @@
           "component_type": "PlayerCameraController"
         },
         "FastSpeed": 50,
-        "FindFirstTarget": true,
         "Speed": 10
       }
     ],
