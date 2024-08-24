@@ -92,6 +92,9 @@ public class GamesLauncher : Component, Component.INetworkListener
     private void TryAllowPlayAloneBtn() => TryAllowPlayAlone();
     public bool TryAllowPlayAlone()
     {
+        if(IsAllowedPlayAlone)
+            return true;
+
         if(Connection.All.Count > 1)
             return false;
 
@@ -102,8 +105,12 @@ public class GamesLauncher : Component, Component.INetworkListener
         GamesVoter.Clear();
         return true;
     }
+
     public void DisallowPlayAlone()
     {
+        if(!IsAllowedPlayAlone)
+            return;
+
         IsAllowedPlayAlone = false;
         GamesVoter.Clear();
     }
