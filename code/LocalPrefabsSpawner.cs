@@ -43,7 +43,6 @@ public class LocalPrefabsSpawner : Component
     {
         foreach(var spawnSettings in Prefabs)
         {
-            Log.Info(spawnSettings.Prefab);
             var gameObject = spawnSettings.Prefab.Clone(spawnSettings.ToCloneConfig());
             gameObject.NetworkMode = NetworkMode.Never;
         }
