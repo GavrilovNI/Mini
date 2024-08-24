@@ -12,7 +12,7 @@ namespace Mini;
 
 public class GamesLauncher : Component
 {
-    public static GamesLauncher Instance { get; private set; }
+    public static GamesLauncher? Instance { get; private set; }
 
     public MiniGame? CurrentGame { get; private set; }
     public GameInfo CurrentGameInfo { get; private set; }
