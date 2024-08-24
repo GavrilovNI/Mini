@@ -205,10 +205,12 @@
               "StartEnabled": true,
               "Transform": {
                 "UniformScale": 1,
+                "IsValid": true,
                 "ForwardRay": {
                   "Forward": "1,0,0"
                 },
-                "Scale": "1,1,1"
+                "Scale": "1,1,1",
+                "Rotation": "0,0,0,1"
               },
               "PrefabVariables": {}
             }
