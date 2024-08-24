@@ -10,6 +10,8 @@ MainMenu {
 	font-family: Poppins;
 
 	.button {
+		pointer-events: all;
+
 		.label {
 			border-radius: 50%;
 			white-space: nowrap;
