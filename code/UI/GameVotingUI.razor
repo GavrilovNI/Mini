@@ -18,7 +18,7 @@
 		var height = AutoHeight ? GamesVoter.GamesCount / width + (GamesVoter.GamesCount % width > 0 ? 1 : 0) : Height;
 		var gamesEnumerator = GamesVoter.Games.GetEnumerator();
 	}
-	<label class="title">Vote for Next Game!</label>
+	<label class="title">Vote for the next game!</label>
 	<div class="games" style="aspect-ratio:@(GamePlateAspectRatio * width / height); @(width * GamePlateAspectRatio > height ? "width" : "height"): @(WidownSizePercent)vh;">
 		@for (int y = 0; y < height; ++y)
 		{
