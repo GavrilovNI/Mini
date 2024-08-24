@@ -146,7 +146,7 @@ public class SpectatingCamera : Component
                 if(_lastTargetObject.IsValid())
                     SetTarget(_lastTargetObject);
                 else
-                    SetTarget(Scene.Components.Get<Player>(FindMode.EnabledInSelfAndDescendants).GameObject);
+                    SetTarget(Scene.Components.Get<Player>(FindMode.EnabledInSelfAndDescendants)?.GameObject);
             }
             else
             {
