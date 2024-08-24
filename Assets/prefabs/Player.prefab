@@ -49,7 +49,7 @@
         "EyeHeightOffset": -8,
         "GroundFriction": 4,
         "HeightChangingSpeed": 0.005,
-        "JumpForce": 400,
+        "JumpForce": 350,
         "MaxForce": 50,
         "MaxModelDeltaAngle": 50,
         "MaxSpeedForRotatedModel": 10,
