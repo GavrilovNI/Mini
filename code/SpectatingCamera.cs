@@ -11,6 +11,8 @@ public class SpectatingCamera : Component
     public static SpectatingCamera? Instance { get; private set; }
 
     [Property]
+    public bool SetTargetToPlayerOnStart { get; set; } = false;
+    [Property, HideIf(nameof(SetTargetToPlayerOnStart), true)]
     public GameObject? TargetObject { get; private set; }
     public GameObject? Target { get; private set; }
 
@@ -42,10 +44,20 @@ public class SpectatingCamera : Component
 
     protected override void OnAwake()
     {
-        var targetObject = TargetObject;
-        TargetObject = null;
-        Target = null;
-        SetTarget(targetObject);
+        if(SetTargetToPlayerOnStart)
+        {
+            TargetObject = null;
+            Target = null;
+            SetTargetToPlayer();
+        }
+        else if(TargetObject is not null)
+        {
+            var targetObject = TargetObject;
+            TargetObject = null;
+            Target = null;
+            SetTarget(targetObject);
+        }
+
     }
 
     public void SetTarget(GameObject? target)
@@ -134,6 +146,11 @@ public class SpectatingCamera : Component
         }
     }
 
+    protected virtual void SetTargetToPlayer()
+    {
+        SetTarget(Scene.Components.Get<Player>(FindMode.EnabledInSelfAndDescendants)?.GameObject);
+    }
+
     protected virtual void UpdateTarget()
     {
         if(Target is not null && !Target.IsValid())
@@ -146,7 +163,7 @@ public class SpectatingCamera : Component
                 if(_lastTargetObject.IsValid())
                     SetTarget(_lastTargetObject);
                 else
-                    SetTarget(Scene.Components.Get<Player>(FindMode.EnabledInSelfAndDescendants)?.GameObject);
+                    SetTargetToPlayer();
             }
             else
             {
