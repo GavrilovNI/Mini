@@ -73,12 +73,18 @@ MainHUD {
 		text-stroke: 5 black;
 		top: 100px;
 		right: 10px;
+		white-space: nowrap;
 	}
 
 	.play-alone-button {
 		position: absolute;
+		font-size: 20px;
+		font-family: Poppins;
+		color: #fff;
+		text-stroke: 5 black;
 		top: 150px;
 		right: 10px;
+		white-space: nowrap;
 	}
 
 	.game-name {
