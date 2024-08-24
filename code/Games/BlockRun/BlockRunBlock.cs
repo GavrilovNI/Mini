@@ -1,4 +1,5 @@
 ﻿using Mini.Networking.Exceptions;
+using Mini.Players;
 using Sandbox;
 
 namespace Mini.Games.BlockRun;
@@ -33,7 +34,7 @@ public class BlockRunBlock : Component, Component.ITriggerListener
         if(IsProxy || IsBreaking)
             return;
 
-        if(collider.GameObject.Components.Get<BlockRunBlock>().IsValid())
+        if(!collider.GameObject.Components.Get<Player>().IsValid())
             return;
 
         Break();
