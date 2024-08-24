@@ -202,6 +202,14 @@
                 "_type": "gameobject",
                 "prefab": "prefabs/spectatingcamera.prefab"
               },
+              "StartEnabled": true,
+              "Transform": {
+                "UniformScale": 1,
+                "ForwardRay": {
+                  "Forward": "1,0,0"
+                },
+                "Scale": "1,1,1"
+              },
               "PrefabVariables": {}
             }
           ],
