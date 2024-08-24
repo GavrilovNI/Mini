@@ -236,6 +236,9 @@ public class GamesLauncher : Component
     {
         if(NetWinners.Contains(Steam.SteamId))
             Sandbox.Services.Stats.Increment("wins", 1);
+
+        var winRate = Sandbox.Services.Stats.LocalPlayer.Get("wins").Value / Math.Max(1, Sandbox.Services.Stats.LocalPlayer.Get("games_played").Value);
+        Sandbox.Services.Stats.SetValue("win_rate", winRate);
     }
 
     [Broadcast(NetPermission.OwnerOnly)]
