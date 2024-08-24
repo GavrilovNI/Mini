@@ -2,6 +2,7 @@
 using Mini.Games;
 using Mini.Players;
 using Sandbox;
+using Sandbox.Internal;
 using Sandbox.Utility;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Mini;
 
-public class GamesLauncher : Component
+public class GamesLauncher : Component, Component.INetworkListener
 {
     public static GamesLauncher? Instance { get; private set; }
 
@@ -49,6 +50,9 @@ public class GamesLauncher : Component
     [Sync]
     protected NetList<ulong> NetPlayers { get; private set; } = new();
 
+
+    public bool IsAllowedPlayAlone { get; private set; } = false;
+
     public ISet<ulong> Winners => NetWinners.ToHashSet();
     public ISet<ulong> Players => NetPlayers.ToHashSet();
 
@@ -72,6 +76,36 @@ public class GamesLauncher : Component
         }
         Instance = this;
         return Task.CompletedTask;
+    }
+
+    public void OnConnected(Connection channel)
+    {
+        DisallowPlayAlone();
+    }
+
+    public void OnDisconnected(Connection channel)
+    {
+        DisallowPlayAlone();
+    }
+
+    [Button("Try Allow Play Alone")]
+    private void TryAllowPlayAloneBtn() => TryAllowPlayAlone();
+    public bool TryAllowPlayAlone()
+    {
+        if(Connection.All.Count > 1)
+            return false;
+
+        if(GameStatus != GameStatus.None)
+            return false;
+
+        IsAllowedPlayAlone = true;
+        GamesVoter.Clear();
+        return true;
+    }
+    public void DisallowPlayAlone()
+    {
+        IsAllowedPlayAlone = false;
+        GamesVoter.Clear();
     }
 
     [Button("StartRandomGame")]
@@ -226,7 +260,9 @@ public class GamesLauncher : Component
             _allPlayersVoted = false;
             _timeSinceVotingStarted = 0;
             GamesVoter.Clear();
-            GamesVoter.ChooseGames(Math.Min(GamesCountToVote, GamesLoader.GamesCount));
+
+            bool playingAlone = IsAllowedPlayAlone && Connection.All.Count == 1;
+            GamesVoter.ChooseGames(Math.Min(GamesCountToVote, GamesLoader.GamesCount), i => !playingAlone || i.GameInfo.CanPlayAlone);
         }
 
         TimeUntilGameStatusEnd = VotingTime - Math.Min(_timeSinceVotingStarted, _timeSinceEnoughPlayersConnected);
@@ -252,6 +288,9 @@ public class GamesLauncher : Component
     [Broadcast(NetPermission.OwnerOnly)]
     private void OnWinnersChosen()
     {
+        if(NetPlayers.Count <= 1)
+            return;
+
         if(NetWinners.Contains(Steam.SteamId))
             PlayerStats.RegisterWin();
 
@@ -261,6 +300,9 @@ public class GamesLauncher : Component
     [Broadcast(NetPermission.OwnerOnly)]
     private void OnGameStarted()
     {
+        if(NetPlayers.Count <= 1)
+            return;
+
         if(NetPlayers.Contains(Steam.SteamId))
             PlayerStats.RegisterGame();
     }

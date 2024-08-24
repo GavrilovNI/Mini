@@ -26,10 +26,15 @@
 		@if(!GamesLauncher.HasEnoughPlayers)
 		{
 			<label class="title">Waiting Players</label>
+			<div class="play-alone-button light button" @onclick=@TryAllowPlayAlone>I'm alone :(</div>
 		}
 		else
 		{
 			<label class="title">Voting ends in @timeUntilGameStatusEndString</label>
+			@if(GamesLauncher.IsAllowedPlayAlone)
+			{
+				<div class="play-alone-button light button" @onclick=@DisallowPlayAlone>I found a friend!</div>
+			}
 		}
 	}
 	else if(GamesLauncher.GameStatus == GameStatus.SettingUp)
@@ -96,6 +101,15 @@
 			_showDeathMessage = false;
 			StateHasChanged();
 		}
+	}
+
+	private void TryAllowPlayAlone()
+	{
+		GamesLauncher.Instance?.TryAllowPlayAlone();
+	}
+	private void DisallowPlayAlone()
+	{
+		GamesLauncher.Instance?.DisallowPlayAlone();
 	}
 
 	[Button("Show Death Message")]

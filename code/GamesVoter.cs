@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using Mini.Games;
+using Sandbox;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,8 @@ public class GamesVoter : Component, Component.INetworkListener
     public IEnumerable<KeyValuePair<ulong, string>> Votes => NetVotes;
 
 
-    public void ChooseGames(int count)
+    public void ChooseGames(int count) => ChooseGames(count, _ => true);
+    public void ChooseGames(int count, Func<LoadedGameInfo, bool> predicate)
     {
         if(count <= 0)
             throw new System.ArgumentOutOfRangeException(nameof(count), "Count is negative.");
@@ -31,7 +33,7 @@ public class GamesVoter : Component, Component.INetworkListener
         if(count > GamesLoader.GamesCount)
             throw new System.ArgumentOutOfRangeException(nameof(count), "There are no that much games.");
 
-        var games = GamesLoader.Games.OrderBy(g => Guid.NewGuid()).Take(count);
+        var games = GamesLoader.Games.Where(predicate).OrderBy(g => Guid.NewGuid()).Take(count);
 
         NetGames.Clear();
         foreach(var game in games)
