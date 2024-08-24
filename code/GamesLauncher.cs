@@ -1,5 +1,6 @@
 ﻿using Mini.Exceptions;
 using Mini.Games;
+using Mini.Players;
 using Sandbox;
 using Sandbox.Utility;
 using System;
@@ -235,16 +236,15 @@ public class GamesLauncher : Component
     private void OnWinnersChosen()
     {
         if(NetWinners.Contains(Steam.SteamId))
-            Sandbox.Services.Stats.Increment("wins", 1);
+            PlayerStats.RegisterWin();
 
-        var winRate = Sandbox.Services.Stats.LocalPlayer.Get("wins").Value / Math.Max(1, Sandbox.Services.Stats.LocalPlayer.Get("games_played").Value);
-        Sandbox.Services.Stats.SetValue("win_rate", winRate);
+        PlayerStats.UpdateWinRate();
     }
 
     [Broadcast(NetPermission.OwnerOnly)]
     private void OnGameStarted()
     {
         if(NetPlayers.Contains(Steam.SteamId))
-            Sandbox.Services.Stats.Increment("games_played", 1);
+            PlayerStats.RegisterGame();
     }
 }
