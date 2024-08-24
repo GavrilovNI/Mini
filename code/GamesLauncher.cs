@@ -6,11 +6,14 @@ using Sandbox.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Mini;
 
 public class GamesLauncher : Component
 {
+    public static GamesLauncher Instance { get; private set; }
+
     public MiniGame? CurrentGame { get; private set; }
     public GameInfo CurrentGameInfo { get; private set; }
 
@@ -56,6 +59,20 @@ public class GamesLauncher : Component
     private bool _allPlayersVoted;
 
 
+
+    protected override Task OnLoad()
+    {
+        if(Scene.IsEditor)
+            return Task.CompletedTask;
+
+        if(Instance.IsValid())
+        {
+            GameObject.Destroy();
+            return Task.CompletedTask;
+        }
+        Instance = this;
+        return Task.CompletedTask;
+    }
 
     [Button("StartRandomGame")]
     private void StartRandomGame()

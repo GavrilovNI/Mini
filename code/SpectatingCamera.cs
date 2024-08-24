@@ -1,4 +1,5 @@
-﻿using Mini.Interfaces;
+﻿using Mini.Games;
+using Mini.Interfaces;
 using Mini.Players;
 using Sandbox;
 using System.Linq;
@@ -58,6 +59,8 @@ public class SpectatingCamera : Component
             SetTarget(targetObject);
         }
 
+        var gameStatus = GamesLauncher.Instance?.GameStatus ?? GameStatus.None;
+        GameObject.Enabled = gameStatus.IsAfter(GameStatus.Starting);
     }
 
     public void SetTarget(GameObject? target)
