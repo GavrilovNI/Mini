@@ -116,6 +116,7 @@
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "919e07c8-294b-43ce-b8d4-68fb5c916ddd",
                 "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "materials/dev/black_grid_8.vmat",
                 "Model": "models/dev/plane.vmdl",
                 "RenderType": "On",
                 "Tint": "1,1,1,1"
@@ -143,6 +144,7 @@
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "f6bf66f0-6941-400b-91ab-bfe04e8f9b58",
                 "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "materials/dev/black_grid_8.vmat",
                 "Model": "models/dev/plane.vmdl",
                 "RenderType": "On",
                 "Tint": "1,1,1,1"
@@ -170,6 +172,7 @@
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "b6c72a43-f6c3-4a3d-bd1d-a395209be2c3",
                 "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "materials/dev/black_grid_8.vmat",
                 "Model": "models/dev/plane.vmdl",
                 "RenderType": "On",
                 "Tint": "1,1,1,1"
@@ -197,6 +200,7 @@
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "451be6f7-04f7-49fa-97cb-b33cbb7fb7b4",
                 "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "materials/dev/black_grid_8.vmat",
                 "Model": "models/dev/plane.vmdl",
                 "RenderType": "On",
                 "Tint": "1,1,1,1"
@@ -223,6 +227,7 @@
                 "__type": "Sandbox.ModelRenderer",
                 "__guid": "6ae1518a-b12d-416f-9903-43eb3cbdce17",
                 "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "materials/dev/black_grid_8.vmat",
                 "Model": "models/dev/plane.vmdl",
                 "RenderType": "On",
                 "Tint": "1,1,1,1"
