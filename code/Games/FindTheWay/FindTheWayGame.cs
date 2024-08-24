@@ -79,17 +79,12 @@ public class FindTheWayGame : MiniGame
         EnableBarrier(false);
     }
 
-    protected override bool TryStopGameByPlayersCount()
+    protected override bool ShouldStopGameByPlayersCount()
     {
-        if(base.TryStopGameByPlayersCount())
+        if(base.ShouldStopGameByPlayersCount())
             return true;
 
-        if(Players.Select(p => p.Network.OwnerConnection.SteamId).ToHashSet().IsSubsetOf(_finishedPlayers))
-        {
-            Stop();
-            return true;
-        }
-        return false;
+        return Players.Select(p => p.Network.OwnerConnection.SteamId).ToHashSet().IsSubsetOf(_finishedPlayers);
     }
 
     [Broadcast(NetPermission.OwnerOnly)]
@@ -107,7 +102,8 @@ public class FindTheWayGame : MiniGame
         if(player.IsValid())
         {
             _finishedPlayers.Add(player.Network.OwnerConnection.SteamId);
-            TryStopGameByPlayersCount();
+            if(ShouldStopGameByPlayersCount())
+                Stop();
         }
     }
 

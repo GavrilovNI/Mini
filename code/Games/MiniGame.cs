@@ -161,7 +161,9 @@ public abstract class MiniGame : Component, Component.INetworkListener
 
         Players.Remove(player);
         player.GameObject.Destroy();
-        TryStopGameByPlayersCount();
+
+        if(ShouldStopGameByPlayersCount())
+            Stop();
     }
 
     protected virtual void OnPlayerDestroyed(Player player)
@@ -172,7 +174,9 @@ public abstract class MiniGame : Component, Component.INetworkListener
         player.Died -= OnPlayerDied;
         player.Destroyed -= OnPlayerDestroyed;
         Players.Remove(player);
-        TryStopGameByPlayersCount();
+
+        if(ShouldStopGameByPlayersCount())
+            Stop();
     }
 
 
@@ -191,19 +195,17 @@ public abstract class MiniGame : Component, Component.INetworkListener
         if(player is not null)
             OnPlayerDied(player);
 
-        TryStopGameByPlayersCount();
+        if(ShouldStopGameByPlayersCount())
+            Stop();
     }
 
-    protected virtual bool TryStopGameByPlayersCount()
+    protected virtual bool ShouldStopGameByPlayersCount()
     {
         if(Status != GameStatus.Started)
             return false;
 
         bool shouldStop = StopGameIfNotEnoughPlayers && Players.Count < Consts.MinPlayersToPlay ||
             StopGameIfZeroPlayers && Players.Count == 0;
-
-        if(shouldStop)
-            Stop();
 
         return shouldStop;
     }
