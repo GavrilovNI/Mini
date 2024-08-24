@@ -1,6 +1,7 @@
 ﻿using Mini.Exceptions;
 using Mini.Games;
 using Sandbox;
+using Sandbox.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -180,6 +181,7 @@ public class GamesLauncher : Component
                 NetWinners.Clear();
                 foreach(var winner in CurrentGame.GetWinners())
                     NetWinners.Add(winner);
+                OnWinnersChosen();
             }
 
             TimeUntilGameStatusEnd = TimeAfterEnd - CurrentGame.TimeSinceStatusChanged;
@@ -217,5 +219,12 @@ public class GamesLauncher : Component
             GamesVoter.Clear();
             StartGame(choosedGame);
         }
+    }
+
+    [Broadcast(NetPermission.OwnerOnly)]
+    private void OnWinnersChosen()
+    {
+        if(NetWinners.Contains(Steam.SteamId))
+            Sandbox.Services.Stats.Increment("wins", 1);
     }
 }
