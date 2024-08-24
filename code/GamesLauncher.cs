@@ -42,8 +42,11 @@ public class GamesLauncher : Component
 
     [Sync]
     protected NetList<ulong> NetWinners { get; private set; } = new();
+    [Sync]
+    protected NetList<ulong> NetPlayers { get; private set; } = new();
 
     public ISet<ulong> Winners => NetWinners.ToHashSet();
+    public ISet<ulong> Players => NetPlayers.ToHashSet();
 
     private TimeSince _timeSinceVotingStarted;
     private TimeSince _timeSinceAllPlayersVoted;
@@ -172,6 +175,13 @@ public class GamesLauncher : Component
         }
         else if(CurrentGame.Status == GameStatus.Started)
         {
+            if(_oldGameStatus != GameStatus.Started)
+            {
+                NetPlayers.Clear();
+                foreach(var playerSteamId in CurrentGame.PlayingPlayers.Select(p => p.Network.OwnerConnection.SteamId))
+                    NetPlayers.Add(playerSteamId);
+                OnGameStarted();
+            }
             TimeUntilGameStatusEnd = CurrentGame.MaxGameTime - CurrentGame.TimeSinceStatusChanged;
         }
         else if(CurrentGame.Status == GameStatus.Stopped)
@@ -226,5 +236,12 @@ public class GamesLauncher : Component
     {
         if(NetWinners.Contains(Steam.SteamId))
             Sandbox.Services.Stats.Increment("wins", 1);
+    }
+
+    [Broadcast(NetPermission.OwnerOnly)]
+    private void OnGameStarted()
+    {
+        if(NetPlayers.Contains(Steam.SteamId))
+            Sandbox.Services.Stats.Increment("games_played", 1);
     }
 }
