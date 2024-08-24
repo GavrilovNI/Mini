@@ -26,7 +26,10 @@
 		@if(!GamesLauncher.HasEnoughPlayers)
 		{
 			<label class="title">Waiting Players</label>
-			<div class="play-alone-button light button" @onclick=@TryAllowPlayAlone>I'm alone :(</div>
+			@if(!GamesLauncher.IsAllowedPlayAlone && Connection.All.Count <= 1)
+			{
+				<div class="play-alone-button light button" @onclick=@TryAllowPlayAlone>I'm alone :(</div>
+			}
 		}
 		else
 		{
