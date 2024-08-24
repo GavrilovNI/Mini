@@ -205,7 +205,7 @@
               "PrefabVariables": {}
             }
           ],
-          "SpawnOnLoad": true
+          "SpawnTime": "OnStart"
         }
       ]
     }

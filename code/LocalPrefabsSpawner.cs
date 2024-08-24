@@ -32,10 +32,17 @@ public class LocalPrefabsSpawner : Component
         };
     }
 
+    public enum PrefabsSpawnTime
+    {
+        OnLoad,
+        OnAwake,
+        OnStart
+    }
+
     [Property]
     public List<SpawnSettings> Prefabs { get; set; } = new();
     [Property]
-    public bool SpawnOnLoad { get; set; } = true;
+    public PrefabsSpawnTime SpawnTime { get; set; } = PrefabsSpawnTime.OnStart;
 
 
     [Button("Spawn prefabs")]
@@ -53,8 +60,19 @@ public class LocalPrefabsSpawner : Component
         if(Scene.IsEditor)
             return Task.CompletedTask;
 
-        if(SpawnOnLoad)
+        if(SpawnTime == PrefabsSpawnTime.OnLoad)
             SpawnPrefabs();
         return Task.CompletedTask;
+    }
+
+    protected override void OnAwake()
+    {
+        if(SpawnTime == PrefabsSpawnTime.OnAwake)
+            SpawnPrefabs();
+    }
+    protected override void OnStart()
+    {
+        if(SpawnTime == PrefabsSpawnTime.OnStart)
+            SpawnPrefabs();
     }
 }
