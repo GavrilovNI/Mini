@@ -61,9 +61,11 @@ public sealed class PlayerCameraController : Component
 
     private void Rotate()
     {
+        var sensitivity = 10f * Preferences.Sensitivity / Math.Max(1f, MathF.Max(Screen.Width, Screen.Height) * 0.5f);
+
         var eyeAngles = Eye.Transform.Rotation.Angles();
-        eyeAngles.pitch += Input.MouseDelta.y * 0.1f;
-        eyeAngles.yaw -= Input.MouseDelta.x * 0.1f;
+        eyeAngles.pitch += Input.MouseDelta.y * sensitivity;
+        eyeAngles.yaw -= Input.MouseDelta.x * sensitivity;
         eyeAngles.roll = 0f;
         eyeAngles.pitch = eyeAngles.pitch.Clamp(-89f, 89f);
         Eye.Transform.Rotation = eyeAngles.ToRotation();
