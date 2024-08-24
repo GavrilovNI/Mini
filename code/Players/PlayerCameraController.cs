@@ -24,7 +24,7 @@ public sealed class PlayerCameraController : Component
     public float BackingDistanceChangeSpeed { get; set; } = 10;
 
 
-    private float _backingDistance;
+    public float BackingDistance { get; private set; }
 
 
     public void SetView(bool firstPerson)
@@ -35,7 +35,7 @@ public sealed class PlayerCameraController : Component
 
     protected override void OnAwake()
     {
-        _backingDistance = MinBackingDistance;
+        BackingDistance = MinBackingDistance;
     }
 
     protected override void OnUpdate()
@@ -56,7 +56,7 @@ public sealed class PlayerCameraController : Component
 
     private void UpdateBackingDistance()
     {
-        _backingDistance = Math.Clamp(_backingDistance -= Input.MouseWheel.y * BackingDistanceChangeSpeed, MinBackingDistance, MaxBackingDistance);
+        BackingDistance = Math.Clamp(BackingDistance -= Input.MouseWheel.y * BackingDistanceChangeSpeed, MinBackingDistance, MaxBackingDistance);
     }
 
     private void Rotate()
@@ -78,7 +78,7 @@ public sealed class PlayerCameraController : Component
         }
 
         var cameraBackward = Camera.Transform.Rotation.Backward;
-        var traceResult = Scene.Trace.Ray(Eye.Transform.Position, Eye.Transform.Position + cameraBackward * _backingDistance)
+        var traceResult = Scene.Trace.Ray(Eye.Transform.Position, Eye.Transform.Position + cameraBackward * BackingDistance)
                                     .WithCollisionRules("player")
                                     .IgnoreGameObject(GameObject)
                                     .Radius(1f)
