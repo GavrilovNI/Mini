@@ -89,6 +89,21 @@
         "Enabled": true,
         "Children": [
           {
+            "__guid": "44226121-14c1-40af-95cd-9895a4879af0",
+            "Flags": 0,
+            "Name": "2D Skybox",
+            "Tags": "skybox",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.SkyBox2D",
+                "__guid": "f0d203c9-7dee-434b-a9ea-06e1128195e1",
+                "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          },
+          {
             "__guid": "01e09cb4-c486-4cbe-be74-05426fdf1853",
             "Flags": 0,
             "Name": "Sun",

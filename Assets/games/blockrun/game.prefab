@@ -71,6 +71,21 @@
         "Enabled": true,
         "Children": [
           {
+            "__guid": "1f2cd1fc-f13c-468e-a7d9-b8a4f5236db9",
+            "Flags": 0,
+            "Name": "2D Skybox",
+            "Tags": "skybox",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.SkyBox2D",
+                "__guid": "384ff4ae-2643-401e-a9f1-058bec4ec438",
+                "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          },
+          {
             "__guid": "eb934b98-f056-418e-ad24-a35144d787d8",
             "Flags": 0,
             "Name": "SpawnPlatform",

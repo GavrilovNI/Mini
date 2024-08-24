@@ -560,6 +560,22 @@
                 ]
               }
             ]
+          },
+          {
+            "__guid": "d242a3c8-bdd0-4b42-99cc-20eb5ffac95e",
+            "Flags": 0,
+            "Name": "2D Skybox",
+            "Position": "0,0,0",
+            "Tags": "skybox",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.SkyBox2D",
+                "__guid": "af0fa2f6-8e7c-4edf-9b8b-20a7a26c9ba4",
+                "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
+                "Tint": "1,1,1,1"
+              }
+            ]
           }
         ]
       },
