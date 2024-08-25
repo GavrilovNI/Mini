@@ -1,5 +1,6 @@
 @using Sandbox;
 @using Sandbox.UI;
+@using Sandbox.UI.GameMenu;
 @using Sandbox.Audio;
 @using Mini.Settings;
 @using System.Collections.Generic;
@@ -22,47 +23,66 @@
 	@if (CurrentMenu == SubMenu.None)
 		return;
 
-	<div class="settings-container">
-		<div class="settings">
-			@if(CurrentMenu == SubMenu.Input)
-			{
-				<div class="subgroup">
-					<label class="name">Mouse</label>
-					<div class="line">
-						<div class="name">Mouse Sensitivity</div>
-						<div class="setting">
-							<SliderControl Min=@(0) Max=@(20) Step=@(0.1f) Value=@(GameSettings.Sensitivity)
-								OnValueChanged=@((float v) => { GameSettings.Sensitivity = v; SaveSettings(); }) />
-						</div>
-						<label class="value">@GameSettings.Sensitivity</label>
-					</div>
-				</div>
-			}
-			else if(CurrentMenu == SubMenu.Keybinds)
-			{
-				<div class="subgroup">
-					<label class="name">We can't change keybinds in game, sorry :(</label>
-				</div>
-			}
-			else if(CurrentMenu == SubMenu.Sound)
-			{
-				<div class="subgroup">
-					<label class="name">Volume</label>
-
-					@foreach(var (_, mixer) in _mixers)
-					{
+	<div class="right">
+		<div class="settings-container">
+			<div class="settings">
+				@if(CurrentMenu == SubMenu.Input)
+				{
+					<div class="subgroup">
+						<label class="name">Mouse</label>
 						<div class="line">
-							<div class="name">@mixer.Name</div>
+							<div class="name">Mouse Sensitivity</div>
 							<div class="setting">
-								<SliderControl Min=@(0) Max=@(1) Step=@(0.01f) Value=@(GameSettings.GetSoundVolume(mixer.Name))
-									OnValueChanged=@((float v) => { SetSoundVolume(mixer.Name, v); SaveSettings(); }) />
+								<SliderControl Min=@(0) Max=@(20) Step=@(0.1f) Value=@(GameSettings.Sensitivity)
+									OnValueChanged=@((float v) => { GameSettings.Sensitivity = v; SaveSettings(); }) />
 							</div>
-							<label class="value">@GameSettings.GetSoundVolume(mixer.Name)</label>
+							<label class="value">@GameSettings.Sensitivity</label>
+						</div>
+					</div>
+				}
+				else if(CurrentMenu == SubMenu.Keybinds)
+				{
+					var groups = Input.GetActions().GroupBy(x => x.GroupName);
+					foreach(var group in groups)
+					{
+						<div class="subgroup">
+							<label class="name">@group.Key</label>
+							@foreach(var action in group)
+							{
+								<div class="line">
+									<div class="name">@action.Name</div>
+									<KeyBind class="setting" Game=@IGameInstance.Current Action=@action />
+								</div>
+							}
 						</div>
 					}
-				</div>
-			}
+				}
+				else if(CurrentMenu == SubMenu.Sound)
+				{
+					<div class="subgroup">
+						<label class="name">Volume</label>
+
+						@foreach(var (_, mixer) in _mixers)
+						{
+							<div class="line">
+								<div class="name">@mixer.Name</div>
+								<div class="setting">
+									<SliderControl Min=@(0) Max=@(1) Step=@(0.01f) Value=@(GameSettings.GetSoundVolume(mixer.Name))
+										OnValueChanged=@((float v) => { SetSoundVolume(mixer.Name, v); SaveSettings(); }) />
+								</div>
+								<label class="value">@GameSettings.GetSoundVolume(mixer.Name)</label>
+							</div>
+						}
+					</div>
+				}
+			</div>
 		</div>
+		@if(CurrentMenu == SubMenu.Keybinds)
+		{
+			<div class="keybinds-buttons">
+				<div class="button light reset-keybinds-button" @onclick=@IGameInstance.Current.ResetBinds>Reset to default</div>
+			</div>
+		}
 	</div>
 </root>
 
@@ -108,6 +128,20 @@
 		}
 	}
 
+	[Button("Save key binds")]
+	private void SaveKeyBinds() => SaveKeyBindsByPanel(Panel);
+	private void SaveKeyBindsByPanel(Panel panel)
+	{
+		foreach(var child in panel.Children)
+		{
+			if (child is KeyBind keybind)
+				keybind.Apply();
+			else
+				SaveKeyBindsByPanel(child);
+		}
+		IGameInstance.Current.SaveBinds();
+	}
+
 	private void SaveSettings()
 	{
 		GameSettings.Save(GameSettings.DefaultPath);
@@ -125,5 +159,11 @@
 	{
 		CurrentMenu = subMenu;
 		StateHasChanged();
+		SaveKeyBinds();
+	}
+
+	protected override void OnDisabled()
+	{
+		SaveKeyBinds();
 	}
 }
