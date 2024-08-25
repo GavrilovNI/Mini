@@ -5,10 +5,10 @@ using System;
 
 namespace Mini.Players;
 
-public class PlayerStats
+public class MiniPlayerStats
 {
-    private static PlayerStats? _local;
-    public static PlayerStats Local
+    private static MiniPlayerStats? _local;
+    public static MiniPlayerStats Local
     {
         get
         {
@@ -63,7 +63,7 @@ public class PlayerStats
 
 
 
-    public PlayerStats(ulong steamId)
+    public MiniPlayerStats(ulong steamId)
     {
         SteamId = steamId;
     }

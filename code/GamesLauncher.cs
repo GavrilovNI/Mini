@@ -305,9 +305,9 @@ public class GamesLauncher : Component, Component.INetworkListener
             return;
 
         if(NetWinners.Contains(Steam.SteamId))
-            PlayerStats.Local.RegisterWin();
+            MiniPlayerStats.Local.RegisterWin();
 
-        PlayerStats.Local.UpdateWinRate();
+        MiniPlayerStats.Local.UpdateWinRate();
     }
 
     [Broadcast(NetPermission.OwnerOnly)]
@@ -317,6 +317,6 @@ public class GamesLauncher : Component, Component.INetworkListener
             return;
 
         if(NetPlayers.Contains(Steam.SteamId))
-            PlayerStats.Local.RegisterGame();
+            MiniPlayerStats.Local.RegisterGame();
     }
 }

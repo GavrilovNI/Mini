@@ -55,14 +55,14 @@
 	[Property]
 	public bool Open { get; set; } = false;
 
-	private Dictionary<ulong, PlayerStats> _stats = new();
+	private Dictionary<ulong, MiniPlayerStats> _stats = new();
 
 
-	private PlayerStats GetOrCreateStats(ulong steamId)
+	private MiniPlayerStats GetOrCreateStats(ulong steamId)
 	{
 		if(!_stats.TryGetValue(steamId, out var stats))
 		{
-			stats = new PlayerStats(steamId);
+			stats = new MiniPlayerStats(steamId);
 			_stats[steamId] = stats;
 		}
 		stats.UpdateLocalStats();
