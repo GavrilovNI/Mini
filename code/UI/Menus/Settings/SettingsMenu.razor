@@ -19,6 +19,8 @@
 		<div class="button" @onclick=@(() => SetSubMenu(SubMenu.Sound))>Sound</div>
 	</div>
 
+	<div class="button close-button" @onclick=@(MenuController.CloseMenu)>Close</div>
+
 
 	@if (CurrentMenu == SubMenu.None)
 		return;
@@ -95,6 +97,9 @@
 		Keybinds,
 		Sound,
 	}
+	
+	[Property]
+	public MenuController MenuController { get; private set; } = null!;
 
 	[Property]
 	public SubMenu CurrentMenu { get; private set; } = SubMenu.None;

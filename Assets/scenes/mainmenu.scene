@@ -87,7 +87,13 @@
               "__type": "Mini.UI.Menus.SettingsMenu",
               "__guid": "8172e909-424b-4c60-9b36-9650350526bf",
               "__enabled": false,
-              "CurrentMenu": "None"
+              "CurrentMenu": "None",
+              "MenuController": {
+                "_type": "component",
+                "component_id": "39446675-7cb5-4695-a415-8d00c0ac77b9",
+                "go": "e4549192-518b-4f78-b80e-a068e0de12e0",
+                "component_type": "MenuController"
+              }
             }
           ]
         }
