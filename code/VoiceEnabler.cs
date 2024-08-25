@@ -1,4 +1,5 @@
-﻿using Mini.UI;
+﻿using Mini.Settings;
+using Mini.UI;
 using Sandbox;
 using System.Threading.Tasks;
 
@@ -44,7 +45,8 @@ public class VoiceEnabler : Component
         if(IsProxy)
             return;
 
-        IsListening = PushToTalk ? Input.Down(Voice.PushToTalkInput) : true;
+        Voice.Volume = GameSettings.Current.GetSoundVolume("voice");
+        IsListening = !PushToTalk || Input.Down(Voice.PushToTalkInput);
         Voice.IsListening = IsListening;
         Amplitude = Voice.Amplitude;
     }

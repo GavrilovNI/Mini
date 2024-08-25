@@ -1,6 +1,10 @@
 @using Sandbox;
 @using Sandbox.UI;
+@using Sandbox.Audio;
 @using Mini.Settings;
+@using System.Collections.Generic;
+@using System.Linq;
+@using System.Threading.Tasks;
 
 @namespace Mini.UI.Menus
 
@@ -11,6 +15,7 @@
 	<div class="menus">
 		<div class="button" @onclick=@(() => SetSubMenu(SubMenu.Input))>Input</div>
 		<div class="button" @onclick=@(() => SetSubMenu(SubMenu.Keybinds))>Keybinds</div>
+		<div class="button" @onclick=@(() => SetSubMenu(SubMenu.Sound))>Sound</div>
 	</div>
 
 
@@ -33,10 +38,28 @@
 					</div>
 				</div>
 			}
-			@if(CurrentMenu == SubMenu.Keybinds)
+			else if(CurrentMenu == SubMenu.Keybinds)
 			{
 				<div class="subgroup">
 					<label class="name">We can't change keybinds in game, sorry :(</label>
+				</div>
+			}
+			else if(CurrentMenu == SubMenu.Sound)
+			{
+				<div class="subgroup">
+					<label class="name">Volume</label>
+
+					@foreach(var (_, mixer) in _mixers)
+					{
+						<div class="line">
+							<div class="name">@mixer.Name</div>
+							<div class="setting">
+								<SliderControl Min=@(0) Max=@(1) Step=@(0.01f) Value=@(GameSettings.GetSoundVolume(mixer.Name))
+									OnValueChanged=@((float v) => { SetSoundVolume(mixer.Name, v); SaveSettings(); }) />
+							</div>
+							<label class="value">@GameSettings.GetSoundVolume(mixer.Name)</label>
+						</div>
+					}
 				</div>
 			}
 		</div>
@@ -50,6 +73,7 @@
 		None,
 		Input,
 		Keybinds,
+		Sound,
 	}
 
 	[Property]
@@ -57,9 +81,44 @@
 
 	private GameSettings GameSettings => GameSettings.Current;
 
+	private Dictionary<string, Mixer> _mixers = new();
+
+	protected override async Task OnLoad()
+	{
+		await base.OnLoad();
+
+		if (Scene.IsEditor)
+			return;
+
+		foreach (var (_, mixer) in _mixers)
+			SetSoundVolume(mixer.Name, GameSettings.GetSoundVolume(mixer.Name));
+	}
+
+	public SettingsMenu()
+	{
+		_mixers.Add(Mixer.Master.Name, Mixer.Master);
+		foreach(var mixer in Mixer.Master.GetChildren())
+			_mixers.Add(mixer.Name, mixer);
+
+		if(!_mixers.Any(x => x.Key.ToLower() == "voice"))
+		{
+			var voiceMixer = Mixer.Master.AddChild();
+			voiceMixer.Name = "Voice";
+			_mixers.Add(voiceMixer.Name, voiceMixer);
+		}
+	}
+
 	private void SaveSettings()
 	{
 		GameSettings.Save(GameSettings.DefaultPath);
+	}
+
+	private void SetSoundVolume(string name, float volume)
+	{
+		if(_mixers.TryGetValue(name, out var mixer))
+			mixer.Volume = volume;
+
+		GameSettings.SetSoundVolume(name, volume);
 	}
 
 	public void SetSubMenu(SubMenu subMenu)
