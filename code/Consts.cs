@@ -13,7 +13,7 @@ public static class Consts
             if(GamesLauncher.Instance?.IsAllowedPlayAlone ?? false && GamesLauncher.Instance.CurrentGameInfo.CanPlayAlone)
                 return 1;
 
-            return 2;
+            return Game.IsEditor ? 1 : 2;
         }
     }
 
