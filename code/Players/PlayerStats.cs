@@ -55,12 +55,7 @@ public class PlayerStats
         get
         {
             if(_winRate < 0)
-            {
-                if(Stats.TryGet("win_rate", out var stat))
-                    _winRate = (float)stat.Value;
-                else
-                    _winRate = 1f * Wins / Math.Max(1, GamesPlayed);
-            }
+                _winRate = 1f * Wins / Math.Max(1, GamesPlayed);
             return _winRate;
         }
         private set => _winRate = value;
@@ -85,7 +80,7 @@ public class PlayerStats
         ResetLocal();
         _gamesPlayed = GamesPlayed;
         _wins = Wins;
-        _winRate = 1f * _wins / _gamesPlayed;
+        _winRate = WinRate;
     }
 
     public void RegisterGame()
@@ -113,7 +108,7 @@ public class PlayerStats
         if(Steam.SteamId != SteamId)
             throw new InvalidOperationException("Can't set stats of non-local player");
 
-        WinRate = 1f * Wins / Math.Max(1, GamesPlayed);
+        _winRate = WinRate;
         Sandbox.Services.Stats.SetValue("win_rate", WinRate);
     }
 
