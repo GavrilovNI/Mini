@@ -1,0 +1,70 @@
+@using Sandbox;
+@using Sandbox.UI;
+@using Mini.Settings;
+
+@namespace Mini.UI.Menus
+
+@inherits PanelComponent
+
+<root>
+	<label class="title-mini">Settings</label>
+	<div class="menus">
+		<div class="button" @onclick=@(() => SetSubMenu(SubMenu.Input))>Input</div>
+		<div class="button" @onclick=@(() => SetSubMenu(SubMenu.Keybinds))>Keybinds</div>
+	</div>
+
+
+	@if (CurrentMenu == SubMenu.None)
+		return;
+
+	<div class="settings-container">
+		<div class="settings">
+			@if(CurrentMenu == SubMenu.Input)
+			{
+				<div class="subgroup">
+					<label class="name">Mouse</label>
+					<div class="line">
+						<div class="name">Mouse Sensitivity</div>
+						<div class="setting">
+							<SliderControl Min=@(0) Max=@(20) Step=@(0.1f) Value=@(GameSettings.Sensitivity)
+								OnValueChanged=@((float v) => { GameSettings.Sensitivity = v; SaveSettings(); }) />
+						</div>
+						<label class="value">@GameSettings.Sensitivity</label>
+					</div>
+				</div>
+			}
+			@if(CurrentMenu == SubMenu.Keybinds)
+			{
+				<div class="subgroup">
+					<label class="name">We can't change keybinds in game, sorry :(</label>
+				</div>
+			}
+		</div>
+	</div>
+</root>
+
+@code {
+
+	public enum SubMenu
+	{
+		None,
+		Input,
+		Keybinds,
+	}
+
+	[Property]
+	public SubMenu CurrentMenu { get; private set; } = SubMenu.None;
+
+	private GameSettings GameSettings => GameSettings.Current;
+
+	private void SaveSettings()
+	{
+		GameSettings.Save(GameSettings.DefaultPath);
+	}
+
+	public void SetSubMenu(SubMenu subMenu)
+	{
+		CurrentMenu = subMenu;
+		StateHasChanged();
+	}
+}

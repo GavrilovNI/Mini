@@ -14,7 +14,7 @@
 		<div class="button" @onclick=@(() => MenuController.CloseMenu())>
 			<label class="label">Close</label>
 		</div>
-		<div class="button disabled">
+		<div class="button" @onclick=@(() => MenuController.OpenMenu(SettingsMenu))>
 			<label class="label">Settings</label>
 		</div>
 		<div class="button" @onclick=@(Leave)>
@@ -30,6 +30,8 @@
 	public string MainMenuScene { get; set; } = "scenes/mainmenu.scene";
 	[Property]
 	public MenuController MenuController { get; set; } = null!;
+	[Property]
+	public SettingsMenu SettingsMenu { get; set; } = null!;
 
 	private void Leave()
 	{

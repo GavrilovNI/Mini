@@ -17,7 +17,7 @@
 
 	<div class="buttons">
 		<div class="button" @onclick=@CreateLobby>Create Lobby</div>
-		<div class="button disabled">Settings</div>
+		<div class="button" @onclick=@(() => MenuController.OpenMenu(SettingsMenu))>Settings</div>
 		<div class="button" @onclick=@Quit>Quit</div>
 	</div>
 
@@ -70,6 +70,8 @@
 	public string NewLobbyScene { get; set; } = "scenes/main.scene";
 	[Property]
 	public MenuController MenuController { get; set; } = null!;
+	[Property]
+	public SettingsMenu SettingsMenu { get; set; } = null!;
 
 
 	private bool _connectingToLobby = false;
