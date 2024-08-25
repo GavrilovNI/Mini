@@ -1,0 +1,61 @@
+{
+  "RootObject": {
+    "__guid": "a1119bc8-0907-4407-88b5-37395d25311c",
+    "Flags": 0,
+    "Name": "ingamemenu",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Mini.UI.Menus.MenuController",
+        "__guid": "0b0965ac-aefc-43c3-a849-1def2fe9287a",
+        "DisableDefaultEscapeMenu": false,
+        "EscapeMenu": {
+          "_type": "component",
+          "component_id": "d97851cc-9cad-40d2-8ffb-fda23fe4e4a0",
+          "go": "a1119bc8-0907-4407-88b5-37395d25311c",
+          "component_type": "EscapeMenu"
+        }
+      },
+      {
+        "__type": "Sandbox.ScreenPanel",
+        "__guid": "8d98f3b6-0177-48e9-af79-519a1655894a",
+        "AutoScreenScale": true,
+        "Opacity": 1,
+        "Scale": 1,
+        "ZIndex": 200
+      },
+      {
+        "__type": "Mini.UI.Menus.EscapeMenu",
+        "__guid": "d97851cc-9cad-40d2-8ffb-fda23fe4e4a0",
+        "__enabled": false,
+        "MainMenuScene": "scenes/mainmenu.scene",
+        "MenuController": {
+          "_type": "component",
+          "component_id": "0b0965ac-aefc-43c3-a849-1def2fe9287a",
+          "go": "a1119bc8-0907-4407-88b5-37395d25311c",
+          "component_type": "MenuController"
+        },
+        "SettingsMenu": {
+          "_type": "component",
+          "component_id": "154762aa-0260-48a9-b6f3-5ef9fb8c4d2e",
+          "go": "a1119bc8-0907-4407-88b5-37395d25311c",
+          "component_type": "SettingsMenu"
+        }
+      },
+      {
+        "__type": "Mini.UI.Menus.SettingsMenu",
+        "__guid": "154762aa-0260-48a9-b6f3-5ef9fb8c4d2e",
+        "__enabled": false,
+        "CurrentMenu": "None"
+      }
+    ],
+    "Children": [],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}
