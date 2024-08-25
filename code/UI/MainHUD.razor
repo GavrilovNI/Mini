@@ -28,7 +28,10 @@
 			<label class="title">Waiting Players</label>
 			@if(!GamesLauncher.IsAllowedPlayAlone && Connection.All.Count <= 1)
 			{
-				<div class="play-alone-button light button" @onclick=@TryAllowPlayAlone>I'm alone :(</div>
+				<div class="play-alone">
+					<div class="play-alone-button light button" @onclick=@TryAllowPlayAlone>I'm alone :(</div>
+					<label class="play-alone-info">No stats will be recorded.</label>
+				</div>
 			}
 		}
 		else
@@ -36,7 +39,9 @@
 			<label class="title">Voting ends in @timeUntilGameStatusEndString</label>
 			@if(GamesLauncher.IsAllowedPlayAlone)
 			{
-				<div class="play-alone-button light button" @onclick=@DisallowPlayAlone>I found a friend!</div>
+				<div class="play-alone">
+					<div class="play-alone-button light button" @onclick=@DisallowPlayAlone>I found a friend!</div>
+				</div>
 			}
 		}
 	}

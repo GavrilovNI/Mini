@@ -76,15 +76,35 @@ MainHUD {
 		white-space: nowrap;
 	}
 
-	.play-alone-button {
+	.play-alone {
 		position: absolute;
-		font-size: 20px;
-		font-family: Poppins;
-		color: #fff;
-		text-stroke: 5 black;
 		top: 150px;
 		right: 10px;
-		white-space: nowrap;
+
+		.play-alone-button {
+			position: relative;
+			font-size: 20px;
+			font-family: Poppins;
+			color: #fff;
+			text-stroke: 5 black;
+			white-space: nowrap;
+		}
+
+		.play-alone-info {
+			position: absolute;
+			top: 60px;
+			right: 0;
+			font-size: 15px;
+			font-family: Poppins;
+			color: red;
+			text-stroke: 2 white;
+		}
+
+		&:not(:hover) {
+			.play-alone-info {
+				opacity: 0;
+			}
+		}
 	}
 
 	.game-name {
