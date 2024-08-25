@@ -82,6 +82,7 @@ public class PlayerStats
 
     public void UpdateLocalStats()
     {
+        ResetLocal();
         _gamesPlayed = GamesPlayed;
         _wins = Wins;
         _winRate = 1f * _wins / _gamesPlayed;
