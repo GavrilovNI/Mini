@@ -68,6 +68,8 @@
 	public string MainMenuScene { get; set; } = "scenes/mainmenu.scene";
 	[Property]
 	public string NewLobbyScene { get; set; } = "scenes/main.scene";
+	[Property]
+	public MenuController MenuController { get; set; } = null!;
 
 
 	private bool _connectingToLobby = false;
@@ -91,9 +93,6 @@
 
 	protected override void OnUpdate()
 	{
-		if (Input.EscapePressed)
-			Input.EscapePressed = false;
-
 		if (_lobbiesUpdatingTask.IsCompleted && _timeSinceLobbiesUpdated >= LobbiesUpdateTime)
 			_ = UpdateLobbies();
 	}

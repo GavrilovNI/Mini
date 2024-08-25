@@ -35,6 +35,11 @@
       "Enabled": true,
       "Components": [
         {
+          "__type": "Mini.UI.Menus.MenuController",
+          "__guid": "39446675-7cb5-4695-a415-8d00c0ac77b9",
+          "DisableDefaultEscapeMenu": true
+        },
+        {
           "__type": "Sandbox.ScreenPanel",
           "__guid": "ae0ea650-a5c6-4486-ab70-a9540e3159e1",
           "AutoScreenScale": true,
@@ -47,7 +52,44 @@
           "__guid": "a05278e8-04ba-44e4-b55c-7e44cf4be9ba",
           "LobbiesUpdateTime": 5,
           "MainMenuScene": "scenes/mainmenu.scene",
-          "NewLobbyScene": "scenes/main.scene"
+          "MenuController": {
+            "_type": "component",
+            "component_id": "39446675-7cb5-4695-a415-8d00c0ac77b9",
+            "go": "e4549192-518b-4f78-b80e-a068e0de12e0",
+            "component_type": "MenuController"
+          },
+          "NewLobbyScene": "scenes/main.scene",
+          "SettingsMenu": {
+            "_type": "component",
+            "component_id": "8172e909-424b-4c60-9b36-9650350526bf",
+            "go": "dd3706e6-8e25-4cdc-9f12-255213fd8790",
+            "component_type": "SettingsMenu"
+          }
+        }
+      ],
+      "Children": [
+        {
+          "__guid": "dd3706e6-8e25-4cdc-9f12-255213fd8790",
+          "Flags": 0,
+          "Name": "SettingsMenu",
+          "Position": "-795.0825,-666.7389,1385.417",
+          "Enabled": true,
+          "Components": [
+            {
+              "__type": "Sandbox.ScreenPanel",
+              "__guid": "3bdf0ffb-7780-4c33-9ae1-8b863fb4015b",
+              "AutoScreenScale": true,
+              "Opacity": 1,
+              "Scale": 1,
+              "ZIndex": 110
+            },
+            {
+              "__type": "Mini.UI.Menus.SettingsMenu",
+              "__guid": "8172e909-424b-4c60-9b36-9650350526bf",
+              "__enabled": false,
+              "CurrentMenu": "None"
+            }
+          ]
         }
       ]
     }

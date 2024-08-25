@@ -7,11 +7,11 @@
 
 @inherits PanelComponent
 
-<root class="@(Opened ? "" : "disabled")">
+<root>
 	<label class="title-mini">MINI</label>
 
 	<div class="buttons">
-		<div class="button" @onclick=@(Close)>
+		<div class="button" @onclick=@(() => MenuController.CloseMenu())>
 			<label class="label">Close</label>
 		</div>
 		<div class="button disabled">
@@ -28,26 +28,8 @@
 {
 	[Property]
 	public string MainMenuScene { get; set; } = "scenes/mainmenu.scene";
-
 	[Property]
-	public bool Opened { get; set; } = false;
-
-	[Button("Switch")]
-	private void Switch() => Opened = !Opened;
-
-	protected override int BuildHash() => Opened.GetHashCode();
-
-	public void Open() => Opened = true;
-	public void Close() => Opened = false;
-
-	protected override void OnUpdate()
-	{
-		if(Input.EscapePressed)
-		{
-			Input.EscapePressed = false;
-			Switch();
-		}
-	}
+	public MenuController MenuController { get; set; } = null!;
 
 	private void Leave()
 	{
