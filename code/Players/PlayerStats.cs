@@ -84,7 +84,7 @@ public class PlayerStats
     {
         _gamesPlayed = GamesPlayed;
         _wins = Wins;
-        _winRate = WinRate;
+        _winRate = 1f * _wins / _gamesPlayed;
     }
 
     public void RegisterGame()
@@ -115,4 +115,6 @@ public class PlayerStats
         WinRate = 1f * Wins / Math.Max(1, GamesPlayed);
         Sandbox.Services.Stats.SetValue("win_rate", WinRate);
     }
+
+    public override int GetHashCode() => HashCode.Combine(SteamId, _gamesPlayed, _winRate, _wins);
 }

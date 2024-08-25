@@ -55,7 +55,29 @@
         }
       }
     ],
-    "Children": [],
+    "Children": [
+      {
+        "__guid": "6f841115-c729-44a0-8a0b-1022fc45967b",
+        "Flags": 0,
+        "Name": "TabMenu",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ScreenPanel",
+            "__guid": "3613191e-a367-493a-a347-077078c404ab",
+            "AutoScreenScale": true,
+            "Opacity": 1,
+            "Scale": 1,
+            "ZIndex": 150
+          },
+          {
+            "__type": "Mini.UI.Menus.TabMenu",
+            "__guid": "623bf104-7385-42f4-8662-612a22f4caa2",
+            "Open": false
+          }
+        ]
+      }
+    ],
     "__variables": []
   },
   "ShowInMenu": false,
