@@ -81,6 +81,9 @@
 
 	protected override int BuildHash()
 	{
+		if (!Open)
+			return Open.GetHashCode();
+
 		var hashCode = HashCode.Combine(Open, Connection.All.Count);
 
 		foreach(var connection in Connection.All)
