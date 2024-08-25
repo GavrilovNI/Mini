@@ -189,12 +189,6 @@ public class GamesLauncher : Component, Component.INetworkListener
         _oldGameStatus = GameStatus;
         GameStatus = CurrentGame.Status;
 
-        if(!HasEnoughPlayers && GameStatus == GameStatus.SetUp)
-        {
-            ResetGame();
-            return;
-        }
-
         UpdateGameLifetime();
     }
 
@@ -221,42 +215,54 @@ public class GamesLauncher : Component, Component.INetworkListener
 
     private void UpdateGameLifetime()
     {
-        if(CurrentGame!.Status == GameStatus.SetUp && HasEnoughPlayers)
+        if(GameStatus != _oldGameStatus)
         {
-            var timeSinceStartRequirementsMet = Math.Min(CurrentGame.TimeSinceStatusChanged, _timeSinceEnoughPlayersConnected);
-            TimeUntilGameStatusEnd = TimeBeforeStart - timeSinceStartRequirementsMet;
-
-            if(TimeUntilGameStatusEnd <= 0)
-            {
-                NetWinners.Clear();
-                CurrentGame.Start();
-            }
+            OnGameStatusChanged(_oldGameStatus, GameStatus);
+            _oldGameStatus = GameStatus;
         }
-        else if(CurrentGame.Status == GameStatus.Started)
+
+        if(CurrentGame!.Status == GameStatus.SetUp)
         {
-            if(_oldGameStatus != GameStatus.Started)
+            if(HasEnoughPlayers)
             {
-                NetPlayers.Clear();
-                foreach(var playerSteamId in CurrentGame.PlayingPlayers.Select(p => p.Network.OwnerConnection.SteamId))
-                    NetPlayers.Add(playerSteamId);
-                OnGameStarted();
+                if(TimeUntilGameStatusEnd <= 0)
+                    CurrentGame.Start();
             }
-            TimeUntilGameStatusEnd = CurrentGame.MaxGameTime - CurrentGame.TimeSinceStatusChanged;
+            else
+            {
+                ResetGame();
+            }
         }
         else if(CurrentGame.Status == GameStatus.Stopped)
         {
-            if(_oldGameStatus != GameStatus.Stopped)
-            {
-                NetWinners.Clear();
-                foreach(var winner in CurrentGame.GetWinners())
-                    NetWinners.Add(winner);
-                OnWinnersChosen();
-            }
-
-            TimeUntilGameStatusEnd = TimeAfterEnd - CurrentGame.TimeSinceStatusChanged;
-
             if(CurrentGame.TimeSinceStatusChanged >= TimeAfterEnd)
                 ResetGame();
+        }
+    }
+
+    private void OnGameStatusChanged(GameStatus oldStatus, GameStatus newStatus)
+    {
+        if(newStatus == GameStatus.SetUp)
+        {
+            var timeSinceStartRequirementsMet = Math.Min(CurrentGame!.TimeSinceStatusChanged, _timeSinceEnoughPlayersConnected);
+            TimeUntilGameStatusEnd = TimeBeforeStart - timeSinceStartRequirementsMet;
+        }
+        else if(newStatus == GameStatus.Started)
+        {
+            NetWinners.Clear();
+            NetPlayers.Clear();
+            foreach(var playerSteamId in CurrentGame!.PlayingPlayers.Select(p => p.Network.OwnerConnection.SteamId))
+                NetPlayers.Add(playerSteamId);
+            OnGameStarted();
+            TimeUntilGameStatusEnd = CurrentGame.MaxGameTime - CurrentGame.TimeSinceStatusChanged;
+        }
+        else if(newStatus == GameStatus.Stopped)
+        {
+            NetWinners.Clear();
+            foreach(var winner in CurrentGame!.GetWinners())
+                NetWinners.Add(winner);
+            OnWinnersChosen();
+            TimeUntilGameStatusEnd = TimeAfterEnd - CurrentGame.TimeSinceStatusChanged;
         }
     }
 
