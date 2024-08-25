@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Mini;
+namespace Mini.Networking;
 
 public class LocalPrefabsSpawner : Component
 {

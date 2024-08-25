@@ -171,7 +171,7 @@
       "Enabled": true,
       "Components": [
         {
-          "__type": "Mini.LocalPrefabsSpawner",
+          "__type": "Mini.Networking.LocalPrefabsSpawner",
           "__guid": "ebaeb35b-77fc-4e92-ba51-cf792a1a270c",
           "Prefabs": [
             {
