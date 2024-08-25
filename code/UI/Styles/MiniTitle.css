@@ -1,0 +1,9 @@
+﻿.title-mini {
+    font-weight: bold;
+    font-family: Poppins;
+    font-weight: 250;
+    text-stroke: 5px black;
+    color: white;
+    white-space: nowrap;
+    text-align: center;
+}

@@ -1,4 +1,5 @@
 @import "/UI/Styles/Buttons.css";
+@import "/UI/Styles/MiniTitle.css";
 
 EscapeMenu {
 	position: absolute;
@@ -16,14 +17,11 @@ EscapeMenu {
 		opacity: 0;
 	}
 
-	.title {
+	.title-mini {
 		position: absolute;
 		left: 50%;
 		transform: translate(-50%, 0);
 		top: 50px;
-		font-weight: 250;
-		text-stroke: 5px black;
-		color: white;
 		font-size: 200px;
 	}
 

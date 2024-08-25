@@ -1,4 +1,5 @@
 @import "/UI/Styles/Buttons.css";
+@import "/UI/Styles/MiniTitle.css";
 
 MainMenu {
 	position: absolute;
@@ -12,14 +13,14 @@ MainMenu {
 	font-family: Poppins;
 
 
-	.title {
+	.title-mini {
 		position: absolute;
 		left: 50px;
 		top: 50px;
-		font-weight: 250;
-		text-stroke: 5px black;
-		color: white;
 		font-size: 200px;
+		text-align: center;
+		display: flex;
+		align-items: center;
 	}
 
 	.buttons {
