@@ -1,3 +1,5 @@
+@import "/UI/Styles/Buttons.css";
+
 EscapeMenu {
 	position: absolute;
 	top: 0;
@@ -42,65 +44,6 @@ EscapeMenu {
 		.button {
 			font-size: 50px;
 			height: 100px;
-
-			.label {
-				width: 100%;
-			}
-		}
-	}
-
-	.button {
-		pointer-events: all;
-
-		.label {
-			border-radius: 50%;
-			white-space: nowrap;
-			color: white;
-			padding: 10px;
-			text-stroke: 5px black;
-			text-align: center;
-		}
-
-		&.disabled {
-			.label {
-				background-color: #555;
-			}
-		}
-
-		&:not(.disabled) {
-			.label {
-				background-color: #888;
-
-				&:hover {
-					background-color: #aaa;
-				}
-
-				&:active {
-					background-color: #bbb;
-				}
-			}
-		}
-
-		&.light {
-			&.disabled {
-				.label {
-					background-color: #666;
-				}
-			}
-
-			&:not(.disabled) {
-				.label {
-					background-color: #999;
-
-					&:hover {
-						background-color: #bbb;
-					}
-
-					&:active {
-						background-color: #ccc;
-					}
-				}
-			}
 		}
 	}
 }

@@ -16,24 +16,18 @@
 	<label class="Title">MINI</label>
 
 	<div class="buttons">
-		<div class="create-lobby-button button" @onclick=@CreateLobby>
-			<label class="button-label">Create Lobby</label>
-		</div>
-		<div class="settings-button button disabled">
-			<label class="button-label">Settings</label>
-		</div>
-		<div class="quit-nutton button" @onclick=@Quit>
-			<label class="button-label">Quit</label>
-		</div>
+		<div class="button" @onclick=@CreateLobby>Create Lobby</div>
+		<div class="button disabled">Settings</div>
+		<div class="button" @onclick=@Quit>Quit</div>
 	</div>
 
 	@if(_lobbiesUpdatingTask is not null && !_lobbiesUpdatingTask.IsCompleted)
 	{
-		<i class="updating-icon">autorenew</i>
+		<i class="update-icon">autorenew</i>
 	}
 	else
 	{
-		<div class="update-button button" @onclick=@(() => _ = UpdateLobbies())>
+		<div class="update button" @onclick=@(() => _ = UpdateLobbies())>
 			<i class="icon">autorenew</i>
 		</div>
 	}
@@ -46,9 +40,7 @@
 		@if(!lobbies.Any())
 		{
 			<label class="no-lobbies-text">No lobbies found :(</label>
-			<div class="create-lobby-button button light" @onclick=@CreateLobby>
-				<label class="button-label">Create Lobby</label>
-			</div>
+			<div class="create-lobby-button button light" @onclick=@CreateLobby>Create Lobby</div>
 		}
 
 		<div class="lobbies">

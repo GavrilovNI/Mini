@@ -1,3 +1,5 @@
+@import "/UI/Styles/Buttons.css";
+
 MainMenu {
 	position: absolute;
 	top: 0;
@@ -9,60 +11,6 @@ MainMenu {
 	background-color: dimgray;
 	font-family: Poppins;
 
-	.button {
-		pointer-events: all;
-
-		.label {
-			border-radius: 50%;
-			white-space: nowrap;
-			color: white;
-			padding: 10px;
-			text-stroke: 5px black;
-			text-align: center;
-		}
-
-		&.disabled {
-			.label {
-				background-color: #555;
-			}
-		}
-
-		&:not(.disabled) {
-			.label {
-				background-color: #888;
-
-				&:hover {
-					background-color: #aaa;
-				}
-
-				&:active {
-					background-color: #bbb;
-				}
-			}
-		}
-
-		&.light {
-			&.disabled {
-				.label {
-					background-color: #666;
-				}
-			}
-
-			&:not(.disabled) {
-				.label {
-					background-color: #999;
-
-					&:hover {
-						background-color: #bbb;
-					}
-
-					&:active {
-						background-color: #ccc;
-					}
-				}
-			}
-		}
-	}
 
 	.title {
 		position: absolute;
@@ -83,40 +31,40 @@ MainMenu {
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
-		font-size: 50px;
+		align-items: flex-start;
+		gap: 10px;
+
+		.button {
+			font-size: 50px;
+			height: 100px;
+		}
 	}
 
-
-	.updating-icon {
+	.update-icon {
 		position: absolute;
-		top: 340px;
+		top: 345px;
 		right: 205px;
-		font-size: 50px;
 		width: 50px;
 		aspect-ratio: 1;
 		color: white;
+		font-size: 50px;
+		display: flex;
+		align-items: center;
+		text-align: center;
 		text-stroke: 5px black;
 		animation-name: rotate;
 		animation-duration: .9s;
 		animation-iteration-count: infinite;
 	}
 
-	.update-button {
+	.update {
 		position: absolute;
-		top: 335px;
+		top: 340px;
 		right: 200px;
 		width: 60px;
 		aspect-ratio: 1;
-
-		.label {
-			position: absolute;
-			font-size: 50px;
-			padding: 5px;
-			width: 100%;
-			height: 100%;
-			color: white;
-			text-stroke: 5px black;
-		}
+		font-size: 50px;
+		border-radius: 50% 50% 0px 0px;
 	}
 
 	.lobbies-container {
@@ -142,6 +90,8 @@ MainMenu {
 		.create-lobby-button {
 			position: absolute;
 			bottom: 10px;
+			height: 60px;
+			width: 230px;
 			left: 50%;
 			transform: translate(-50%, 0);
 			font-size: 30px;
