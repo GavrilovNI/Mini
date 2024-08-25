@@ -1,4 +1,5 @@
-﻿using Sandbox;
+﻿using Mini.Settings;
+using Sandbox;
 using System;
 
 namespace Mini.Players;
@@ -61,7 +62,8 @@ public sealed class PlayerCameraController : Component
 
     private void Rotate()
     {
-        var sensitivity = 10f * Preferences.Sensitivity / Math.Max(1f, MathF.Max(Screen.Width, Screen.Height) * 0.5f);
+        var sensitivity = GameSettings.Current.Sensitivity;
+        sensitivity = 10f * sensitivity / Math.Max(1f, MathF.Max(Screen.Width, Screen.Height) * 0.5f);
 
         var eyeAngles = Eye.Transform.Rotation.Angles();
         eyeAngles.pitch += Input.MouseDelta.y * sensitivity;
