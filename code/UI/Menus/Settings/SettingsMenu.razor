@@ -1,6 +1,5 @@
 @using Sandbox;
 @using Sandbox.UI;
-@using Sandbox.UI.GameMenu;
 @using Sandbox.Audio;
 @using Mini.Settings;
 @using System.Collections.Generic;
@@ -15,7 +14,6 @@
 	<label class="title-mini">Settings</label>
 	<div class="menus">
 		<div class="button" @onclick=@(() => SetSubMenu(SubMenu.Input))>Input</div>
-		<div class="button" @onclick=@(() => SetSubMenu(SubMenu.Keybinds))>Keybinds</div>
 		<div class="button" @onclick=@(() => SetSubMenu(SubMenu.Sound))>Sound</div>
 	</div>
 
@@ -42,23 +40,6 @@
 						</div>
 					</div>
 				}
-				else if(CurrentMenu == SubMenu.Keybinds)
-				{
-					var groups = Input.GetActions().GroupBy(x => x.GroupName);
-					foreach(var group in groups)
-					{
-						<div class="subgroup">
-							<label class="name">@group.Key</label>
-							@foreach(var action in group)
-							{
-								<div class="line">
-									<div class="name">@action.Name</div>
-									<KeyBind class="setting" Game=@IGameInstance.Current Action=@action />
-								</div>
-							}
-						</div>
-					}
-				}
 				else if(CurrentMenu == SubMenu.Sound)
 				{
 					<div class="subgroup">
@@ -79,12 +60,6 @@
 				}
 			</div>
 		</div>
-		@if(CurrentMenu == SubMenu.Keybinds)
-		{
-			<div class="keybinds-buttons">
-				<div class="button light reset-keybinds-button" @onclick=@IGameInstance.Current.ResetBinds>Reset to default</div>
-			</div>
-		}
 	</div>
 </root>
 
@@ -94,7 +69,6 @@
 	{
 		None,
 		Input,
-		Keybinds,
 		Sound,
 	}
 	
@@ -133,20 +107,6 @@
 		}
 	}
 
-	[Button("Save key binds")]
-	private void SaveKeyBinds() => SaveKeyBindsByPanel(Panel);
-	private void SaveKeyBindsByPanel(Panel panel)
-	{
-		foreach(var child in panel.Children)
-		{
-			if (child is KeyBind keybind)
-				keybind.Apply();
-			else
-				SaveKeyBindsByPanel(child);
-		}
-		IGameInstance.Current.SaveBinds();
-	}
-
 	private void SaveSettings()
 	{
 		GameSettings.Save(GameSettings.DefaultPath);
@@ -164,11 +124,5 @@
 	{
 		CurrentMenu = subMenu;
 		StateHasChanged();
-		SaveKeyBinds();
-	}
-
-	protected override void OnDisabled()
-	{
-		SaveKeyBinds();
 	}
 }
