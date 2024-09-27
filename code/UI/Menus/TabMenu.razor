@@ -1,0 +1,97 @@
+@using Mini.Players;
+@using Sandbox;
+@using Sandbox.UI;
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+
+@namespace Mini.UI.Menus
+
+@inherits PanelComponent
+@inherits Component.INetworkListener
+
+
+<root class="@(Open ? "open" : string.Empty)">
+	<div class="stats">
+		<div class="line">
+			<div class="player-icon" />
+			<label class="player-stat name column-title">Name</label>
+			<label class="player-stat wins column-title">Wins</label>
+			<label class="player-stat games column-title">Games</label>
+			<label class="player-stat winrate column-title">WinRate</label>
+		</div>
+
+		@{
+			var connections = Connection.All.ToList();
+		}
+
+		@for(int i = 0; i < connections.Count; ++i)
+		{
+			var connection = connections[i];
+
+			var stats = GetOrCreateStats(connection.SteamId);
+			<div class="line">
+				<div class="player-icon">
+					<img class="icon" src="avatar:@connection.SteamId" />
+				</div>
+				<label class=@($"player-stat name")>@connection.DisplayName</label>
+				<label class=@($"player-stat wins")>@stats.Wins</label>
+				<label class=@($"player-stat games")>@stats.GamesPlayed</label>
+				<label class=@($"player-stat winrate")>@((stats.WinRate * 100f).FloorToInt())%</label>
+			</div>
+		}
+		<div class="line fake last">
+			<div class="player-icon" />
+			<label class=@($"player-stat name") />
+			<label class=@($"player-stat wins") />
+			<label class=@($"player-stat games") />
+			<label class=@($"player-stat winrate") />
+		</div>
+	</div>
+</root>
+
+@code
+{
+	[Property]
+	public bool Open { get; set; } = false;
+
+	private Dictionary<ulong, MiniPlayerStats> _stats = new();
+
+
+	private MiniPlayerStats GetOrCreateStats(ulong steamId)
+	{
+		if(!_stats.TryGetValue(steamId, out var stats))
+		{
+			stats = new MiniPlayerStats(steamId);
+			_stats[steamId] = stats;
+		}
+		stats.UpdateLocalStats();
+		return stats;
+	}
+
+	protected override void OnUpdate()
+	{
+		Open = Input.Down("Score");
+	}
+
+	protected void OnDisconnected(Connection connection)
+	{
+		_stats.Remove(connection.SteamId);
+	}
+
+	protected override int BuildHash()
+	{
+		if (!Open)
+			return Open.GetHashCode();
+
+		var hashCode = HashCode.Combine(Open, Connection.All.Count);
+
+		foreach(var connection in Connection.All)
+		{
+			var stats = GetOrCreateStats(connection.SteamId);
+			hashCode = HashCode.Combine(hashCode, stats);
+		}
+
+		return hashCode;
+	}
+}

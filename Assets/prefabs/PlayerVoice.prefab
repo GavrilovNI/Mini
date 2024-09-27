@@ -1,0 +1,41 @@
+{
+  "RootObject": {
+    "__guid": "6f6d5c4a-ece1-453d-9e0a-b7fc459dadd8",
+    "Flags": 0,
+    "Name": "playervoice",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "Components": [
+      {
+        "__type": "Sandbox.Voice",
+        "__guid": "637a5bd9-68b2-46d2-aafd-91be26899057",
+        "Loopback": false,
+        "Mode": "Manual",
+        "MorphScale": 3,
+        "MorphSmoothTime": 0.1,
+        "PushToTalkInput": "voice",
+        "Volume": 1,
+        "WorldspacePlayback": false
+      },
+      {
+        "__type": "Mini.VoiceEnabler",
+        "__guid": "900160ba-3e93-4dcd-a0e2-2c629b50c293",
+        "PushToTalk": true,
+        "Voice": {
+          "_type": "component",
+          "component_id": "637a5bd9-68b2-46d2-aafd-91be26899057",
+          "go": "6f6d5c4a-ece1-453d-9e0a-b7fc459dadd8",
+          "component_type": "Voice"
+        }
+      }
+    ],
+    "Children": [],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

@@ -1,0 +1,130 @@
+@using Mini.Games;
+@using Sandbox;
+@using Sandbox.UI;
+@using System;
+@using System.Linq;
+
+@namespace Mini.UI
+
+@inherits PanelComponent
+
+<root class="@(GamesVoter.IsVoting ? "" : "hidden")">
+
+	@{
+		if (GamesVoter.GamesCount == 0)
+			return;
+
+		var width = AutoWidth ? Math.Min(GamesVoter.GamesCount, MathF.Sqrt(GamesVoter.GamesCount * Screen.Width / Screen.Height).CeilToInt()) : Width;
+		var height = AutoHeight ? GamesVoter.GamesCount / width + (GamesVoter.GamesCount % width > 0 ? 1 : 0) : Height;
+		var gamesEnumerator = GamesVoter.Games.GetEnumerator();
+	}
+	<label class="title">Vote for the next game!</label>
+	<div class="games" style="aspect-ratio:@(GamePlateAspectRatio * width / height); @(width * GamePlateAspectRatio > height ? "width" : "height"): @(WidownSizePercent)vh;">
+		@for (int y = 0; y < height; ++y)
+		{
+			<div class="line">
+				@for(int x = 0; x < width; ++x)
+				{
+					string gameId;
+					GameInfo gameInfo;
+					string gameIcon;
+					string fakeClass;
+					bool fake;
+
+					if (gamesEnumerator.MoveNext())
+					{
+						gameId = gamesEnumerator.Current;
+						gameInfo = GamesLoader.GetGameInfo(gameId);
+						gameIcon = GamesLoader.GetGameIconPath(gameId);
+						fakeClass = string.Empty;
+						fake = false;
+					}
+					else
+					{
+						gameId = "";
+						gameInfo = new();
+						gameIcon = "";
+						fakeClass = "fake";
+						fake = true;
+					}
+
+
+					<div class="game @fakeClass" style="aspect-ratio: @GamePlateAspectRatio;" @onclick=@(() => { if(!fake) SwitchVote(gameId); })>
+						<div class="game-icon" style="background-image:url('@(gameIcon)')"></div>
+						<label class="game-title">@gameInfo.Name</label>
+						<div class="game-description-parent">
+							<label class="game-description">@gameInfo.Description</label>
+						</div>
+						<div class="game-votes">
+							@{
+								var votes = GamesVoter.GetGameVotes(gameId);
+								var votesEnumerator = votes.GetEnumerator();
+								for (int i = 0; i < MaxVotesToShowPerGame; ++i)
+								{
+									if (!votesEnumerator.MoveNext())
+										break;
+
+									<img class="player-icon" src="avatar:@votesEnumerator.Current" style="left: @($"{VoteIconsOffsetPercent * i}%");" />
+
+								}
+								if (votesEnumerator.MoveNext())
+								{
+									<div class="more-players-icon" style="left: @($"{VoteIconsOffsetPercent * MaxVotesToShowPerGame}%");">+@(votes.Count() - MaxVotesToShowPerGame)</div>
+								}
+							}
+						</div>
+					</div>
+				}
+			</div>
+		}
+	</div>
+</root>
+
+@code
+{
+	[Property]
+	public GamesVoter GamesVoter { get; set; } = null!;
+	[Property]
+	public GamesLoader GamesLoader { get; set; } = null!;
+
+	[Property]
+	public bool AutoWidth { get; set; } = true;
+	[Property]
+	public bool AutoHeight { get; set; } = true;
+
+	[Property, HideIf(nameof(AutoWidth), true)]
+	public int Width { get; set; } = 5;
+	[Property, HideIf(nameof(AutoHeight), true)]
+	public int Height { get; set; } = 3;
+
+	[Property]
+	public int MaxVotesToShowPerGame { get; set; } = 5;
+	[Property]
+	public float WidownSizePercent { get; set; } = 75;
+	[Property]
+	public float VoteIconsOffsetPercent { get; set; } = 10;
+	[Property]
+	public float GamePlateAspectRatio { get; set; } = 0.8f;
+
+	private void SwitchVote(string gameId)
+	{
+		if (GamesVoter.GetGameVotes(gameId).Contains(Connection.Local.SteamId))
+			GamesVoter.RemoveVote();
+		else
+			GamesVoter.Vote(gameId);
+	}
+
+	protected override int BuildHash()
+	{
+		var hashcode = HashCode.Combine(GamesVoter.IsVoting, AutoWidth, AutoHeight, Width, Height, Screen.Width, Screen.Height);
+		hashcode = HashCode.Combine(hashcode, MaxVotesToShowPerGame, VoteIconsOffsetPercent, GamePlateAspectRatio);
+
+		foreach(var game in GamesVoter.Games)
+			hashcode = HashCode.Combine(hashcode, game);
+
+		foreach(var (steamId, votedGame) in GamesVoter.Votes)
+			hashcode = HashCode.Combine(hashcode, steamId, votedGame);
+
+		return hashcode;
+	}
+}

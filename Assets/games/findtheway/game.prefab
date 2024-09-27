@@ -1,0 +1,321 @@
+{
+  "RootObject": {
+    "__guid": "7d5d3bd9-f8ba-40f0-bdb8-6f17e7bb1ddd",
+    "Flags": 0,
+    "Name": "game",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Mini.Games.FindTheWay.FindTheWayGame",
+        "__guid": "83c0e5cc-c3f3-4610-bca8-1f641bcebd19",
+        "BlockSize": "3,3,1",
+        "BlocksParent": {
+          "_type": "gameobject",
+          "go": "e159cbb4-efc2-49be-99d3-8eec09b4741e"
+        },
+        "Color": "0.33,0.33,0.33,1",
+        "FakeBlockPrefab": {
+          "_type": "gameobject",
+          "prefab": "games/findtheway/fakeblock.prefab"
+        },
+        "FinishPlatform": {
+          "_type": "gameobject",
+          "go": "7732f60e-8a2c-4e11-985e-f63e35c9a5bb"
+        },
+        "HighlightColor": "1,1,1,1",
+        "HighlightCurve": [
+          {},
+          {
+            "x": 0.25,
+            "y": 1
+          },
+          {
+            "x": 0.75,
+            "y": 1
+          },
+          {
+            "x": 1
+          }
+        ],
+        "HighlightedBlockPrefab": {
+          "_type": "gameobject",
+          "prefab": "games/findtheway/highlightedblock.prefab"
+        },
+        "HighlightSpeed": 7,
+        "HighlightTime": 2,
+        "KillingZone": {
+          "_type": "gameobject",
+          "go": "8f57ac76-2fef-497e-8030-cc661a38d639"
+        },
+        "MaxGameTime": 60,
+        "MinDistanceWithoutTurn": 3,
+        "PlayerPrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/player.prefab"
+        },
+        "PlayersParent": {
+          "_type": "gameobject",
+          "go": "9b9c2f26-9bc2-4357-95cc-29fc9b310ee0"
+        },
+        "Size": "20,8",
+        "SpawnBarrier": {
+          "_type": "gameobject",
+          "go": "6048de01-1559-46b6-b5ce-f129a9030658"
+        },
+        "SpawnPlatform": {
+          "_type": "gameobject",
+          "go": "70895795-b1b5-4277-a16e-bd97e7b929ea"
+        },
+        "SpawnPointParent": {
+          "_type": "gameobject",
+          "go": "ec9ec8a9-79be-4555-9977-fb5d48f6bdd1"
+        },
+        "SpawnPointPrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/spawnpoint.prefab"
+        },
+        "Status": "Created",
+        "StopGameIfNotEnoughPlayers": false,
+        "StopGameIfZeroPlayers": true,
+        "TimeBetweenHighlights": 10,
+        "TurnChanceMultiplier": 3
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "d6942ef2-d4b9-44ed-8261-47c9a3553825",
+        "Flags": 0,
+        "Name": "Room",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "44226121-14c1-40af-95cd-9895a4879af0",
+            "Flags": 0,
+            "Name": "2D Skybox",
+            "Tags": "skybox",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.SkyBox2D",
+                "__guid": "f0d203c9-7dee-434b-a9ea-06e1128195e1",
+                "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          },
+          {
+            "__guid": "01e09cb4-c486-4cbe-be74-05426fdf1853",
+            "Flags": 0,
+            "Name": "Sun",
+            "Position": "15.85686,10.00759,298.7758",
+            "Rotation": "-0.09904574,0.3696438,0.2391176,0.8923991",
+            "Tags": "light_directional,light",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.DirectionalLight",
+                "__guid": "ce9b8133-61c5-4f8c-92ef-e2b74add4a07",
+                "FogMode": "Enabled",
+                "FogStrength": 1,
+                "LightColor": "0.91373,0.98039,1,1",
+                "Shadows": true,
+                "SkyColor": "0,0,0,0"
+              }
+            ]
+          },
+          {
+            "__guid": "03cf8d4a-3333-4232-8358-eddb75bdff99",
+            "Flags": 0,
+            "Name": "Sun",
+            "Position": "15.85686,10.00759,298.7758",
+            "Rotation": "0.3696438,0.09904579,-0.8923991,0.2391178",
+            "Tags": "light_directional,light",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.DirectionalLight",
+                "__guid": "cc6b0d2a-0f90-4c3d-a997-d6bf582a5db1",
+                "FogMode": "Enabled",
+                "FogStrength": 1,
+                "LightColor": "0.91373,0.98039,1,1",
+                "Shadows": true,
+                "SkyColor": "0,0,0,0"
+              }
+            ]
+          },
+          {
+            "__guid": "ec9ec8a9-79be-4555-9977-fb5d48f6bdd1",
+            "Flags": 0,
+            "Name": "SpawnPoints",
+            "Enabled": true
+          },
+          {
+            "__guid": "70895795-b1b5-4277-a16e-bd97e7b929ea",
+            "Flags": 0,
+            "Name": "SpawnPlatform",
+            "Position": "-125,250,0",
+            "Scale": "5,10,1",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "6f73fc1f-2fbb-4312-8f0f-d6a018f6d322",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/dev/box.vmdl",
+                "RenderType": "On",
+                "Tint": "0.63721,1,0.66744,1"
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "d0409475-a2c0-4c1b-b699-b2ee210b640f",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "50,50,50",
+                "Static": false
+              }
+            ]
+          },
+          {
+            "__guid": "7732f60e-8a2c-4e11-985e-f63e35c9a5bb",
+            "Flags": 0,
+            "Name": "FinishPlatform",
+            "Position": "125,250,0",
+            "Scale": "5,10,1",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "09b45756-4de3-4e23-ba51-f2d471cfbd89",
+                "BodyGroups": 18446744073709551615,
+                "Model": "models/dev/box.vmdl",
+                "RenderType": "On",
+                "Tint": "0.92674,1,0.37209,1"
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "e4617ab1-59ca-4c63-b429-a20eebfc63ed",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "OnTriggerEnter": {
+                  "__version": 7,
+                  "__guid": "d5f45a3f-9e51-493a-bd05-eda7168334a5",
+                  "UserData": {
+                    "Title": "On Trigger Enter"
+                  },
+                  "Variables": [],
+                  "Nodes": [
+                    {
+                      "Id": 0,
+                      "Type": "input"
+                    }
+                  ],
+                  "Links": []
+                },
+                "Scale": "50,50,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "f6225a61-33e2-44b7-9433-ddae727d25c4",
+                "Center": "0,0,50",
+                "IsTrigger": true,
+                "Scale": "50,50,50",
+                "Static": false
+              }
+            ]
+          },
+          {
+            "__guid": "8f57ac76-2fef-497e-8030-cc661a38d639",
+            "Flags": 0,
+            "Name": "KillingZone",
+            "Position": "0,0,-50",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "5949d1ca-ffb0-4db5-bb87-27eb17db48ac",
+                "Center": "0,0,0",
+                "IsTrigger": true,
+                "Scale": "50,50,50",
+                "Static": false
+              },
+              {
+                "__type": "Mini.UtilComponents.KillingZone",
+                "__guid": "4f6e8927-c0c6-4cfe-8b71-fe60a30a09ab"
+              }
+            ]
+          },
+          {
+            "__guid": "6048de01-1559-46b6-b5ce-f129a9030658",
+            "Flags": 0,
+            "Name": "SpawnBarrier",
+            "Scale": "1,1,10",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "8414d8a2-8c63-474d-8b1b-835d013589a1",
+                "Center": "0,0,25",
+                "IsTrigger": false,
+                "Scale": "50,50,1",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "3f94ee4d-b33b-4018-8e19-7d02cec8d693",
+                "Center": "25,0,0",
+                "IsTrigger": false,
+                "Scale": "1,50,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "cdfd9226-ab31-49b7-ba63-3fda548c09e7",
+                "Center": "-25,0,0",
+                "IsTrigger": false,
+                "Scale": "1,50,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "fed161d8-1499-4458-846e-809467da75a1",
+                "Center": "0,25,0",
+                "IsTrigger": false,
+                "Scale": "50,1,50",
+                "Static": false
+              },
+              {
+                "__type": "Sandbox.BoxCollider",
+                "__guid": "e52f2f04-9bc1-480e-95b0-1ba24cb3b506",
+                "Center": "0,-25,0",
+                "IsTrigger": false,
+                "Scale": "50,1,50",
+                "Static": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__guid": "9b9c2f26-9bc2-4357-95cc-29fc9b310ee0",
+        "Flags": 0,
+        "Name": "Players",
+        "Position": "-375.3816,0,0",
+        "Enabled": true
+      },
+      {
+        "__guid": "e159cbb4-efc2-49be-99d3-8eec09b4741e",
+        "Flags": 0,
+        "Name": "Blocks",
+        "Enabled": true
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

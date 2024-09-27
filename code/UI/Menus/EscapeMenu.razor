@@ -1,0 +1,43 @@
+@using System;
+@using Sandbox;
+@using Sandbox.UI;
+@using Sandbox.Network;
+
+@namespace Mini.UI.Menus
+
+@inherits PanelComponent
+
+<root>
+	<label class="title-mini">MINI</label>
+
+	<div class="buttons">
+		<div class="button" @onclick=@(() => MenuController.CloseMenu())>
+			<label class="label">Close</label>
+		</div>
+		<div class="button" @onclick=@(() => MenuController.OpenMenu(SettingsMenu))>
+			<label class="label">Settings</label>
+		</div>
+		<div class="button" @onclick=@(Leave)>
+			<label class="label">Leave</label>
+		</div>
+	</div>
+	
+</root>
+
+@code
+{
+	[Property]
+	public string MainMenuScene { get; set; } = "scenes/mainmenu.scene";
+	[Property]
+	public MenuController MenuController { get; set; } = null!;
+	[Property]
+	public SettingsMenu SettingsMenu { get; set; } = null!;
+
+	private void Leave()
+	{
+		GameNetworkSystem.Disconnect();
+		var loadedMainMenu = Game.ActiveScene.LoadFromFile(MainMenuScene);
+		if(!loadedMainMenu)
+			Log.Error("Couldn't load main menu.");
+	}
+}

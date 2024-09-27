@@ -1,0 +1,94 @@
+@using Mini.Exceptions;
+@using Sandbox;
+@using Sandbox.UI;
+@using System;
+@using System.Collections.Generic;
+@using System.Threading.Tasks;
+
+@namespace Mini.UI
+
+@inherits PanelComponent
+@implements Component.INetworkListener
+
+<root>
+	@foreach(var voice in _voices)
+	{
+		if(voice.IsValid() && voice.IsListening)
+		{
+			var owner = voice.Network.OwnerConnection;
+			var color = Color.Lerp(LowAmplitudeBorderColor, HighAmplitudeBorderColor, voice.Amplitude);
+
+			<div class="entry">
+				<i class="icon">volume_up</i>
+				<img class="player-icon" src="avatar:@owner.SteamId" style="border: 5px @(color.Hex);" />
+				<div class="player-name">@owner.DisplayName</div>
+			</div>
+		}
+	}
+</root>
+
+@code
+{
+	public static VoiceList? Instance { get; set; } = null!;
+
+	[Property]
+	public Color LowAmplitudeBorderColor { get; set; } = Color.Gray;
+	[Property]
+	public Color HighAmplitudeBorderColor { get; set; } = Color.Green;
+	[Property]
+	public bool CreatePlayerVoices { get; set; } = true;
+	[Property, ShowIf(nameof(CreatePlayerVoices), true)]
+	public GameObject PlayerVoicePrefab { get; set; } = null!;
+
+	private List<VoiceEnabler> _voices = new();
+
+	public void Add(VoiceEnabler voice)
+	{
+		if(!voice.IsValid())
+			throw new ArgumentException("Voice is not valid.", nameof(voice));
+		_voices.Add(voice);
+	}
+
+	public bool Remove(VoiceEnabler voice)
+	{
+		return _voices.Remove(voice);
+	}
+
+	public void OnActive(Connection connection)
+	{
+		if(!CreatePlayerVoices)
+			return;
+
+		var voiceGameObject = PlayerVoicePrefab.Clone(global::Transform.Zero, GameObject, name: $"Player's voice - {connection.DisplayName}" );
+		var voice = voiceGameObject.Components.Get<VoiceEnabler>();
+		if(!voice.IsValid())
+			throw new ComponentNotFoundException(voiceGameObject, typeof(VoiceEnabler));
+
+		voiceGameObject.NetworkSpawn( connection );
+
+	}
+
+	protected override Task OnLoad()
+	{
+		if(Instance.IsValid() && Connection.Local.IsHost)
+		{
+			GameObject.Destroy();
+			return Task.CompletedTask;
+		}
+
+		if(!Scene.IsEditor)
+			Instance = this;
+
+		return Task.CompletedTask;
+	}
+
+	protected override int BuildHash()
+	{
+		int hashcode = _voices.Count;
+
+		foreach(var voice in _voices)
+			hashcode = HashCode.Combine(hashcode, voice.IsListening, voice.Amplitude);
+
+		return hashcode;
+	}
+}

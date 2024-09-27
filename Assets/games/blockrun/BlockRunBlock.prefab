@@ -1,0 +1,55 @@
+{
+  "RootObject": {
+    "__guid": "21d78567-bb95-4fc8-bcd6-897f54dace36",
+    "Flags": 0,
+    "Name": "blockrunblock",
+    "Scale": "1,1,0.25",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.ModelRenderer",
+        "__guid": "55bf212d-44f8-42d4-bd41-326d7bc98597",
+        "BodyGroups": 18446744073709551615,
+        "Model": "models/dev/box.vmdl",
+        "RenderType": "Off",
+        "Tint": "1,1,1,1"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "72447450-ec27-4f6e-b05f-79af607b5b30",
+        "Center": "0,0,0",
+        "IsTrigger": false,
+        "Scale": "50,50,50",
+        "Static": false
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "f769981c-0adb-4d8a-9552-928503ddcce4",
+        "Center": "0,0,25.5",
+        "IsTrigger": true,
+        "Scale": "50,50,1",
+        "Static": false
+      },
+      {
+        "__type": "Mini.Games.BlockRun.BlockRunBlock",
+        "__guid": "93ab57b2-2913-4b25-8828-7f112b0447bf",
+        "BreakingTime": 1,
+        "Color": "1,1,1,1",
+        "Model": {
+          "_type": "component",
+          "component_id": "55bf212d-44f8-42d4-bd41-326d7bc98597",
+          "go": "21d78567-bb95-4fc8-bcd6-897f54dace36",
+          "component_type": "ModelRenderer"
+        }
+      }
+    ],
+    "Children": [],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

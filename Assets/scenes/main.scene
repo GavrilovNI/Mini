@@ -1,0 +1,243 @@
+{
+  "__guid": "a3b48e7e-2ded-4938-b71c-33da429d6baf",
+  "GameObjects": [
+    {
+      "__guid": "fb244dd1-43e3-4465-bd8c-5d91e80c8526",
+      "Flags": 0,
+      "Name": "Network",
+      "Enabled": true,
+      "NetworkMode": 1,
+      "Components": [
+        {
+          "__type": "Mini.Networking.GameNetwork",
+          "__guid": "c3e55251-9c4f-453c-9f56-087273d523ec",
+          "DisconnectIfHostLeft": true,
+          "DisconnectOnDestroy": true,
+          "MainMenuScene": "scenes/mainmenu.scene",
+          "StartServer": true
+        }
+      ]
+    },
+    {
+      "__guid": "e8454cb1-58b1-4856-b496-7d755f874765",
+      "Flags": 0,
+      "Name": "GamesLauncher",
+      "Enabled": true,
+      "NetworkMode": 1,
+      "Components": [
+        {
+          "__type": "Mini.GamesLauncher",
+          "__guid": "8e2186f5-c6a5-40b1-9c0a-34d4e7a6a670",
+          "GamesCountToVote": 15,
+          "GamesLoader": {
+            "_type": "component",
+            "component_id": "2ecf5ce7-ad71-4c46-93b1-30893f61b260",
+            "go": "e8454cb1-58b1-4856-b496-7d755f874765",
+            "component_type": "GamesLoader"
+          },
+          "GamesVoter": {
+            "_type": "component",
+            "component_id": "89efa426-c33b-4830-aa65-b6f1e75a0059",
+            "go": "e8454cb1-58b1-4856-b496-7d755f874765",
+            "component_type": "GamesVoter"
+          },
+          "TimeAfterEnd": 10,
+          "TimeBeforeStart": 10,
+          "VotingEndTime": 3,
+          "VotingTime": 30
+        },
+        {
+          "__type": "Mini.GamesLoader",
+          "__guid": "2ecf5ce7-ad71-4c46-93b1-30893f61b260"
+        },
+        {
+          "__type": "Mini.GamesVoter",
+          "__guid": "89efa426-c33b-4830-aa65-b6f1e75a0059",
+          "GamesLoader": {
+            "_type": "component",
+            "component_id": "2ecf5ce7-ad71-4c46-93b1-30893f61b260",
+            "go": "e8454cb1-58b1-4856-b496-7d755f874765",
+            "component_type": "GamesLoader"
+          }
+        }
+      ]
+    },
+    {
+      "__guid": "65dcbf5c-4340-48d1-93dc-35f743722194",
+      "Flags": 0,
+      "Name": "UI",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "db23f478-12bd-462a-8283-8fc2d485ebfb",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 100
+        },
+        {
+          "__type": "Mini.UI.MainHUD",
+          "__guid": "8fd43218-7f39-4c1c-acc0-879e1d11d22f",
+          "DeathMessageTime": 3,
+          "GamesLauncher": {
+            "_type": "component",
+            "component_id": "8e2186f5-c6a5-40b1-9c0a-34d4e7a6a670",
+            "go": "e8454cb1-58b1-4856-b496-7d755f874765",
+            "component_type": "GamesLauncher"
+          }
+        },
+        {
+          "__type": "Mini.UI.GameVotingUI",
+          "__guid": "a8dccb12-5c5a-46f1-a0e4-807d1584bb39",
+          "AutoHeight": true,
+          "AutoWidth": true,
+          "GamePlateAspectRatio": 0.8,
+          "GamesLoader": {
+            "_type": "component",
+            "component_id": "2ecf5ce7-ad71-4c46-93b1-30893f61b260",
+            "go": "e8454cb1-58b1-4856-b496-7d755f874765",
+            "component_type": "GamesLoader"
+          },
+          "GamesVoter": {
+            "_type": "component",
+            "component_id": "89efa426-c33b-4830-aa65-b6f1e75a0059",
+            "go": "e8454cb1-58b1-4856-b496-7d755f874765",
+            "component_type": "GamesVoter"
+          },
+          "Height": 3,
+          "MaxVotesToShowPerGame": 5,
+          "VoteIconsOffsetPercent": 10,
+          "WidownSizePercent": 75,
+          "Width": 5
+        }
+      ]
+    },
+    {
+      "__guid": "840df57b-2c8d-4eae-8e3b-213de9251886",
+      "Flags": 0,
+      "Name": "Chat",
+      "Position": "-834.8896,-6267.19,2070.259",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "c4d66fcb-8c58-4bc7-af34-31d39c945e6f",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 105
+        },
+        {
+          "__type": "Mini.UI.Chat",
+          "__guid": "161c1f03-1757-4d3a-bf1c-d543e59620c3",
+          "MaxMessageTime": 10
+        }
+      ]
+    },
+    {
+      "__guid": "cc056125-48a7-4198-8ed1-35beaf6bc637",
+      "Flags": 0,
+      "Name": "PlayerVoices",
+      "Position": "-865.4682,-6029.153,2161.615",
+      "Enabled": true,
+      "NetworkMode": 1,
+      "Components": [
+        {
+          "__type": "Sandbox.ScreenPanel",
+          "__guid": "ba54c4a2-87f0-495f-81a6-83ac55db008a",
+          "AutoScreenScale": true,
+          "Opacity": 1,
+          "Scale": 1,
+          "ZIndex": 100
+        },
+        {
+          "__type": "Mini.UI.VoiceList",
+          "__guid": "3b8394b6-7211-4d49-bd09-917369e26b20",
+          "CreatePlayerVoices": true,
+          "HighAmplitudeBorderColor": "0,1,0,1",
+          "LowAmplitudeBorderColor": "0.5,0.5,0.5,1",
+          "PlayerVoicePrefab": {
+            "_type": "gameobject",
+            "prefab": "prefabs/playervoice.prefab"
+          }
+        }
+      ]
+    },
+    {
+      "__guid": "d44ef5e1-edab-4f95-bcb0-80dae113d23b",
+      "Flags": 0,
+      "Name": "LocalPrefabsSpawner",
+      "Enabled": true,
+      "Components": [
+        {
+          "__type": "Mini.Networking.LocalPrefabsSpawner",
+          "__guid": "ebaeb35b-77fc-4e92-ba51-cf792a1a270c",
+          "Prefabs": [
+            {
+              "Prefab": {
+                "_type": "gameobject",
+                "prefab": "prefabs/spectatingcamera.prefab"
+              },
+              "StartEnabled": true,
+              "Transform": {
+                "UniformScale": 1,
+                "IsValid": true,
+                "ForwardRay": {
+                  "Forward": "1,0,0"
+                },
+                "Scale": "1,1,1",
+                "Rotation": "0,0,0,1"
+              },
+              "PrefabVariables": {}
+            },
+            {
+              "Prefab": {
+                "_type": "gameobject",
+                "prefab": "prefabs/ingamemenu.prefab"
+              },
+              "StartEnabled": true,
+              "Transform": {
+                "UniformScale": 1,
+                "IsValid": true,
+                "ForwardRay": {
+                  "Forward": "1,0,0"
+                },
+                "Scale": "1,1,1",
+                "Rotation": "0,0,0,1"
+              },
+              "PrefabVariables": {}
+            }
+          ],
+          "SpawnTime": "OnStart"
+        }
+      ]
+    }
+  ],
+  "SceneProperties": {
+    "FixedUpdateFrequency": 50,
+    "MaxFixedUpdates": 5,
+    "NetworkFrequency": 30,
+    "NetworkInterpolation": true,
+    "ThreadedAnimation": true,
+    "TimeScale": 1,
+    "UseFixedUpdate": true,
+    "NavMesh": {
+      "Enabled": false,
+      "IncludeStaticBodies": true,
+      "IncludeKeyframedBodies": true,
+      "EditorAutoUpdate": true,
+      "AgentHeight": 64,
+      "AgentRadius": 16,
+      "AgentStepSize": 18,
+      "AgentMaxSlope": 40,
+      "ExcludedBodies": "",
+      "IncludedBodies": ""
+    }
+  },
+  "Title": "fallingblocks",
+  "Description": "",
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

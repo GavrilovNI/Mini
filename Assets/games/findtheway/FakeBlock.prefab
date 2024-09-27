@@ -1,0 +1,46 @@
+{
+  "RootObject": {
+    "__guid": "10235a0f-c9e2-4a40-a500-07fae410b43b",
+    "Flags": 0,
+    "Name": "fakeblock",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Sandbox.ModelRenderer",
+        "__guid": "972d721b-9a32-4cef-bb6e-b6ebb3cfeb59",
+        "BodyGroups": 18446744073709551615,
+        "MaterialOverride": "materials/bordered_square.vmat",
+        "Model": "models/dev/box.vmdl",
+        "RenderType": "On",
+        "Tint": "0.33,0.33,0.33,1"
+      },
+      {
+        "__type": "Sandbox.BoxCollider",
+        "__guid": "bf7729f7-3c65-4b06-9394-e0737c93870e",
+        "Center": "0,0,25",
+        "IsTrigger": true,
+        "Scale": "50,50,100",
+        "Static": false
+      },
+      {
+        "__type": "Mini.Games.FindTheWay.FakeBlock",
+        "__guid": "a3814bbb-75b1-4e82-88e2-194627d8c590",
+        "Color": "0.32941,0.32941,0.32941,1",
+        "ModelRenderer": {
+          "_type": "component",
+          "component_id": "972d721b-9a32-4cef-bb6e-b6ebb3cfeb59",
+          "go": "10235a0f-c9e2-4a40-a500-07fae410b43b",
+          "component_type": "ModelRenderer"
+        }
+      }
+    ],
+    "Children": [],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

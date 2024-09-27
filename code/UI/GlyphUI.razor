@@ -1,0 +1,76 @@
+﻿@using System;
+@using Sandbox;
+@using Sandbox.UI;
+@inherits Sandbox.UI.Panel;
+
+@namespace Mini.UI
+
+@attribute [StyleSheet]
+
+<root />
+
+@code {
+
+    private string _input = string.Empty;
+    private InputAnalog? _inputAnalog;
+    private InputGlyphSize _size = InputGlyphSize.Small;
+    private bool _outline = false;
+
+    public void SetInput(string value)
+    {
+        if(Enum.TryParse<InputAnalog>(value, true, out var analog))
+        {
+            _inputAnalog = analog;
+            _input = string.Empty;
+        }
+        else
+        {
+            _inputAnalog = null;
+            _input = value ?? string.Empty;
+        }
+        Update();
+    }
+
+    private void Update()
+    {
+        Style.BackgroundImage = _inputAnalog.HasValue ?
+            Input.GetGlyph(_inputAnalog.Value, _size, _outline) :
+            Input.GetGlyph(_input, _size, true);
+    }
+
+    public override void SetProperty(string name, string value)
+    {
+        switch(name)
+        {
+            case "input":
+            {
+                SetInput(value);
+                Update();
+                break;
+            }
+            case "size":
+            {
+                if(Enum.TryParse<InputGlyphSize>(value, true, out var size))
+                    _size = size;
+                Update();
+                break;
+            }
+            case "outline":
+            {
+                _outline = (value.ToLower() == "true");
+                Update();
+                break;
+            }
+        }
+
+        
+        base.SetProperty(name, value);
+    }
+
+    protected override void OnAfterTreeRender(bool firstTime) => Update();
+
+    protected override int BuildHash()
+    {
+        return HashCode.Combine(Input.UsingController, _input, _inputAnalog, _outline);
+    }
+}

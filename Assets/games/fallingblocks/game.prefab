@@ -1,0 +1,577 @@
+{
+  "RootObject": {
+    "__guid": "c900a688-0326-43ba-ac29-2aeb95b6d7d5",
+    "Flags": 0,
+    "Name": "game",
+    "Enabled": true,
+    "NetworkMode": 1,
+    "Components": [
+      {
+        "__type": "Mini.Games.FallingBlocks.FallingBlocksGame",
+        "__guid": "78127e67-8ecc-47ca-b6ca-8740f8b9a53c",
+        "DifficultyIncreaseTime": 60,
+        "BlockColors": [
+          "0.68372,0,0,1",
+          "0.76884,0.8093,0,1",
+          "0.05606,0.53023,0.0222,1",
+          "0.01229,0.63886,0.66047,1",
+          "0,0,0.64651,1",
+          "0.69767,0.00649,0.60552,1",
+          "0.85581,0.45643,0,1",
+          "0.48372,0,0.74419,1"
+        ],
+        "BlockSize": "3,3,1",
+        "BlocksSpeedCurve": {
+          "rangey": "100,800",
+          "frames": [
+            {},
+            {
+              "x": 0.23660715,
+              "y": 0.3329463
+            },
+            {
+              "x": 0.61011904,
+              "y": 0.7157638
+            },
+            {
+              "x": 0.76785713,
+              "y": 0.95189935,
+              "in": -0.48629227,
+              "out": 0.48629227
+            },
+            {
+              "x": 1,
+              "y": 1
+            }
+          ]
+        },
+        "FallingBlockPrefab": {
+          "_type": "gameobject",
+          "prefab": "games/fallingblocks/fallingblock.prefab"
+        },
+        "FallingBlocksParent": {
+          "_type": "gameobject",
+          "go": "3ec6166e-21b1-4b30-a1b9-b5ea330d3bc4"
+        },
+        "MaxGameTime": 120,
+        "PlayerPrefab": {
+          "_type": "gameobject",
+          "prefab": "prefabs/player.prefab"
+        },
+        "PlayersParent": {
+          "_type": "gameobject",
+          "go": "8092e1d3-7632-4e36-80ca-1b57ae4bd68c"
+        },
+        "Size": "8,8",
+        "SpawningHeight": 1250,
+        "SpawningSpeedCurve": {
+          "rangey": "0.5,5",
+          "frames": [
+            {},
+            {
+              "x": 0.28422618,
+              "y": 0.0922535,
+              "in": -0.725008,
+              "out": 0.725008
+            },
+            {
+              "x": 0.4642857,
+              "y": 0.4466262
+            },
+            {
+              "x": 0.74107134,
+              "y": 0.81785446,
+              "in": -1.6660736,
+              "out": 1.6660736
+            },
+            {
+              "x": 1,
+              "y": 1
+            }
+          ]
+        },
+        "Status": "Created",
+        "StopGameIfNotEnoughPlayers": true,
+        "StopGameIfZeroPlayers": true
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "3fd7cde0-66de-4760-990d-a10c77534e72",
+        "Flags": 0,
+        "Name": "Room",
+        "Position": "600,600,0",
+        "Enabled": true,
+        "Children": [
+          {
+            "__guid": "a6c5f752-3679-4569-a222-22f9acbe36ce",
+            "Flags": 0,
+            "Name": "Plane",
+            "Position": "-600,0,600",
+            "Rotation": "0,0.7071068,0,0.7071068",
+            "Scale": "12,12,1",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "919e07c8-294b-43ce-b8d4-68fb5c916ddd",
+                "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "materials/dev/black_grid_8.vmat",
+                "Model": "models/dev/plane.vmdl",
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.PlaneCollider",
+                "__guid": "6f2fd03c-9488-4949-b096-139328e2b480",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "100,100",
+                "Static": true
+              }
+            ]
+          },
+          {
+            "__guid": "e106a565-fd8e-4ba4-aa1c-22a6df010a50",
+            "Flags": 0,
+            "Name": "Plane (1)",
+            "Position": "600,0,600",
+            "Rotation": "0,-0.7071068,0,0.7071068",
+            "Scale": "12,12,1",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "f6bf66f0-6941-400b-91ab-bfe04e8f9b58",
+                "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "materials/dev/black_grid_8.vmat",
+                "Model": "models/dev/plane.vmdl",
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.PlaneCollider",
+                "__guid": "8c1a5f6a-ea98-488f-af6b-6a1308e02764",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "100,100",
+                "Static": true
+              }
+            ]
+          },
+          {
+            "__guid": "ad725351-1b1a-440b-b1d7-2bdfd09433b8",
+            "Flags": 0,
+            "Name": "Plane (1)",
+            "Position": "0,600,600",
+            "Rotation": "0.7071068,0,0,0.7071068",
+            "Scale": "12,12,1",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "b6c72a43-f6c3-4a3d-bd1d-a395209be2c3",
+                "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "materials/dev/black_grid_8.vmat",
+                "Model": "models/dev/plane.vmdl",
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.PlaneCollider",
+                "__guid": "b94839d3-733a-40dc-98a7-c61851255620",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "100,100",
+                "Static": true
+              }
+            ]
+          },
+          {
+            "__guid": "2703b86f-c25a-4408-9204-a5fb0c508729",
+            "Flags": 0,
+            "Name": "Plane (1)",
+            "Position": "0,-600,600",
+            "Rotation": "-0.7071068,-0,0,0.7071068",
+            "Scale": "12,12,1",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "451be6f7-04f7-49fa-97cb-b33cbb7fb7b4",
+                "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "materials/dev/black_grid_8.vmat",
+                "Model": "models/dev/plane.vmdl",
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.PlaneCollider",
+                "__guid": "c66829ca-b6d8-41a7-8978-8b2b0bc2c357",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "100,100",
+                "Static": true
+              }
+            ]
+          },
+          {
+            "__guid": "60e58070-ee79-4cfc-8b7b-8eb0c5e5cad0",
+            "Flags": 0,
+            "Name": "Plane",
+            "Position": "0,0,0",
+            "Scale": "12,12,1",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.ModelRenderer",
+                "__guid": "6ae1518a-b12d-416f-9903-43eb3cbdce17",
+                "BodyGroups": 18446744073709551615,
+                "MaterialOverride": "materials/dev/black_grid_8.vmat",
+                "Model": "models/dev/plane.vmdl",
+                "RenderType": "On",
+                "Tint": "1,1,1,1"
+              },
+              {
+                "__type": "Sandbox.PlaneCollider",
+                "__guid": "833f23f3-4edb-48fc-9253-975a76f10c60",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "100,100",
+                "Static": true
+              }
+            ]
+          },
+          {
+            "__guid": "f431201e-dcc6-4337-95dd-6de517c22e0c",
+            "Flags": 0,
+            "Name": "Plane",
+            "Position": "0,0,1200",
+            "Rotation": "1,0,0,-0.00000004371139",
+            "Scale": "12,12,1",
+            "Tags": "playerclip",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.PlaneCollider",
+                "__guid": "e34a0e2c-dd40-44be-b1ec-6f58fabb5bbf",
+                "Center": "0,0,0",
+                "IsTrigger": false,
+                "Scale": "100,100",
+                "Static": true
+              }
+            ]
+          },
+          {
+            "__guid": "5063e8b5-fc8b-4b2e-8931-7bdefcecdd15",
+            "Flags": 0,
+            "Name": "Directional Light",
+            "Position": "0,0,1536.608",
+            "Rotation": "-0.7500001,0.4330126,0.2500001,0.4330126",
+            "Tags": "light_directional,light",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.DirectionalLight",
+                "__guid": "02f4c155-4350-4a15-b718-f0f44900e10d",
+                "FogMode": "Enabled",
+                "FogStrength": 1,
+                "LightColor": "0.91373,0.98039,1,1",
+                "Shadows": true,
+                "SkyColor": "0,0,0,0"
+              }
+            ]
+          },
+          {
+            "__guid": "eb4fe78a-50be-4c3a-90e1-cb207aa0e7d1",
+            "Flags": 0,
+            "Name": "Directional Light (1)",
+            "Position": "0,0,1536.608",
+            "Rotation": "-0.1584937,-0.1584936,0.7745191,0.5915062",
+            "Tags": "light_directional,light",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.DirectionalLight",
+                "__guid": "21db8852-ef3f-47a6-bd24-23d31afa0049",
+                "FogMode": "Enabled",
+                "FogStrength": 1,
+                "LightColor": "0.91373,0.98039,1,1",
+                "Shadows": true,
+                "SkyColor": "0,0,0,0"
+              }
+            ]
+          },
+          {
+            "__guid": "4c853e8f-4766-49ed-869a-ce42a0b0d90a",
+            "Flags": 0,
+            "Name": "SpawnPoints",
+            "Position": "0,0,0",
+            "Enabled": true,
+            "Children": [
+              {
+                "__guid": "3a775c58-dec2-4ae1-b711-70f79f44a7d1",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "-450,-450,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "69eb74cb-b98d-40ec-ae56-4e51f2bac1ca",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "3b0a6156-90ba-43fc-ad42-fa4a0401c8c7",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "-150,-450,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "dcdad647-2833-4369-9ea9-44a39207c89b",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "fe2490ef-3669-4566-9edb-4269e7c0130d",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "150,-450,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "05f3b747-cb7f-4417-9874-fb9cb3af9db6",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "4336093a-de97-4329-af31-3310c45ed121",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "450,-450,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "960d759c-432d-4307-a9be-ccaaebe02ad7",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "dfb70d83-89e3-4888-8f99-b0f3309acbf3",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "-450,-150,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "c9808060-c8f3-4afd-b21b-3d50d61efed9",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "bd5c9518-5f1c-4c8b-8d3c-1bd222250f76",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "-150,-150,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "c29fc4ba-0f44-4b2c-ab05-e9fff9cd174a",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "7a4e90f0-5407-43e7-9c07-88cb1c0c32a9",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "150,-150,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "e59db115-3721-4686-bd2d-1ccf6decc337",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "9a9a2384-4030-4852-bb6d-0d8e72ce0e9f",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "450,-150,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "568bf949-ed3c-49d0-94c4-eabd9c6aef6f",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "af4a3f3a-775d-486e-a573-b1018ec274e8",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "-450,150,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "67ef6401-fe2c-4082-bde7-05fc93414388",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "6d30ddb5-7d99-4a06-b3d6-8cf324cb679c",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "-150,150,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "b46e8a31-2821-41c4-9460-339ca9a20291",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "068b5395-c039-4d47-b2cb-73e884fdf6a7",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "150,150,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "82ea4d7c-7771-4e0b-a752-51cf4f253ed1",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "63233df5-3027-4a2f-a465-bcd3f074d674",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "450,150,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "7b210c01-d6e9-41bf-b443-22377cc10e4d",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "a0eaf8b2-ea6b-4f92-b1f1-963b946a75dd",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "-450,450,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "071addae-3ec8-46ee-a05f-77cde9ae0a5a",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "480dbb48-e0bb-4738-86fe-b798bda3b0be",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "-150,450,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "b72d71a2-9b1d-4db0-b617-7b227598550d",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "ed372818-0d92-4750-8b7f-4794a548b3f3",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "150,450,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "59a0cd3c-02cb-4b93-965b-75543a4f6fb4",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              },
+              {
+                "__guid": "f321e775-97ad-4f64-b1f1-8be3e0e3eb09",
+                "Flags": 0,
+                "Name": "Spawnpoint",
+                "Position": "450,450,0",
+                "Enabled": true,
+                "Components": [
+                  {
+                    "__type": "Sandbox.SpawnPoint",
+                    "__guid": "4d889cc2-a9b7-4c67-8baa-db18d91df81f",
+                    "Color": "0.8902,0.31765,0.05098,1"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "__guid": "d242a3c8-bdd0-4b42-99cc-20eb5ffac95e",
+            "Flags": 0,
+            "Name": "2D Skybox",
+            "Position": "0,0,0",
+            "Tags": "skybox",
+            "Enabled": true,
+            "Components": [
+              {
+                "__type": "Sandbox.SkyBox2D",
+                "__guid": "af0fa2f6-8e7c-4edf-9b8b-20a7a26c9ba4",
+                "SkyMaterial": "materials/skybox/skybox_day_01.vmat",
+                "Tint": "1,1,1,1"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "__guid": "8092e1d3-7632-4e36-80ca-1b57ae4bd68c",
+        "Flags": 0,
+        "Name": "Players",
+        "Enabled": true
+      },
+      {
+        "__guid": "3ec6166e-21b1-4b30-a1b9-b5ea330d3bc4",
+        "Flags": 0,
+        "Name": "Blocks",
+        "Enabled": true
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

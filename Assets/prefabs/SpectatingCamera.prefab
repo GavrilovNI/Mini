@@ -1,0 +1,109 @@
+{
+  "RootObject": {
+    "__guid": "502eea79-39fe-4da1-8071-4bec6d487f88",
+    "Flags": 0,
+    "Name": "spectatingcamera",
+    "Enabled": true,
+    "Components": [
+      {
+        "__type": "Mini.Players.PlayerCameraController",
+        "__guid": "ff00b385-5828-437e-b74b-92ffdd12d815",
+        "AllowChangingView": true,
+        "BackingDistanceChangeSpeed": 10,
+        "Camera": {
+          "_type": "gameobject",
+          "go": "3a0d9e4d-dc11-4ee4-9094-88fb9e5bd03a"
+        },
+        "Eye": {
+          "_type": "gameobject",
+          "go": "502eea79-39fe-4da1-8071-4bec6d487f88"
+        },
+        "IsFirstPerson": false,
+        "MaxBackingDistance": 300,
+        "MinBackingDistance": 100
+      },
+      {
+        "__type": "Mini.SpectatingCamera",
+        "__guid": "7f228d3d-b8ec-4204-b2f3-7612c46a35f0",
+        "CameraController": {
+          "_type": "component",
+          "component_id": "ff00b385-5828-437e-b74b-92ffdd12d815",
+          "go": "502eea79-39fe-4da1-8071-4bec6d487f88",
+          "component_type": "PlayerCameraController"
+        },
+        "FastSpeed": 50,
+        "SetTargetToPlayerOnStart": true,
+        "Speed": 10
+      }
+    ],
+    "Children": [
+      {
+        "__guid": "3a0d9e4d-dc11-4ee4-9094-88fb9e5bd03a",
+        "Flags": 0,
+        "Name": "Camera",
+        "Tags": "maincamera",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.CameraComponent",
+            "__guid": "85f4bb6c-c9ca-4205-a5e6-cf21e18b596e",
+            "BackgroundColor": "0.33333,0.46275,0.52157,1",
+            "ClearFlags": "All",
+            "FieldOfView": 90,
+            "IsMainCamera": false,
+            "Orthographic": false,
+            "OrthographicHeight": 1204,
+            "Priority": 2,
+            "RenderExcludeTags": "",
+            "RenderTags": "",
+            "TargetEye": "None",
+            "Viewport": "0,0,1,1",
+            "ZFar": 50000,
+            "ZNear": 10
+          },
+          {
+            "__type": "Sandbox.AudioListener",
+            "__guid": "74f3ffaa-0ea0-4178-9078-3e45559dc60e",
+            "UseCameraDirection": true
+          }
+        ]
+      },
+      {
+        "__guid": "c44e5179-b22c-4e80-b631-f7b2a9e7bd6a",
+        "Flags": 0,
+        "Name": "Glyphs",
+        "Enabled": true,
+        "Components": [
+          {
+            "__type": "Sandbox.ScreenPanel",
+            "__guid": "ed756a07-9f71-4057-b3e0-7d94cd2d813b",
+            "AutoScreenScale": true,
+            "Opacity": 1,
+            "Scale": 1,
+            "ZIndex": 100
+          },
+          {
+            "__type": "Mini.UI.InputHints",
+            "__guid": "af5fc3f7-8538-479a-9bd9-6ea27991a2ab",
+            "GlyphDescriptions": {
+              "view": "View",
+              "jump": "Spectating mode",
+              "attack1": "Previous player",
+              "attack2": "Next player",
+              "run": "Speed up",
+              "voice": "Talk",
+              "chat": "Chat"
+            }
+          }
+        ]
+      }
+    ],
+    "__variables": []
+  },
+  "ShowInMenu": false,
+  "MenuPath": null,
+  "MenuIcon": null,
+  "ResourceVersion": 1,
+  "__references": [],
+  "__version": 1
+}

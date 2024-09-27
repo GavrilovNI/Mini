@@ -1,0 +1,132 @@
+@using System;
+@using System.Linq;
+@using System.Threading.Tasks;
+@using Sandbox;
+@using Sandbox.UI;
+@using Mini.Games;
+
+@namespace Mini.UI
+
+@inherits PanelComponent
+
+<root>
+	@{
+		int timeUntilGameStatusEnd = GamesLauncher.TimeUntilGameStatusEnd.Relative.CeilToInt();
+		string timeUntilGameStatusEndString = timeUntilGameStatusEnd > 60 ?
+			$"{timeUntilGameStatusEnd / 60}:{timeUntilGameStatusEnd % 60:00}" : timeUntilGameStatusEnd.ToString();
+	}
+
+	@if(_showDeathMessage)
+	{
+		<label class="death-message">You Died!</label>
+	}
+	
+	@if(GamesLauncher.GameStatus == GameStatus.None)
+	{
+		@if(!GamesLauncher.HasEnoughPlayers)
+		{
+			<label class="title">Waiting Players</label>
+			@if(!GamesLauncher.IsAllowedPlayAlone && Connection.All.Count <= 1)
+			{
+				<div class="play-alone">
+					<div class="play-alone-button light button" @onclick=@TryAllowPlayAlone>I'm alone :(</div>
+					<label class="play-alone-info">No stats will be recorded.</label>
+				</div>
+			}
+		}
+		else
+		{
+			<label class="title">Voting ends in @timeUntilGameStatusEndString</label>
+			@if(GamesLauncher.IsAllowedPlayAlone)
+			{
+				<div class="play-alone">
+					<div class="play-alone-button light button" @onclick=@DisallowPlayAlone>I found a friend!</div>
+				</div>
+			}
+		}
+	}
+	else if(GamesLauncher.GameStatus == GameStatus.SettingUp)
+	{
+		<label class="title">Setting up the game</label>
+	}
+	else if(GamesLauncher.GameStatus == GameStatus.SetUp)
+	{
+		<label class="title">Game starts in @timeUntilGameStatusEndString</label>
+	}
+	else if(GamesLauncher.GameStatus == GameStatus.Started)
+	{
+		<label class="title">Game ends in @timeUntilGameStatusEndString</label>
+	}
+	else if(GamesLauncher.GameStatus == GameStatus.Stopped)
+	{
+		var winners = GamesLauncher.Winners
+			.Select(steamId => Connection.All.FirstOrDefault(c => c.SteamId == steamId, null)?.DisplayName)
+			.Where(name => name is not null);
+
+		var winnersString = winners.Any() ? "Winners are " + string.Join(", ", winners) : "Nobody won :(";
+		<label class="winners">@winnersString</label>
+		<label class="title">Voting starts in @timeUntilGameStatusEndString</label>
+	}
+
+	@if(GamesLauncher.GameStatus == GameStatus.SettingUp || GamesLauncher.GameStatus == GameStatus.SetUp)
+	{
+		var gameInfo = GamesLauncher.CurrentGameInfo;
+		<label class="game-name">@gameInfo.Name</label>
+		<label class="game-desc">@gameInfo.Description</label>
+	}
+</root>
+
+@code
+{
+	public static MainHUD? Instance { get; set; } = null!;
+
+	[Property]
+	public GamesLauncher GamesLauncher { get; set; } = null!;
+	[Property]
+	public float DeathMessageTime { get; set; } = 3f;
+
+	private TimeSince _timeSinceDeathMessageEnabled = 0;
+	private bool _showDeathMessage = false;
+
+	protected override Task OnLoad()
+	{
+		if(Instance.IsValid() && Connection.Local.IsHost)
+		{
+			GameObject.Destroy();
+			return Task.CompletedTask;
+		}
+
+		if(!Scene.IsEditor)
+			Instance = this;
+
+		return Task.CompletedTask;
+	}
+
+	protected override void OnUpdate()
+	{
+		if(_showDeathMessage && _timeSinceDeathMessageEnabled > DeathMessageTime)
+		{
+			_showDeathMessage = false;
+			StateHasChanged();
+		}
+	}
+
+	private void TryAllowPlayAlone()
+	{
+		GamesLauncher.Instance?.TryAllowPlayAlone();
+	}
+	private void DisallowPlayAlone()
+	{
+		GamesLauncher.Instance?.DisallowPlayAlone();
+	}
+
+	[Button("Show Death Message")]
+	public void ShowDeathMessage()
+	{
+		_showDeathMessage = true;
+		_timeSinceDeathMessageEnabled = 0;
+		StateHasChanged();
+	}
+
+	protected override int BuildHash() => HashCode.Combine(GamesLauncher.HasEnoughPlayers, GamesLauncher.TimeUntilGameStatusEnd, GamesLauncher.GameStatus, Time.Now, _showDeathMessage);
+}

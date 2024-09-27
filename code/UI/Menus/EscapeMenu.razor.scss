@@ -1,0 +1,47 @@
+@import "/UI/Styles/Buttons.css";
+@import "/UI/Styles/MiniTitle.css";
+
+EscapeMenu {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	font-weight: bold;
+	pointer-events: all;
+	font-family: Poppins;
+	pointer-events: all;
+	backdrop-filter: blur(5px);
+
+	&.disabled {
+		opacity: 0;
+	}
+
+	.title-mini {
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%, 0);
+		top: 50px;
+		font-size: 200px;
+	}
+
+	.buttons {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		width: 300px;
+		transform: translate(-50%, -50%);
+		background-color: red;
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		padding: 15px;
+		background-color: #666;
+		border-radius: 65px;
+
+		.button {
+			font-size: 50px;
+			height: 100px;
+		}
+	}
+}

@@ -1,0 +1,141 @@
+@import "/UI/Styles/Buttons.css";
+@import "/UI/Styles/MiniTitle.css";
+
+SettingsMenu {
+    width: 100%;
+    height: 100%;
+    background-color: dimgray;
+    pointer-events: all;
+
+
+    .title-mini {
+        position: absolute;
+        left: 50px;
+        top: 50px;
+        font-size: 100px;
+    }
+
+    .menus {
+        position: absolute;
+        left: 50px;
+        top: 250px;
+        width: 300px;
+        height: 60%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .button {
+        width: 100%;
+        height: 70px;
+        background-color: beige;
+        font-size: 40px;
+    }
+
+    .close-button {
+        position: absolute;
+        width: 300px;
+        height: 70px;
+        left: 50px;
+        bottom: 50px;
+    }
+
+    .right {
+        position: absolute;
+        top: 250px;
+        right: 200px;
+        width: 60%;
+        height: 70%;
+        background-color: gray;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+
+        .keybinds-buttons {
+            position: relative;
+            width: 100%;
+            height: 70px;
+
+            .reset-keybinds-button {
+                position: absolute;
+                left: 0;
+                width: 40%;
+            }
+        }
+
+        .settings-container {
+            position: relative;
+            width: 100%;
+            overflow: scroll;
+            flex-grow: 1;
+
+            .settings {
+                position: absolute;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .label {
+                    position: relative;
+                    padding: 10px;
+                    color: white;
+                    text-stroke: 5px black;
+                    text-align: center;
+                    font-family: Poppins;
+                    font-weight: bold;
+                    white-space: nowrap;
+                    display: flex;
+                    align-items: center;
+                }
+
+                .subgroup {
+                    position: relative;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    width: 100%;
+                    gap: 5px;
+                    background-color: #777;
+
+                    > .name {
+                        width: 100%;
+                        height: 50px;
+                        font-size: 40px;
+                        text-align: left;
+                    }
+
+                    .line {
+                        position: relative;
+                        width: 100%;
+                        height: 50px;
+                        background-color: #999;
+                        display: flex;
+                        flex-direction: row;
+
+                        .name {
+                            width: 26%;
+                            height: 100%;
+                            font-size: 20px;
+                            border-right: 1px #777;
+                        }
+
+                        .setting {
+                            height: 100%;
+                            width: auto;
+                            flex-grow: 2;
+                        }
+
+                        .value {
+                            height: 100%;
+                            width: 100px;
+                            font-size: 20px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

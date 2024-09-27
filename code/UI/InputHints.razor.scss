@@ -1,0 +1,34 @@
+InputHints {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    width: 500px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .entry {
+        position: relative;
+        width: 100%;
+        height: 30px;
+
+        .glyph {
+            position: absolute;
+            left: 0px;
+            height: 100%;
+            aspect-ratio: 1;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .description {
+            position: absolute;
+            left: 50px;
+            color: white;
+            font-size: 20px;
+            text-stroke: 5px black;
+            white-space: nowrap;
+            align-self: center;
+        }
+    }
+}

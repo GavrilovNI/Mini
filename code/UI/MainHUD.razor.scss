@@ -1,0 +1,159 @@
+MainHUD {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	justify-content: center;
+	align-items: center;
+	font-weight: bold;
+	border-radius: 20px;
+
+	.button {
+		pointer-events: all;
+
+		.label {
+			border-radius: 50%;
+			white-space: nowrap;
+			color: white;
+			padding: 10px;
+			text-stroke: 5px black;
+			text-align: center;
+		}
+
+		&.disabled {
+			.label {
+				background-color: #555;
+			}
+		}
+
+		&:not(.disabled) {
+			.label {
+				background-color: #888;
+
+				&:hover {
+					background-color: #aaa;
+				}
+
+				&:active {
+					background-color: #bbb;
+				}
+			}
+		}
+
+		&.light {
+			&.disabled {
+				.label {
+					background-color: #666;
+				}
+			}
+
+			&:not(.disabled) {
+				.label {
+					background-color: #999;
+
+					&:hover {
+						background-color: #bbb;
+					}
+
+					&:active {
+						background-color: #ccc;
+					}
+				}
+			}
+		}
+	}
+
+
+	.title {
+		position: absolute;
+		font-size: 25px;
+		font-family: Poppins;
+		color: #fff;
+		text-stroke: 5 black;
+		top: 100px;
+		right: 10px;
+		white-space: nowrap;
+	}
+
+	.play-alone {
+		position: absolute;
+		top: 150px;
+		right: 10px;
+
+		.play-alone-button {
+			position: relative;
+			font-size: 20px;
+			font-family: Poppins;
+			color: #fff;
+			text-stroke: 5 black;
+			white-space: nowrap;
+		}
+
+		.play-alone-info {
+			position: absolute;
+			top: 60px;
+			right: 0;
+			font-size: 15px;
+			font-family: Poppins;
+			color: red;
+			text-stroke: 2 white;
+		}
+
+		&:not(:hover) {
+			.play-alone-info {
+				opacity: 0;
+			}
+		}
+	}
+
+	.game-name {
+		position: absolute;
+		width: 100%;
+		top: 100px;
+		height: 70px;
+		text-align: center;
+		font-size: 50px;
+		font-family: Poppins;
+		color: #fff;
+		text-stroke: 5 black;
+		white-space: nowrap;
+	}
+
+	.game-desc {
+		position: absolute;
+		width: 50%;
+		left: 25%;
+		top: 170px;
+		height: 50px;
+		text-align: center;
+		font-size: 25px;
+		font-family: Poppins;
+		color: #fff;
+		text-stroke: 5 black;
+	}
+
+	.death-message {
+		position: absolute;
+		width: 100%;
+		height: 100px;
+		top: 30%;
+		font-family: Poppins;
+		color: red;
+		text-stroke: 5 black;
+		font-size: 100px;
+		white-space: nowrap;
+		text-align: center;
+	}
+
+	.winners {
+		position: absolute;
+		width: 100%;
+		top: 50px;
+		font-size: 25px;
+		font-family: Poppins;
+		color: #fff;
+		text-stroke: 5 black;
+		text-align: center;
+	}
+}

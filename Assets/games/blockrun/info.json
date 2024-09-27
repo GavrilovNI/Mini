@@ -1,0 +1,5 @@
+{
+	"name": "Block Run",
+	"description": "Break blocks by running on top of them and don't fall.",
+	"canplayalone": false
+}
