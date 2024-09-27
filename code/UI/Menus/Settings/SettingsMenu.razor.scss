@@ -53,18 +53,6 @@ SettingsMenu {
         gap: 10px;
         padding: 10px;
 
-        .keybinds-buttons {
-            position: relative;
-            width: 100%;
-            height: 70px;
-
-            .reset-keybinds-button {
-                position: absolute;
-                left: 0;
-                width: 40%;
-            }
-        }
-
         .settings-container {
             position: relative;
             width: 100%;
